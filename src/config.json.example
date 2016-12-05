@@ -1,0 +1,4 @@
+{
+  "botToken": "insert your bot token here between the double quotes",
+  "prefix": "/"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "sharp-bot",
+  "version": "1.0.0",
+  "description": "A Discord.js self-bot written by Rayzr",
+  "main": "src/bot.js",
+  "scripts": {
+    "start": "gulp"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "github:hydrabolt/discord.js#indev",
+    "sqlite": "^2.2.0",
+    "superagent": "^3.1.0",
+    "uws": "^0.11.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.11.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1"
+  }
+}
