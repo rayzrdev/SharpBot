@@ -16,7 +16,7 @@ const db = bot.db = require('sqlite');
 db.open('./selfbot.sqlite');
 
 bot.on('ready', () => {
-    log(`Selfbot Rewrite: Ready to spy on ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} servers.`);
+    log(`SharpBot: Connected to ${bot.guilds.size} servers, for a total of ${bot.channels.size} channels and ${bot.users.size} users.`);
     delete bot.user.email;
     delete bot.user.verified;
     fs.readdirSync('./src/commands/').forEach(file => {
@@ -28,7 +28,7 @@ bot.on('ready', () => {
         }
         commands[command.info.name] = command;
     });
-    console.log('=> Ready');
+    console.log('=> Bot loaded');
 });
 
 bot.on('message', msg => {

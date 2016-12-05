@@ -1,26 +1,23 @@
-# Root's Selfbot
-
-This is the selfbot I use in my every day dealings with Discord. 
-
-It's built in Discord.js version 9.2.0 (at the moment)
+# SharpBot
+SharpBot is an ever-expanding selfbot for Discord.js v9 with mostly utilitarion commands, but also a few fun commands.
 
 ## Downloading
+Make sure that the `git` command-line tools are installed on your computer, as well as [yarn](https://github.com/yarnpkg/yarn). If you have `npm` but not `yarn`, you can install `yarn` as simply as `npm install -g yarn`.
 
-Have git installed on your machine and run the following command:
+> Just a note, instead of `yarn` you could do `npm install`, but I use yarn because it is much faster and a lot more stable. I would HIGHLY suggest you use it.
 
-`git pull https://github.com/eslachance/djs-selfbot-v9.git`
+- `git clone https://github.com/Rayzr522/SharpBot.git`
+- `cd SharpBot`
+- `yarn`
+- Rename `selfbot.sqlite.example` in the `src` folder to `selfbot.sqlite`
+- Rename `config.json.example` in the `src` folder to `config.json`
+- Edit `config.json` and enter your user-token
 
-Once finished: 
+> You can get your user-token by going to Discord, hitting `CTRL+SHIFT+I` on Windows or `CMD+ALT+I` on a Mac, going into the console tab, and typing in `localStorage.token`
+> If the developer panel does not open, make sure that `Settings > Appearance > Developer Mode` is turned on. 
 
-- `cd djs-selfbot-v9`
-- `npm install`
-- Rename `selfbot.sqlite.example` to `selfbot.sqlite`
-- Rename `config.json.example` to `config.json`
-- Edit `config.json` and enter your token
+## Running
+Assuming you have set up the config file with the user-token, just do `yarn start` to to run the bot.
 
-> To get your token, do CTRL+SHIFT+I in Discord, type in `localStorage.token` and copy it.
-
-Then start the bot using 
-`node self.js`
-
-For support join the [Discord.js Official server](https://discord.gg/bRCvFy9) and speak to `root`.
+## Credits
+I can't possibly credit all the various places I have learned from, but the original base for the selfbot came from [here](https://github.com/eslachance/djs-selfbot-v9). The tag-related commands, as well as `prune` and `purge` are basically the only remaining parts of the original code, and even **they** have been modified to some degree or another. The rest is all either my code, or snippets I have found online (but mostly just my code).
