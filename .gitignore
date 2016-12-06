@@ -3,4 +3,4 @@
 node_modules/
 
 src/config.json
-src/selfbot.sqlite
+selfbot.sqlite
