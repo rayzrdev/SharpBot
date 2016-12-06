@@ -9,7 +9,7 @@ Make sure that the `git` command-line tools are installed on your computer, as w
 - `git clone https://github.com/Rayzr522/SharpBot.git`
 - `cd SharpBot`
 - `yarn`
-- Rename `selfbot.sqlite.example` in the `src` folder to `selfbot.sqlite`
+- Rename `selfbot.sqlite.example` in the root folder to `selfbot.sqlite`
 - Rename `config.json.example` in the `src` folder to `config.json`
 - Edit `config.json` and enter your user-token
 
