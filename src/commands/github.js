@@ -57,7 +57,6 @@ function safeRepo(input) {
     let user = input.substr(0, input.indexOf('/'));
     input = input.substr(input.indexOf('/') + 1);
     let repo = input.indexOf('/') === -1 ? input : input.substr(0, input.indexOf('/'));
-    console.log(`${user}/${repo}`);
     return `${user}/${repo}`;
 }
 
