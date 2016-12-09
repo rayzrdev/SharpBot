@@ -14,8 +14,7 @@ This message will dissappear in 10 seconds.
 **RAM:** ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 
 `)
-    })
-        .then(m => m.delete(10000));
+    }).then(m => m.delete(10000));
 };
 
 exports.info = {
