@@ -1,4 +1,4 @@
-const utils = require('../utils')
+const utils = require('../utils');
 
 exports.run = function (bot, msg, args) {
     if (args.length < 1) {

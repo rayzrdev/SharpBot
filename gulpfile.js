@@ -6,11 +6,15 @@ var bot;
 
 const paths = {
     srcFiles: 'src/**/!(_)*.js',
-    configFiles: 'src/**/!(_)*.json'
+    configFiles: 'src/**/!(_)*.json',
+    gulpFile: 'gulpfile.js'
 };
 
 gulp.task('lint', () =>
-    gulp.src(paths.srcFiles)
+    gulp.src([
+        paths.srcFiles,
+        paths.gulpFile
+    ])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
@@ -37,4 +41,4 @@ gulp.task('default', ['main', 'watch']);
 
 process.on('exit', () => {
     if (bot) bot.kill();
-})
+});

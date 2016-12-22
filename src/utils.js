@@ -22,6 +22,18 @@ exports.randomColor = function () {
     return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 };
 
+var randomFooter = function () {
+    return exports.randomSelection(
+        'just add water!',
+        'Powered by squirrels!',
+        'codeisluvcodeislife',
+        'Where did you get that?',
+        'WHAT DID YOU BREAK!?',
+        'D-D-D-DROP THE BASS',
+        'Eat, Sleep, Dubstep'
+    );
+};
+
 exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let timestamp = options.timestamp || false;
@@ -46,7 +58,7 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         image: { url },
         timestamp: timestamp ? new Date() : null,
         footer: {
-            text: this.randomSelection('just add water!', 'Powered by squirrels!', 'codeisluvcodeislife'),
+            text: randomFooter(),
             icon_url: bot.client.user.avatarURL
         }
     };
