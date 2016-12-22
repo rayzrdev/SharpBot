@@ -1,4 +1,4 @@
-exports.run = function(bot, msg, args) {
+exports.run = function (bot, msg, args) {
     if (args.length < 1) {
         msg.edit(':no_entry_sign: You must provide text to space out!').then(m => m.delete(2000));
         return;
@@ -15,6 +15,6 @@ exports.run = function(bot, msg, args) {
 
 exports.info = {
     name: 'space',
-    usage: 'space <text>',
+    usage: 'space [amount] <text>',
     description: 'Spaces out text to look all dramatic n\' stuff'
 };

@@ -7,7 +7,7 @@ exports.run = function (bot, msg) {
     }
     var output = '';
     msg.mentions.users.forEach(m => {
-        output += `__${m.username}__  :gun:  __${bot.user.username}__${output.length < 1 ? '' : '\n'}`;
+        output += `__${m.username}__  :gun:  __${bot.user.username}__\n`;
     });
 
     msg.edit('', { embed: utils.embed(`${bot.user.username} is on a shooting spree!`, output) });
