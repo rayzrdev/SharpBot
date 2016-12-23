@@ -1,6 +1,5 @@
 const ascii = `
 \`\`\`
-\u200b
   _______   _________    _________   ,        ,
  /              |       /            |        |
 |               |      |             |        |
@@ -14,7 +13,7 @@ const ascii = `
 \`\`\`
 `;
 
-exports.run = function(bot, msg) {
+exports.run = function (bot, msg) {
     msg.edit(ascii);
 };
 
