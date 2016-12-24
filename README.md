@@ -2,7 +2,7 @@
 SharpBot is an ever-expanding selfbot for Discord.js v9 with mostly utilitarion commands, but also a few fun commands.
 
 ## Downloading
-Make sure that the `git` command-line tools are installed on your computer, as well as [yarn](https://github.com/yarnpkg/yarn). If you have `npm` but not `yarn`, you can install `yarn` as simply as `npm install -g yarn`.
+Make sure that the `git` command-line tools are installed on your computer, as well as [yarn](https://github.com/yarnpkg/yarn). If you have `npm` but not `yarn`, ~~you can install `yarn` as simply as `npm install -g yarn`.~~ install it by going [here](https://yarnpkg.com/en/docs/install)
 
 > Just a note, instead of `yarn` you could do `npm install`, but I use yarn because it is much faster and a lot more stable. I would HIGHLY suggest you use it.
 
