@@ -1900,7 +1900,7 @@ replace-ext@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-0.0.1.tgz#29bbd92078a739f0bcce2b4ee41e837953522924"
 
-request@^2.79.0:
+request@>=2.48.0, request@^2.79.0:
   version "2.79.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:
@@ -2354,6 +2354,12 @@ ws@^1.1.1:
   dependencies:
     options ">=0.0.5"
     ultron "1.0.x"
+
+xkcd-imgs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xkcd-imgs/-/xkcd-imgs-1.0.1.tgz#6786b325da800e942f96e5ecd4796ad4ad43cfc6"
+  dependencies:
+    request ">=2.48.0"
 
 "xtend@>=4.0.0 <4.1.0-0", xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"
