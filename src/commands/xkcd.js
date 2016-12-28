@@ -11,13 +11,13 @@ exports.run = function (bot, msg) {
             }
             m.edit('', {
                 embed: utils.embed('', res.title, [], { url: res.url })
-            })
-        })
+            });
+        });
     });
-}
+};
 
 exports.info = {
     name: 'xkcd',
     usage: 'xkcd',
     description: 'Shows you random xkcd comics'
-}
+};
