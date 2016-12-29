@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "github:hydrabolt/discord.js#indev",
+    "leven": "^2.0.0",
     "sqlite": "^2.2.0",
     "superagent": "^3.1.0",
     "uws": "^0.11.1",

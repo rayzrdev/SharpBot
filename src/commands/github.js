@@ -67,7 +67,7 @@ function getInfo(json) {
 \t**Owner:** [${json.owner.login}](${json.owner.html_url})
 \t**Primary Language:** \`${json.language}\` 
 
-\t:house:  [Home page](${json.html_url})  :small_red_triangle_down:  [Downlads](${json.html_url}/releases)  :exclamation:  [Issues](${json.html_url}/issues)
+\t:house:  [Home page](${json.html_url})  :small_red_triangle_down:  [Downloads](${json.html_url}/releases)  :exclamation:  [Issues](${json.html_url}/issues)
 
 \t:negative_squared_cross_mark:  \`${json.open_issues_count}\` open issues  :star:  \`${json.stargazers_count}\` stargazers  :eyes:  \`${json.subscribers_count || json.watchers_count}\` watchers
 

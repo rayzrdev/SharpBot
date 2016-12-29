@@ -1292,6 +1292,10 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
+leven@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/leven/-/leven-2.0.0.tgz#74c45744439550da185801912829f61d22071bc1"
+
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.3.0.tgz#3b09924edf9f083c0490fdd4c0bc4421e04764ee"
