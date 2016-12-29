@@ -1,3 +1,11 @@
+function formatDate(date) {
+    return `[${_(date.getDay())}/${_(date.getMonth())}/${_(date.getYear() - 100)}] [${_(date.getHours())}:${_(date.getMinutes())}:${_(date.getSeconds())}]`;
+}
+
+function _(number) {
+    return number < 10 ? '0' + number : '' + number;
+}
+
 exports.run = function (bot, msg, args) {
     if (args.length < 1) {
         msg.edit(':no_entry_sign: You must specify what to search for.')
@@ -14,7 +22,7 @@ exports.run = function (bot, msg, args) {
                 .then(messages => {
                     var results = messages.filter(it => it.content.toLowerCase().indexOf(query.toLowerCase()) != -1);
                     var output = results
-                        .map(it => `[${it.createdAt.getDay()}/${it.createdAt.getMonth()}/${it.createdAt.getYear() + 1900} ${it.createdAt.getHours()}:${it.createdAt.getMinutes()}:${it.createdAt.getSeconds()}] [${it.author.username}] ${it.content}`)
+                        .map(it => `${formatDate(it.createdAt)} ${it.author.username}: ${it.content}`)
                         .join('\n');
                     console.log(output);
                     m.editCode('log', output);
