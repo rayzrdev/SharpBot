@@ -2,6 +2,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const didYouMean = require('didyoumean2');
+const chalk = require('chalk');
 
 const bot = exports.client = new Discord.Client();
 const config = bot.config = require('./config.json');
@@ -25,7 +26,7 @@ bot.on('ready', () => {
         }
         commands[command.info.name] = command;
     });
-    console.log('\u2713 Bot loaded');
+    console.log(chalk.green('\u2713') + ' Bot loaded');
 });
 
 bot.on('message', msg => {
@@ -54,7 +55,7 @@ bot.on('message', msg => {
         }
     } else {
         var maybe = didYouMean(command, Object.keys(commands), {
-            threshold: 4,
+            threshold: 5,
             thresholdType: 'edit-distance'
         });
 
