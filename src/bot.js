@@ -43,11 +43,9 @@ bot.on('message', msg => {
     const command = msg.content.split(' ')[0].substr(config.prefix.length);
     const args = msg.content.split(' ').splice(1);
 
-    msg.editEmbed = function(embed) {
-        this.edit('', { embed });
-    };
-
     if (commands[command]) {
+        msg.editEmbed = (embed) => { this.edit('', { embed }); };
+
         try {
             commands[command].run(bot, msg, args);
         } catch (e) {
@@ -55,14 +53,11 @@ bot.on('message', msg => {
             console.error(e);
         }
     } else {
-        var names = [];
-        for (var name in commands) {
-            names.push(name);
-        }
-        var maybe = didYouMean(command, names, {
+        var maybe = didYouMean(command, Object.keys(commands), {
             threshold: 4,
             thresholdType: 'edit-distance'
         });
+
         if (maybe) {
             msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
         } else {
