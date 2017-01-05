@@ -1,39 +1,36 @@
 'use strict';
 const Discord = require('discord.js');
 const fs = require('fs');
+const didYouMean = require('didyoumean2');
 
 const bot = exports.client = new Discord.Client();
 const config = bot.config = require('./config.json');
 
 const commands = bot.commands = {};
 
-const log = (msg) => {
-    console.log(`[SelfBot]: ${msg}`);
-};
-
 // Before using, rename `selfbot.sqlite.example` to `selfbot.sqlite`
 const db = bot.db = require('sqlite');
 db.open('./selfbot.sqlite');
 
 bot.on('ready', () => {
-    log(`SharpBot: Connected to ${bot.guilds.size} servers, for a total of ${bot.channels.size} channels and ${bot.users.size} users.`);
+    console.log(`SharpBot: Connected to ${bot.guilds.size} servers, for a total of ${bot.channels.size} channels and ${bot.users.size} users.`);
     delete bot.user.email;
     delete bot.user.verified;
-    fs.readdirSync('./src/commands/').forEach(file => {
+    fs.readdirSync(__dirname + '/commands/').forEach(file => {
         if (file.startsWith('_') || !file.endsWith('.js')) return;
         var command = require(`./commands/${file}`);
         if (typeof command.run !== 'function' || typeof command.info !== 'object' || typeof command.info.name !== 'string') {
-            log(`Invalid command file: ${file}`);
+            console.log(`Invalid command file: ${file}`);
             return;
         }
         commands[command.info.name] = command;
     });
-    console.log('=> Bot loaded');
+    console.log('\u2713 Bot loaded');
 });
 
 bot.on('message', msg => {
     if (msg.isMentioned(bot.user.id)) {
-        log(`[MENTION] ${msg.author.username} (${msg.author.id}) on ${msg.guild.name}/${msg.channel.name}:\n${msg.content}`);
+        console.log(`[MENTION] ${msg.author.username} (${msg.author.id}) on ${msg.guild.name}/${msg.channel.name}:\n${msg.content}`);
     }
 
     if (msg.author.id !== bot.user.id) {
@@ -46,15 +43,31 @@ bot.on('message', msg => {
     const command = msg.content.split(' ')[0].substr(config.prefix.length);
     const args = msg.content.split(' ').splice(1);
 
+    msg.editEmbed = function(embed) {
+        this.edit('', { embed });
+    };
+
     if (commands[command]) {
-        msg.editEmbed = function (embed) {
-            this.edit('', { embed });
-        };
         try {
             commands[command].run(bot, msg, args);
         } catch (e) {
             msg.edit(msg.author + `Error while executing command\n${e}`).then(m => m.delete(5000));
             console.error(e);
+        }
+    } else {
+        var names = [];
+        for (var name in commands) {
+            names.push(name);
+        }
+        var maybe = didYouMean(command, names, {
+            threshold: 4,
+            thresholdType: 'edit-distance'
+        });
+        if (maybe) {
+            msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
+        } else {
+            msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${command}\``)
+                .then(m => m.delete(5000));
         }
     }
 });

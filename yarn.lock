@@ -385,6 +385,13 @@ detect-file@^0.1.0:
   dependencies:
     fs-exists-sync "^0.1.0"
 
+didyoumean2@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/didyoumean2/-/didyoumean2-1.2.0.tgz#95d641988d60b113ea536213484baa5f362bc4e1"
+  dependencies:
+    leven "^2.0.0"
+    lodash "^4.17.2"
+
 discord.js@^11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-11.0.0.tgz#735a4fc5607b04b2c1d0d699c88ea2936cf0d656"
@@ -1434,7 +1441,7 @@ lodash.templatesettings@^3.0.0:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
 
-lodash@^4.0.0, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.17.2, lodash@^4.3.0:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
