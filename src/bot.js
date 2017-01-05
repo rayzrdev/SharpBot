@@ -47,10 +47,13 @@ bot.on('message', msg => {
     const args = msg.content.split(' ').splice(1);
 
     if (commands[command]) {
+        msg.editEmbed = function (embed) {
+            this.edit('', { embed });
+        };
         try {
             commands[command].run(bot, msg, args);
         } catch (e) {
-            msg.edit(msg.author + `Error while executing command\n${e}`).then(m => m.delete(3000));
+            msg.edit(msg.author + `Error while executing command\n${e}`).then(m => m.delete(5000));
             console.error(e);
         }
     }

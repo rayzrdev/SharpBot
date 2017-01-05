@@ -14,15 +14,15 @@ const simpleColors = {
     'cyan': '#00FFFF'
 };
 
-exports.randomSelection = function () {
+exports.randomSelection = function() {
     return String(arguments[Math.floor(Math.random() * arguments.length)]);
 };
 
-exports.randomColor = function () {
+exports.randomColor = function() {
     return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 };
 
-var randomFooter = function () {
+var randomFooter = function() {
     return exports.randomSelection(
         'just add water!',
         'Powered by squirrels!',
@@ -38,17 +38,13 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let timestamp = options.timestamp || false;
     let color = this.getColor(options.color || this.randomColor());
+    let footer = options.footer === undefined ? true : options.footer;
 
-    // if (fields.length > 0) description += '\n' + fields.map(obj => `\n**${obj.name}**\n${obj.value}`).join('\n');
     if (options.inline) fields = fields.map(obj => { obj.inline = true; return obj; });
     if (fields.length > 0) fields.push({ name: '\u200b', value: '\u200b' });
     if (url !== '') description += '\n';
-    if (description.length > 0) description += '\n\u200b';
+
     return {
-        // author: {
-        //     name: bot.client.user.username,
-        //     icon_url: bot.client.user.avatarURL
-        // },
         color,
         title,
         fields,
@@ -57,21 +53,21 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         video: { url },
         image: { url },
         timestamp: timestamp ? new Date() : null,
-        footer: {
+        footer: !footer ? null : {
             text: randomFooter(),
             icon_url: bot.client.user.avatarURL
         }
     };
 };
 
-exports.hexToDec = function (hexInput) {
+exports.hexToDec = function(hexInput) {
     if (typeof hexInput === 'number') return hexInput;
     if (typeof hexInput !== 'string') return 0;
     if (hexInput.startsWith('#')) hexInput = hexInput.substr(1);
     return parseInt(hexInput, 16);
 };
 
-exports.rgbToHex = function (rgb) {
+exports.rgbToHex = function(rgb) {
     if (typeof rgb !== 'string') return '#000000';
     if (!rgbToHex.test(rgb)) return '#000000';
     return '#' + rgb.replace(rgbToHex, '$1').split(',')
@@ -81,7 +77,7 @@ exports.rgbToHex = function (rgb) {
         .join('').toUpperCase();
 };
 
-exports.getColor = function (input) {
+exports.getColor = function(input) {
     if (typeof input === 'number') { console.log(`Input: ${input}`); return input; }
     if (typeof input !== 'string') return 0;
     if (rgbToHex.test(input)) input = this.rgbToHex(input); // This falls into the next if

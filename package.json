@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "github:hydrabolt/discord.js#indev",
+    "discord.js": "^11.0.0",
     "leven": "^2.0.0",
     "sqlite": "^2.2.0",
     "superagent": "^3.1.0",

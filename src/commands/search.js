@@ -24,7 +24,6 @@ exports.run = function (bot, msg, args) {
                     var output = results
                         .map(it => `${formatDate(it.createdAt)} ${it.author.username}: ${it.content}`)
                         .join('\n');
-                    console.log(output);
                     m.editCode('log', output);
 
                 }).catch(err => {

@@ -6,9 +6,9 @@ exports.run = function (bot, msg, args) {
         return;
     }
 
-    msg.edit('', {
-        embed: utils.embed('', args.join(' '))
-    });
+    msg.editEmbed(
+        utils.embed('', args.join(' '), [], { footer: false })
+    );
 };
 
 exports.info = {
