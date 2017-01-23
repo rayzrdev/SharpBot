@@ -45,7 +45,7 @@ bot.on('message', msg => {
     const args = msg.content.split(' ').splice(1);
 
     if (commands[command]) {
-        msg.editEmbed = (embed) => { this.edit('', { embed }); };
+        msg.editEmbed = (embed) => { msg.edit('', { embed }); };
 
         try {
             commands[command].run(bot, msg, args);
