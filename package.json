@@ -16,10 +16,7 @@
     "discord.js": "^11.0.0",
     "got": "^6.7.1",
     "leven": "^2.0.0",
-    "request": "^2.79.0",
     "sqlite": "^2.2.0",
-    "superagent": "^3.1.0",
-    "uws": "^0.11.1",
     "xkcd-imgs": "^1.0.1"
   },
   "devDependencies": {

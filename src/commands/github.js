@@ -1,4 +1,4 @@
-const request = require('superagent');
+const got = require('got');
 const utils = require('../utils');
 
 exports.run = function (bot, msg, args) {
@@ -13,8 +13,8 @@ exports.run = function (bot, msg, args) {
 
         msg.edit(`:arrows_counterclockwise:  Loading info for '${repo}'...`);
 
-        request.get(`https://api.github.com/repos/${repo}`, (err, res) => {
-            let json = JSON.parse(res.text);
+        got(`https://api.github.com/repos/${repo}`).then(res => {
+            let json = JSON.parse(res.body);
             if (json.message === 'Not Found') {
                 msg.edit(':no_entry_sign: That repository could not be found!').then(m => m.delete(2000));
                 return;
@@ -27,8 +27,8 @@ exports.run = function (bot, msg, args) {
 
         msg.edit(`:arrows_counterclockwise:  Searching for '${args.join(' ')}'...`);
 
-        request.get(`https://api.github.com/search/repositories?q=${args.join('+')}`, (err, res) => {
-            let json = JSON.parse(res.text);
+        got(`https://api.github.com/search/repositories?q=${args.join('+')}`).then(res => {
+            let json = JSON.parse(res.body);
             if (json.total_count < 1) {
                 msg.edit(`:sob: No results found for '${args.join(' ')}'`).then(m => m.delete(2000));
                 return;

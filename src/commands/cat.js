@@ -1,17 +1,13 @@
-const request = require('superagent');
+const got = require('got');
 
-function getCat(callback) {
-    request.get('http://www.random.cat/meow', (err, res) => {
-        callback(res.body.file);
-    });
-}
-
-exports.getCat = getCat;
+exports.getCat = function (callback) {
+    got('http://www.random.cat/meow').then(res => callback(JSON.parse(res.body).file));
+};
 
 exports.run = function (bot, msg) {
     msg.delete();
     msg.channel.sendMessage(':cat: Have some cat pix:');
-    getCat((url) => msg.channel.sendMessage(url));
+    this.getCat((url) => msg.channel.sendMessage(url));
 };
 
 exports.info = {

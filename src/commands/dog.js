@@ -1,11 +1,13 @@
-const request = require('superagent');
+const got = require('got');
+
+exports.getDog = function (callback) {
+    got('http://random.dog/woof').then(res => callback(`http://random.dog/${res.body}`));
+};
 
 exports.run = function (bot, msg) {
     msg.delete();
     msg.channel.sendMessage(':dog: Have some dog pix:');
-    request.get('http://random.dog/woof', (err, res) => {
-        msg.channel.sendMessage(`http://random.dog/${res.text}`);
-    });
+    this.getDog((url) => msg.channel.sendMessage(url));
 };
 
 exports.info = {

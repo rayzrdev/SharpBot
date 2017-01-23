@@ -96,12 +96,28 @@ exports.multiSend = function (channel, messages, delay) {
     });
 };
 
-exports.sendLarge = function (channel, largeMessage, delay) {
+exports.sendLarge = function (channel, largeMessage, options = {}) {
     var message = largeMessage;
     var messages = [];
-    while (messages.length < 1 || message.length >= 2000) {
-        messages.push(message.substr(0, 2000));
-        message = message.substr(2000);
+    var prefix = options.prefix || '';
+    var suffix = options.suffix || '';
+
+    var max = 2000 - prefix.length - suffix.length;
+
+    while (message.length >= max) {
+        var part = message.substr(0, max);
+        var cutTo = max;
+        if (options.cutOn) {
+            cutTo = part.lastIndexOf(options.cutOn);
+            part = part.substr(0, cutTo);
+        }
+        messages.push(prefix + part + suffix);
+        message = message.substr(cutTo);
     }
-    this.multiSend(channel, messages, delay);
+
+    if (message.length > 1) {
+        messages.push(prefix + message + suffix);
+    }
+
+    this.multiSend(channel, messages, options.delay);
 };
