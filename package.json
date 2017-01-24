@@ -17,7 +17,8 @@
     "got": "^6.7.1",
     "leven": "^2.0.0",
     "sqlite": "^2.2.0",
-    "xkcd-imgs": "^1.0.1"
+    "xkcd-imgs": "^1.0.1",
+    "yargs": "^6.6.0"
   },
   "devDependencies": {
     "eslint": "^3.11.1",
