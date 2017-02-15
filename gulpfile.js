@@ -23,9 +23,12 @@ gulp.task('lint', () =>
 gulp.task('main', ['lint'], () => {
     if (bot) bot.kill();
     bot = spawn('node', ['src/bot.js'], { 'stdio': 'inherit' });
-    bot.on('close', (errorCode) => {
-        if (errorCode === 8) {
-            console.log('Error detected, waiting for changes...');
+    bot.on('close', (code) => {
+        if (code !== 0) {
+            console.error('Error detected, attempting to restart the bot...');
+            gulp.start('main');
+        } else {
+            console.log('Bot has gracefully exited. Waiting for changes...');
         }
     });
 });
