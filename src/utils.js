@@ -17,7 +17,8 @@ const randomFooter = function () {
         'Where did you get that?',
         'WHAT DID YOU BREAK!?',
         'D-D-D-DROP THE BASS',
-        'Eat, Sleep, Dubstep'
+        'Eat, Sleep, Dubstep',
+        '#BlameRayzr522'
     );
 };
 
