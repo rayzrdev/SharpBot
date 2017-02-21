@@ -12,12 +12,13 @@ exports.randomColor = function () {
 const randomFooter = function () {
     return exports.randomSelection(
         'just add water!',
-        'Powered by squirrels!',
+        'Powered by squirrels !',
         'codeisluvcodeislife',
         'Where did you get that?',
         'WHAT DID YOU BREAK!?',
         'D-D-D-DROP THE BASS',
-        'Eat, Sleep, Dubstep'
+        'Eat, Sleep, Dubstep',
+        '#BlameRayzr522'
     );
 };
 
