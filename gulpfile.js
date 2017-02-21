@@ -24,7 +24,7 @@ gulp.task('main', ['lint'], () => {
     if (bot) bot.kill();
     bot = spawn('node', ['src/bot.js'], { 'stdio': 'inherit' });
     bot.on('close', (code) => {
-        if (code !== 0) {
+        if (code === 8) {
             console.error('Error detected, attempting to restart the bot...');
             gulp.start('main');
         } else {
