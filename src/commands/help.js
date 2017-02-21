@@ -8,28 +8,25 @@ const getHelp = function (bot, command) {
 };
 
 exports.run = function (bot, msg, args) {
-    if (args.length < 1) {
 
-        var fields = [];
-        for (const cmd in bot.commands) {
-            fields.push(getHelp(bot, bot.commands[cmd]));
+    var commands = bot.commands;
+    if (args.length > 0) {
+        let command = bot.commands[args[0]];
+        if (!command) {
+            msg.edit(`:no_entry_sign: The command '${args[0]}' does not exist!`).then(m => m.delete(2000));
+            return;
         }
-
-        msg.edit('', {
-            embed: utils.embed('Commands', 'This message will dissappear in 10 seconds.', fields, { inline: true })
-        }).then(m => m.delete(10000));
-
-        return;
+        commands = [command];
     }
 
-    let command = bot.commands[args[0]];
-    if (!command) {
-        msg.edit(`:no_entry_sign: The command '${args[0]}' does not exist!`).then(m => m.delete(2000));
-    } else {
-        msg.edit('', {
-            embed: utils.embed('', 'This message will dissappear in 10 seconds.', [getHelp(bot, command)])
-        }).then(m => m.delete(10000));
+    var fields = [];
+    for (const cmd in commands) {
+        fields.push(getHelp(bot, commands[cmd]));
     }
+
+    msg.edit('', {
+        embed: utils.embed('Commands', 'This message will dissappear in 10 seconds.', fields)
+    }).then(m => m.delete(10000));
 };
 
 exports.info = {
