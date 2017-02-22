@@ -10,12 +10,20 @@ const clean = function (data) {
 };
 
 exports.run = (bot, msg, args) => {
-    var argv = yargs.alias('l', 'lang').parse(args);
+    var lang = 'bash';
+    if (args[0] === '-l' || args[0] === '--lang') {
+        args.shift();
+        lang = args.shift();
+    }
 
-    var ps = exec(argv._.join(' '));
+    if (args.length < 1) {
+        return msg.edit(':no_entry_sign: You must provide a command to run!').then(m => m.delete(2000));
+    }
+
+    var ps = exec(args.join(' '));
 
     var opts = {
-        prefix: `\`\`\`${argv.lang || 'bash'}\n`,
+        prefix: `\`\`\`${lang}\n`,
         suffix: '\n```',
         delay: 10,
         cutOn: '\n'
