@@ -1,8 +1,20 @@
+const oneLine = require('common-tags').oneLine;
 const utils = require('../utils');
 
 exports.run = function (bot, msg) {
+
+    let servers = bot.guilds.array().sort((a, b) => b.memberCount - a.memberCount).map(guild => {
+        return {
+            name: guild.name,
+            value: oneLine`
+                ${guild.memberCount} users,
+                ${guild.channels.size} channels
+            `
+        };
+    });
+
     msg.edit('', {
-        embed: utils.embed(`${bot.user.username}'s Servers`, `${bot.user.username} is a part of the following servers:\n\n${bot.guilds.map(g => '- ' + g.name).sort().join('\n')}`)
+        embed: utils.embed(`${bot.user.username}'s Servers`, '\u200b', servers)
     });
 };
 
