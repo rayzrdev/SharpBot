@@ -31,7 +31,7 @@ bot.on('ready', () => {
 
 bot.on('message', msg => {
     if (msg.isMentioned(bot.user.id)) {
-        console.log(`[MENTION] ${msg.author.username} (${msg.author.id}) on ${msg.guild.name}/${msg.channel.name}:\n${msg.content}`);
+        console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
     if (msg.author.id !== bot.user.id) {
