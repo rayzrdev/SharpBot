@@ -4,6 +4,8 @@ const fs = require('fs');
 const didYouMean = require('didyoumean2');
 const chalk = require('chalk');
 
+const stripIndents = require('common-tags').stripIndents;
+
 const bot = exports.client = new Discord.Client();
 const config = bot.config = require('./config.json');
 
@@ -14,13 +16,17 @@ const db = bot.db = require('sqlite');
 db.open('./selfbot.sqlite');
 
 bot.on('ready', () => {
-    let user = bot.users.filter(user => !user.bot).size;
-    let bots = bot.users.filter(user => user.bot).size;
-    let channels = bot.channels.size;
-    let guilds = bot.guilds.size;
-    console.log(`SharpBot: Connected to ${guilds} servers, for a total of ${channels} channels and ${user} users also seen ${bots} bots.`);
+
+    console.log(chalk.yellow(stripIndents`### STATS ###
+        - Users: ${bot.users.filter(user => !user.bot).size} 
+        - Bots: ${bot.users.filter(user => user.bot).size}
+        - Channels: ${bot.channels.size}
+        - Guilds: ${bot.guilds.size}`
+    ));
+
     delete bot.user.email;
     delete bot.user.verified;
+
     fs.readdirSync(__dirname + '/commands/').forEach(file => {
         if (file.startsWith('_') || !file.endsWith('.js')) return;
         var command = require(`./commands/${file}`);
@@ -30,6 +36,7 @@ bot.on('ready', () => {
         }
         commands[command.info.name] = command;
     });
+
     console.log(chalk.green('\u2713') + ' Bot loaded');
 });
 
