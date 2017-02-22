@@ -27,8 +27,12 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
     let color = options.color || this.randomColor();
     let footer = options.footer === undefined ? true : options.footer;
 
-    if (options.inline) fields = fields.map(obj => { obj.inline = true; return obj; });
     if (fields.length > 0) fields.push({ name: '\u200b', value: '\u200b' });
+    if (options.inline) {
+        fields = fields.map(obj => { obj.inline = true; return obj; });
+        if (fields.length % 3 === 2)
+            fields.push({ name: '\u200b', value: '\u200b' });
+    }
     if (url !== '') description += '\n';
 
     return new RichEmbed({ fields, video: options.video || url })

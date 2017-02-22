@@ -14,7 +14,7 @@ exports.run = function (bot, msg) {
     });
 
     msg.edit('', {
-        embed: utils.embed(`${bot.user.username}'s Servers`, '\u200b', servers)
+        embed: utils.embed(`${bot.user.username}'s Servers`, '\u200b', servers, { inline: true })
     });
 };
 

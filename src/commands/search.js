@@ -37,6 +37,6 @@ exports.run = function (bot, msg, args) {
 
 exports.info = {
     name: 'search',
-    usage: 'search <# of messages> <search text>',
-    description: 'Searches a certain number of messages for the given search text'
+    usage: 'search <#> <text>',
+    description: 'Searches a number of messages for some text'
 };
