@@ -14,7 +14,11 @@ const db = bot.db = require('sqlite');
 db.open('./selfbot.sqlite');
 
 bot.on('ready', () => {
-    console.log(`SharpBot: Connected to ${bot.guilds.size} servers, for a total of ${bot.channels.size} channels and ${bot.users.size} users.`);
+    let user = bot.users.filter(user => !user.bot).size;
+    let bots = bot.users.filter(user => user.bot).size;
+    let channels = bot.channels.size;
+    let guilds = bot.guilds.size;
+    console.log(`SharpBot: Connected to ${guilds} servers, for a total of ${channels} channels and ${user} users also seen ${bots} bots.`);
     delete bot.user.email;
     delete bot.user.verified;
     fs.readdirSync(__dirname + '/commands/').forEach(file => {
