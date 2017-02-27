@@ -23,3 +23,6 @@ Assuming you have set up the config file with the user-token, just do `yarn star
 
 ## Credits
 I can't possibly credit all the various places I have learned from, but the original base for the selfbot came from [here](https://github.com/eslachance/djs-selfbot-v9). The tag-related commands, as well as `prune` and `purge` are basically the only remaining parts of the original code, and even **they** have been modified to some degree or another. The rest is all either my code, or snippets I have found online (but mostly just my code).
+
+## Join Me
+[![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://discord.io/rayzrdevofficial)
