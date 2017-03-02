@@ -7,6 +7,8 @@ SharpBot is an ever-expanding selfbot for Discord.js v11 with mostly utilitarion
 - [Updating](#updating)
 - [Running](#running)
 - [Getting your user-token](#getting-your-user-token)
+- [Credits](#credits)
+- [Join Me](#join-me)
 
 ## Usage
 ### Requirements
@@ -20,7 +22,9 @@ If you have NPM but not yarn, please install it. Yarn is faster and more reliabl
 ```bash
 git clone https://github.com/Rayzr522/SharpBot.git`
 cd SharpBot
-yarn```
+yarn
+```
+
 - Rename `config.json.example` in the `src` folder to `config.json`
 - Edit `config.json` and enter your [user-token](#getting-your-user-token)
 
