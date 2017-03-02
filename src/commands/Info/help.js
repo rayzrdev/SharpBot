@@ -6,7 +6,7 @@ exports.run = (bot, msg, args) => {
     var title = 'Categories';
 
     if (args.length > 0) {
-        if (/c(at(egory)?)?|t(ype)?/i.test(args[0])) {
+        if (/c(ategory)?|t(ype)?/i.test(args[0])) {
             if (args.length < 2) {
                 throw 'You must specify a category!';
             }
@@ -26,7 +26,7 @@ exports.run = (bot, msg, args) => {
         }
     }
 
-    if (commands.length > 1) {
+    if (commands.length > 0) {
         var fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c));
 
         msg.editEmbed(
