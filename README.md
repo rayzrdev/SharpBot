@@ -1,28 +1,60 @@
 # SharpBot
 SharpBot is an ever-expanding selfbot for Discord.js v11 with mostly utilitarion commands, but also a few fun commands.
 
-## Downloading
-Make sure that the `git` command-line tools are installed on your computer, as well as [yarn](https://github.com/yarnpkg/yarn). If you have `npm` but not `yarn`, install it by going [here](https://yarnpkg.com/en/docs/install).
+#### Table of contents
+- [Requirements](#requirements)
+- [Installing](#installing)
+- [Updating](#updating)
+- [Running](#running)
+- [Getting your user-token](#getting-your-user-token)
 
-- `git clone https://github.com/Rayzr522/SharpBot.git`
-- `cd SharpBot`
-- `yarn`
-- Rename `selfbot.sqlite.example` in the root folder to `selfbot.sqlite`
+## Usage
+### Requirements
+- `git`
+- [`yarn`](https://yarnpkg.com/docs/install)
+
+If you have NPM but not yarn, please install it. Yarn is faster and more reliable.
+
+### Installing
+
+```bash
+git clone https://github.com/Rayzr522/SharpBot.git`
+cd SharpBot
+yarn```
 - Rename `config.json.example` in the `src` folder to `config.json`
-- Edit `config.json` and enter your user-token
+- Edit `config.json` and enter your [user-token](#getting-your-user-token)
 
-> You can get your user-token by going to Discord, hitting `CTRL+SHIFT+I` on Windows or `CMD+ALT+I` on a Mac, going into the console tab, and typing in `localStorage.token`
-> If the developer panel does not open, make sure that `Settings > Appearance > Developer Mode` is turned on. 
+### Updating
+Minor updates can be acquired by running `//exec git pull` in Discord to run the `git pull` command on your computer. Some updates, however, change too much to be updated like that, and instead you must do the following commands in your terminal/command prompt:
+
+```bash
+# Go to the SharpBot folder
+cd path/to/SharpBot
+# Pull in any changes
+git pull
+# Install new dependencies
+yarn
+```
+
+### Running
+Assuming you have set up the config file with the user-token, just do `yarn start` to run the bot.
+
+### Getting your user-token
+1. Hit `CTRL+SHIFT+I` (`CMD+ALT+I` on macOS) to bring up the Developers Console
+> If you already see the `Application` tab, you can skip step 2
+2. At the top, click on the arrow pointing to the right
+3. Click `Application`
+4. Go to `Local Storage` under the `Storage` section
+5. Click on `https://discordapp.com`
+6. At the bottom of the list, the last key should be `token`
+7. Copy the value on the right side (omitting the quotes)
 
 > Just a note, instead of `yarn` you could do `npm install`, but I use yarn because it is much faster and a lot more stable. I would HIGHLY suggest you use it.
 
-## Running
-Assuming you have set up the config file with the user-token, just do `yarn start` to to run the bot.
-
-> Again, if you have `npm` and not `yarn` then you can do `npm run start` instead. I cannot gaurantee this will work! `npm` is not very stable.
-
 ## Credits
-I can't possibly credit all the various places I have learned from, but the original base for the selfbot came from [here](https://github.com/eslachance/djs-selfbot-v9). The tag-related commands, as well as `prune` and `purge` are basically the only remaining parts of the original code, and even **they** have been modified to some degree or another. The rest is all either my code, or snippets I have found online (but mostly just my code).
+The bot was originally a modified version of [eslachance's djs-selfbot-v9]([here](https://github.com/eslachance/djs-selfbot-v9), but over time I've completely rewritten it. The commands are a compilation of my own work as well as snippets found online.
 
 ## Join Me
+If you need help with my bot, have a feature to request or just want to chat, you can join my Discord server! If you don't have Discord, don't worry. It only takes a few moments to sign up.
+
 [![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://discord.io/rayzrdevofficial)
