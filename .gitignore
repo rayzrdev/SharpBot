@@ -2,6 +2,7 @@
 *.log
 node_modules/
 
+# Data files/folders
+data/
+*.sqlite
 src/config.json
-selfbot.sqlite
-selfbot.sqlite
