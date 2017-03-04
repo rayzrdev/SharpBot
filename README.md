@@ -20,7 +20,7 @@ If you have NPM but not yarn, please install it. Yarn is faster and more reliabl
 ### Installing
 
 ```bash
-git clone https://github.com/Rayzr522/SharpBot.git`
+git clone https://github.com/Rayzr522/SharpBot.git
 cd SharpBot
 yarn
 ```
