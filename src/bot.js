@@ -95,7 +95,7 @@ bot.on('message', msg => {
     } else {
         db.get(`shortcuts.${base}`).then(sc => {
             if (!sc) {
-                var maybe = didYouMean(base, Object.keys(commands), {
+                var maybe = didYouMean(base, commands.all().map(c => c.info.name), {
                     threshold: 5,
                     thresholdType: 'edit-distance'
                 });
@@ -103,7 +103,7 @@ bot.on('message', msg => {
                 if (maybe) {
                     msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
                 } else {
-                    msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${command}\``)
+                    msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${base}\``)
                         .then(m => m.delete(5000));
                 }
             } else {

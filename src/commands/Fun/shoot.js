@@ -7,7 +7,7 @@ exports.run = function (bot, msg) {
 
     msg.delete();
     msg.channel.sendEmbed(
-        bot.utils.embed(`${bot.user} is on a killing spree!`, output)
+        bot.utils.embed(`${bot.user.username} is on a killing spree!`, output)
     );
 };
 

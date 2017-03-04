@@ -25,7 +25,6 @@ gulp.task('lint', () =>
 gulp.task('main', ['lint'], () => {
     if (bot) bot.kill();
     bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] });
-    console.log('Routing output...');
     bot.stderr.on('data', data => {
         process.stderr.write(data);
         if (moduleError.test(data.toString())) {
