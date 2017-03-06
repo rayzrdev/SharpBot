@@ -1,4 +1,4 @@
-const {exec} = require('child_process');
+const { exec } = require('child_process');
 const username = require('os').userInfo().username;
 
 exports.run = (bot, msg, args) => {
@@ -6,16 +6,12 @@ exports.run = (bot, msg, args) => {
         throw 'You must provide a command to run!';
     }
 
-    var lang = 'bash';
-    if (args[0] === '-l' || args[0] === '--lang') {
-        args.shift();
-        lang = args.shift();
-    }
+    var parsed = bot.utils.parseArgs(args, 'l:');
 
-    var ps = exec(args.join(' '));
+    var ps = exec(parsed.leftover.join(' '));
 
     var opts = {
-        prefix: `\`\`\`${lang}\n`,
+        prefix: `\`\`\`${parsed.options.l || 'bash'}\n`,
         suffix: '\n```',
         delay: 10,
         cutOn: '\n'
@@ -33,6 +29,6 @@ const clean = function (data) {
 
 exports.info = {
     name: 'exec',
-    usage: 'exec <command>',
+    usage: 'exec [-l <lang>] <command>',
     description: 'Executes a command in the console'
 };

@@ -6,15 +6,11 @@ exports.run = (bot, msg, args) => {
         throw 'You must have something to upload!';
     }
 
-    var raw = false;
-    if (args[0] === '-r' || args[0] === '--raw') {
-        args.shift();
-        raw = true;
-    }
+    var parsed = bot.utils.parseArgs(args, 'r');
 
     msg.edit(':arrows_counterclockwise: Uploading...').then(() => {
         got.post(url.resolve('https://hastebin.com', 'documents'), {
-            body: args.join(' '),
+            body: parsed.leftover.join(' '),
             json: true,
             headers: {
                 'Content-Type': 'text/plain'
@@ -25,7 +21,7 @@ exports.run = (bot, msg, args) => {
                 return;
             }
             var key = res.body.key || res.body;
-            if (raw) {
+            if (parsed.options.r) {
                 msg.edit(`:white_check_mark: https://hastebin.com/raw/${key}`);
             } else {
                 msg.edit(`:white_check_mark: https://hastebin.com/${key}`);

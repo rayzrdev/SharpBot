@@ -45,6 +45,11 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
 };
 
 exports.parseArgs = function (args, options) {
+    if (!options)
+        return args;
+    if (typeof options === 'string')
+        options = [options];
+
     var optionValues = {};
     var leftover = [];
     for (var i = 0; i < args.length; i++) {
