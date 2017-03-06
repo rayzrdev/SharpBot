@@ -16,6 +16,6 @@ exports.run = (bot, msg, args) => {
 
 exports.info = {
     name: 'embed',
-    usage: 'embed [-i] [-c <color>] [text]',
+    usage: 'embed [-f] [-c <color>] [text]',
     description: 'Sends a message via embeds'
 };
