@@ -1,7 +1,8 @@
 exports.run = (bot, msg, args) => {
     let count = parseInt(args[0]) || 1;
 
-    msg.channel.fetchMessages({ limit: Math.min(count + 1, 100) })
+    msg.delete();
+    msg.channel.fetchMessages({ limit: Math.min(count, 100), before: msg.id })
         .then(messages => {
             Promise.all(messages.map(m => m.delete()))
                 .catch(console.error)

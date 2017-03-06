@@ -11,7 +11,6 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const didYouMean = require('didyoumean2');
-const chalk = require('chalk');
 
 const XPDB = require('xpdb');
 
@@ -29,43 +28,19 @@ if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
 
 const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
 
-if (fs.existsSync(path.join(__dirname, '../selfbot.sqlite'))) {
-    try {
-        console.log('Migrating DB...');
-        var oldDB = require('sqlite');
-        oldDB.open('./selfbot.sqlite').then(() => {
-            oldDB.all('SELECT * FROM tags').then(rows => {
-                rows.forEach(row => {
-                    db.put(`tags.${row.name}`, {
-                        name: row.name,
-                        contents: row.contents,
-                        used: row.used,
-                        added: row.added
-                    });
-                });
-                console.log('Migration complete. Please set `migrateTagsDB` to `false` in the config file.');
-            });
-        });
-    } catch (err) {
-        console.error('Failed to migrate database!', err);
-        process.exit(1);
-    } finally {
-        fs.unlinkSync(path.join(__dirname, '../selfbot.sqlite'));
-    }
-}
-
 bot.on('ready', () => {
+    Managers.Migrator.migrate(bot, __dirname);
 
     bot.utils = require('./utils');
 
     commands.loadCommands(path.join(__dirname, 'commands'));
 
-    console.log(chalk.yellow(stripIndents`### STATS ###
+    logger.info(stripIndents`Stats:
         - Users: ${bot.users.filter(user => !user.bot).size} 
         - Bots: ${bot.users.filter(user => user.bot).size}
         - Channels: ${bot.channels.size}
         - Guilds: ${bot.guilds.size}`
-    ));
+    );
 
     delete bot.user.email;
     delete bot.user.verified;
