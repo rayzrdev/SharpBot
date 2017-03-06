@@ -3,12 +3,12 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify some text!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['i', 'c:']);
+    var parsed = bot.utils.parseArgs(args, ['f', 'c:']);
 
     msg.delete();
     msg.channel.sendEmbed(
         bot.utils.embed('', parsed.leftover.join(' '), [], {
-            footer: !!parsed.options.i,
+            footer: !!parsed.options.f,
             color: parsed.options.c
         })
     );
