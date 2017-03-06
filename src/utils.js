@@ -44,6 +44,34 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setFooter(footer ? randomFooter() : '', footer ? bot.client.user.avatarURL : undefined);
 };
 
+exports.parseArgs = function (args, options) {
+    var optionValues = {};
+    var leftover = [];
+    for (var i = 0; i < args.length; i++) {
+        var arg = args[i];
+        if (!arg.startsWith('-')) {
+            leftover = leftover.concat(args.slice(i));
+            break;
+        }
+
+        var label = arg.substr(1);
+
+        if (options.indexOf(label + ':') > -1) {
+            i++;
+            optionValues[label] = args[i];
+        } else if (options.indexOf(label) > -1) {
+            optionValues[label] = true;
+        } else {
+            break;
+        }
+    }
+
+    return {
+        options: optionValues,
+        leftover
+    };
+};
+
 exports.multiSend = function (channel, messages, delay) {
     delay = delay || 100;
     messages.forEach((m, i) => {
