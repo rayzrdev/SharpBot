@@ -24,12 +24,14 @@ class Logger {
         this._log(chalk.green('\u2713'), message);
     }
 
-    warn(message) {
+    warn(message, error) {
         this._log(chalk.yellow('!'), message);
+        error && console.error(error);
     }
 
-    severe(message) {
+    severe(message, error) {
         this._log(chalk.red('!'), message);
+        error && console.error(error);
     }
 }
 
