@@ -111,3 +111,24 @@ exports.sendLarge = function (channel, largeMessage, options = {}) {
 
     this.multiSend(channel, messages, options.delay);
 };
+
+exports.now = () => {
+    var now = process.hrtime();
+    return now[0] * 1e3 + now[1] / 1e6;
+};
+
+exports.playAnimation = (msg, delay, list) => {
+    if (list.length < 1)
+        return;
+
+    var next = list.shift();
+    var start = this.now();
+
+    msg.edit(next).then(() => {
+        var elapsed = this.now() - start;
+
+        setTimeout(() => {
+            this.playAnimation(msg, delay, list);
+        }, Math.max(50, delay - elapsed));
+    }).catch(console.error);
+};
