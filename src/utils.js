@@ -51,11 +51,11 @@ exports.parseArgs = function (args, options) {
         options = [options];
 
     var optionValues = {};
-    var leftover = [];
-    for (var i = 0; i < args.length; i++) {
+
+    var i;
+    for (i = 0; i < args.length; i++) {
         var arg = args[i];
         if (!arg.startsWith('-')) {
-            leftover = leftover.concat(args.slice(i));
             break;
         }
 
@@ -73,7 +73,7 @@ exports.parseArgs = function (args, options) {
 
     return {
         options: optionValues,
-        leftover
+        leftover: args.slice(i)
     };
 };
 
