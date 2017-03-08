@@ -22,7 +22,7 @@ exports.run = (bot, msg, args) => {
                 };
                 var attachment = message.attachments.first();
 
-                if (attachment && attachment.width || attachment.height) {
+                if (attachment && (attachment.width || attachment.height)) {
                     options.image = attachment.url;
                 }
 
