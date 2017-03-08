@@ -23,7 +23,6 @@ exports.run = (bot, msg, args) => {
                 var attachment = message.attachments.first();
 
                 if (attachment && attachment.width || attachment.height) {
-                    console.log('Adding image');
                     options.image = attachment.url;
                 }
 
