@@ -15,13 +15,20 @@ exports.run = (bot, msg, args) => {
                 return msg.error('That message could not be found!');
             } else {
                 var message = messages.first();
-                console.log(bot.user.avatarURL);
-                console.log(JSON.stringify(message.author, null, 4));
+
+                var options = {
+                    timestamp: message.editedTimestamp || message.createdTimestamp,
+                    footer: false
+                };
+                var attachment = message.attachments.first();
+
+                if (attachment && attachment.width || attachment.height) {
+                    console.log('Adding image');
+                    options.image = attachment.url;
+                }
+
                 msg.channel.sendEmbed(
-                    bot.utils.embed(`${message.author.username}`, message.toString(), [], {
-                        timestamp: message.editedTimestamp || message.createdTimestamp,
-                        footer: false
-                    })
+                    bot.utils.embed(`${message.author.username}`, message.toString(), [], options)
                 );
             }
         }).catch(() => msg.error('That message could not be found!'));
