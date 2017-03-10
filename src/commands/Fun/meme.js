@@ -64,9 +64,10 @@ exports.run = (bot, msg, args) => {
             throw `That is not a valid meme! Do \`${bot.config.prefix}${this.info.name} list\` to see available memes.`;
         }
 
+        msg.delete();
         return msg.channel.sendEmbed(
             bot.utils.embed(`\`${info.name}\``, `Styles: ${info.styles && info.styles.length > 1 ? info.styles.map(s => `\n- \`${s}\``).join('') : 'None'}`)
-        );
+        ).then(m => m.delete(15000));
     }
 
     var input = args.join(' ');
