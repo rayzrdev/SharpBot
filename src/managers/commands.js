@@ -66,8 +66,9 @@ class CommandManager {
     }
 
     execute(msg, command, args) {
-        msg.editEmbed = (embed) => msg.edit('', { embed });
-        msg.error = (message, delay) => msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`).then(m => m.delete(delay || 2000));
+        msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
+        msg.error = ((message, delay) => msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`).then(m => m.delete(delay || 2000))).bind(msg);
+
 
         try {
             command.run(this.bot, msg, args);

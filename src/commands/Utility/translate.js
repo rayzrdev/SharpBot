@@ -1,38 +1,34 @@
 const translate = require('google-translate-api');
+const stripIndents = require('common-tags').stripIndents;
 
+exports.run = (bot, msg, args) => {
+    if (args.length < 2) {
+        throw 'You must provide a language and some text to translate!';
+    }
 
-exports.run = function(bot, msg, args) {
+    var parsed = bot.utils.parseArgs(args, 'f:');
 
-var quotes = msg.content.split('"');
-var text = quotes[1] ? quotes[1] : ""
-var lang = quotes[3] ? quotes[3]: ""    
+    let lang = parsed.leftover[0];
+    let input = parsed.leftover.slice(1).join(' ');
 
-if (!text){
-	return msg.channel.sendMessage(`:x: You failed to do the Correct Syntax. **Syntax**: ${bot.config.prefix}trans "text" "lang". Don't Forget the Quotations`)
-}else
+    msg.edit(':arrows_counterclockwise: **Translating your Text...**').then(() => {
+        translate(input, { from: parsed.options.f, to: lang }).then(res => {
+            msg.delete();
+            msg.channel.sendEmbed(
+                bot.utils.embed('', stripIndents`
+                **From:** __\`${parsed.options.f || '[auto]'}\`__
+                **To:** __\`${lang}\`__
 
-msg.channel.sendMessage("**Translating your Text...**").then(m => {
+                **Input:**\n\`\`\`\n${input}\n\`\`\`
+                **Output:**\n\`\`\`\n${res.text}\n\`\`\`
+                `)
+            );
+        }).catch(msg.error);
+    });
+};
 
-translate(`${text}`, {to: `${lang}`}).then(res => {
-
-msg.channel.sendMessage('', { embed: bot.utils.embed('', translate()) })
-
-
-
-function translate() {
-    return `**Your Text:** ${text}
-**Language Detected**: ${res.from.language.iso}
-**Translation To**: ${lang}
-**Translation**: ${res.text}`;
-}
-}).catch(err => {
-console.error(err);
-m.edit(":x: Error Has Occurred:", err);               
-})
-})
-}
 exports.info = {
-    name: 'trans',
-    usage: 'trans "text" "lang" ',
+    name: 'translate',
+    usage: 'translate [-f <from>] <lang> <text>',
     description: 'Translate Your Language to any other Language you want.'
 };
