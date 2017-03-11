@@ -30,5 +30,5 @@ exports.run = (bot, msg, args) => {
 exports.info = {
     name: 'translate',
     usage: 'translate [-f <from>] <lang> <text>',
-    description: 'Translate Your Language to any other Language you want.'
+    description: 'Translates text from/to any language'
 };
