@@ -11,10 +11,6 @@ exports.run = (bot, msg, args) => {
     let lang = parsed.leftover[0];
     let input = parsed.leftover.slice(1).join(' ');
 
-    console.log(lang);
-    console.log(input);
-    console.log(parsed.options.f);
-
     msg.edit(':arrows_counterclockwise: **Translating your Text...**').then(() => {
         translate(input, { from: parsed.options.f, to: lang }).then(res => {
             if (parsed.options.e) msg.edit(res.text);
