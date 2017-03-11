@@ -6,30 +6,37 @@ exports.run = (bot, msg, args) => {
         throw 'You must provide a language and some text to translate!';
     }
 
-    var parsed = bot.utils.parseArgs(args, 'f:');
+    var parsed = bot.utils.parseArgs(args, ['e', 'f:']);
 
     let lang = parsed.leftover[0];
     let input = parsed.leftover.slice(1).join(' ');
 
+    console.log(lang);
+    console.log(input);
+    console.log(parsed.options.f);
+
     msg.edit(':arrows_counterclockwise: **Translating your Text...**').then(() => {
         translate(input, { from: parsed.options.f, to: lang }).then(res => {
-            msg.delete();
-            msg.channel.sendEmbed(
-                bot.utils.embed('', stripIndents`
+            if (parsed.options.e) msg.edit(res.text);
+            else {
+                msg.delete();
+                msg.channel.sendEmbed(
+                    bot.utils.embed('', stripIndents`
                 **From:** __\`${parsed.options.f || '[auto]'}\`__
                 **To:** __\`${lang}\`__
 
                 **Input:**\n\`\`\`\n${input}\n\`\`\`
                 **Output:**\n\`\`\`\n${res.text}\n\`\`\`
                 `)
-            );
+                );
+            }
         }).catch(msg.error);
     });
 };
 
 exports.info = {
     name: 'translate',
-    usage: 'translate [-f <from>] <lang> <text>',
+    usage: 'translate [-e] [-f <from>] <lang> <text>',
     description: 'Translates text from/to any language',
     credits: 'Carbowix'
 };
