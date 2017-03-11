@@ -16,6 +16,7 @@
     "didyoumean2": "^1.2.0",
     "discord.js": "^11.0.0",
     "figlet": "^1.2.0",
+    "google-translate-api": "^2.2.2",
     "got": "^6.7.1",
     "leven": "^2.0.0",
     "path": "^0.12.7",
