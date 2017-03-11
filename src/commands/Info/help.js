@@ -52,7 +52,8 @@ const getHelp = (bot, command) => ({
     value: stripIndents`
         **Usage:** \`${bot.config.prefix}${command.info.usage || command.info.name}\`
         **Description:** ${command.info.description || '<no description>'}
-        **Category:** ${command.info.category}`
+        **Category:** __${command.info.category}__
+        ${command.info.credits ? `\n**Credits:** *${command.info.credits}*` : ''}`
 });
 
 exports.info = {

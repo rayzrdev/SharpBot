@@ -30,5 +30,6 @@ exports.run = (bot, msg, args) => {
 exports.info = {
     name: 'translate',
     usage: 'translate [-f <from>] <lang> <text>',
-    description: 'Translates text from/to any language'
+    description: 'Translates text from/to any language',
+    credits: 'Carbowix'
 };
