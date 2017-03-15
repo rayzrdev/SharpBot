@@ -3,7 +3,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify some text!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['f', 'c:', 'r']);
+    var parsed = bot.utils.parseArgs(args, ['f', 'c:', 'r', 'i:']);
 
     var color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
@@ -17,13 +17,14 @@ exports.run = (bot, msg, args) => {
     msg.channel.sendEmbed(
         bot.utils.embed('', parsed.leftover.join(' '), [], {
             footer: !!parsed.options.f,
-            color
+            color,
+            image: parsed.options.i
         })
     );
 };
 
 exports.info = {
     name: 'embed',
-    usage: 'embed [-f] [-r] [-c <color>] [text]',
+    usage: 'embed [-f] [-r] [-c <color>] [-i <imageURL>] [text]',
     description: 'Sends a message via embeds'
 };
