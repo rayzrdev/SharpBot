@@ -30,7 +30,7 @@ exports.run = (bot, msg, args) => {
         var fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c));
 
         // Temporary workaround for the 2k char limit
-        var maxLength = 1950;
+        var maxLength = 1900;
         var messages = [];
 
         while (fields.length > 0) {
@@ -38,7 +38,6 @@ exports.run = (bot, msg, args) => {
             var i = 0;
             while (len < maxLength) {
                 if (i >= fields.length) {
-                    console.log('breaking');
                     break;
                 }
                 var field = fields[i];
@@ -54,10 +53,9 @@ exports.run = (bot, msg, args) => {
 
         msg.delete();
         messages.map(m => m.fields).forEach(fields => {
-            console.log(fields.length);
             msg.channel.sendEmbed(
                 bot.utils.embed(title, '_This message will self-destruct in 30 seconds._', fields)
-            ).then(m => m.delete(30000)).catch(() => { console.error('Failed to send the one with ' + fields.length + ' fields :\\'); });
+            ).then(m => m.delete(30000));
         });
     } else {
         var categories = bot.commands.categories().sort();
