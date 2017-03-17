@@ -32,6 +32,7 @@ function getMeme(name) {
 }
 
 function cleanInput(input) {
+    if (!input) return '';
     return input.replace(/"/g, '\'\'').replace(/\#/g, '~h')
         .replace(/\-/g, '--').replace(/\_/g, '__')
         .replace(' ', '_').replace(/\?/g, '~q')
