@@ -31,11 +31,20 @@ gulp.task('main', ['lint'], () => {
             console.error(`
 #########################################################################################################################
  Node has failed to load a module! If you just updated, you may need to run \'yarn\' again to install/update dependencies.
+ 'yarn' will attempt to run now and install the dependencies for you.
 #########################################################################################################################
 `);
+            spawn('yarn', ['--force'], { 'stdio': 'inherit' }).on('close', code => {
+                if (code === 0) {
+                    console.log(`
+New modules have been installed. The bot will now restart.
+                `);
+                    gulp.start('main');
+                }
+            });
         }
     });
-    bot.on('close', (code) => {
+    bot.on('close', code => {
         if (code === 8) {
             console.error('Error detected, attempting to restart the bot...');
             gulp.start('main');
