@@ -78,6 +78,7 @@ const getHelp = (bot, command) => ({
         **Usage:** \`${bot.config.prefix}${command.info.usage || command.info.name}\`
         **Description:** ${command.info.description || '<no description>'}
         **Category:** __${command.info.category}__
+        ${command.info.examples ? `**Examples:**\n${command.info.examples.map(example => `\`${bot.config.prefix}${example}\``).join('\n')}` : ''}
         ${command.info.credits ? `\n**Credits:** *${command.info.credits}*` : ''}`
 });
 

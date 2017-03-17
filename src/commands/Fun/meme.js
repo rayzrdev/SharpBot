@@ -94,5 +94,10 @@ exports.run = (bot, msg, args) => {
 
 exports.info = {
     name: 'meme',
-    usage: 'meme list <name> | info <name> | [<type> | <line 1> | <line 2> [| <style>]]'
+    usage: 'meme list | info <name> | [<name> | <line 1> | <line 2> | [style]]',
+    examples: [
+        'meme info sad-biden',
+        'meme facepalm | please, oh please | rtfm',
+        'meme sad-biden | sad joe biden | doesn\'t have discord | scowl'
+    ]
 };
