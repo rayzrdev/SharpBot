@@ -3,7 +3,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify something to embed!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['f', 'c:', 'r', 'i:', 'ft:']);
+    var parsed = bot.utils.parseArgs(args, ['f', 'ft:', 't:', 'c:', 'r', 'i:']);
 
     var color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
@@ -15,7 +15,7 @@ exports.run = (bot, msg, args) => {
 
     msg.delete();
     msg.channel.sendEmbed(
-        bot.utils.embed('', parsed.leftover.join(' '), [], {
+        bot.utils.embed((parsed.options.t || '').replace(/_/g, ' '), parsed.leftover.join(' '), [], {
             footer: !!parsed.options.f || (parsed.options.ft || '').replace(/_/g, ' '),
             color,
             image: parsed.options.i
@@ -34,8 +34,13 @@ exports.info = {
         },
         {
             name: '-ft',
-            usage: '-ft <footer>',
+            usage: '-ft <text>',
             description: 'Sets the footer text, replacing `_` with spaces, implies `-f`'
+        },
+        {
+            name: '-t',
+            usage: '-t <text>',
+            description: 'Sets the embed title, replacing `_` with spaces'
         },
         {
             name: '-r',
