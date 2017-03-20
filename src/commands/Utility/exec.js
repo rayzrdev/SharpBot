@@ -9,6 +9,9 @@ exports.run = (bot, msg, args) => {
     var parsed = bot.utils.parseArgs(args, 'l:');
 
     var ps = exec(parsed.leftover.join(' '));
+    if (!ps) {
+        throw 'Failed to start process!';
+    }
 
     var opts = {
         prefix: `\`\`\`${parsed.options.l || 'bash'}\n`,
