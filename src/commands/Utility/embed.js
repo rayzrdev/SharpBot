@@ -15,7 +15,7 @@ exports.run = (bot, msg, args) => {
 
     msg.delete();
     msg.channel.sendEmbed(
-        bot.utils.embed(parsed.options.t, parsed.leftover.join(' '), [], {
+        bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
             footer: parsed.options.f || parsed.options.ft,
             color,
             image: parsed.options.i
