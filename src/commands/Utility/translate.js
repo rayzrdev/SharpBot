@@ -32,7 +32,18 @@ exports.run = (bot, msg, args) => {
 
 exports.info = {
     name: 'translate',
-    usage: 'translate [-e] [-f <from>] <lang> <text>',
+    usage: 'translate <lang> <text>',
     description: 'Translates text from/to any language',
-    credits: 'Carbowix'
+    credits: 'Carbowix',
+    options: [
+        {
+            name: '-e',
+            description: 'Edits your message with the translation instead of showing an embed'
+        },
+        {
+            name: '-f',
+            usage: '-f <language>',
+            description: 'Sets the `from` language, this is `auto` by default'
+        }
+    ]
 };

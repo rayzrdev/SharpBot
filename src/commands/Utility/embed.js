@@ -1,9 +1,9 @@
 exports.run = (bot, msg, args) => {
     if (args.length < 1) {
-        throw 'You must specify some text!';
+        throw 'You must specify something to embed!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['f', 'c:', 'r', 'i:']);
+    var parsed = bot.utils.parseArgs(args, ['f', 'c:', 'r', 'i:', 'ft:']);
 
     var color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
@@ -16,7 +16,7 @@ exports.run = (bot, msg, args) => {
     msg.delete();
     msg.channel.sendEmbed(
         bot.utils.embed('', parsed.leftover.join(' '), [], {
-            footer: !!parsed.options.f,
+            footer: !!parsed.options.f || (parsed.options.ft || '').replace(/_/g, ' '),
             color,
             image: parsed.options.i
         })
@@ -25,6 +25,31 @@ exports.run = (bot, msg, args) => {
 
 exports.info = {
     name: 'embed',
-    usage: 'embed [-f] [-r] [-c <color>] [-i <imageURL>] [text]',
-    description: 'Sends a message via embeds'
+    usage: 'embed [text]',
+    description: 'Sends a message via embeds',
+    options: [
+        {
+            name: '-f',
+            description: 'Shows the footer'
+        },
+        {
+            name: '-ft',
+            usage: '-ft <footer>',
+            description: 'Sets the footer text, replacing `_` with spaces, implies `-f`'
+        },
+        {
+            name: '-r',
+            description: 'Uses your role color for the embed color'
+        },
+        {
+            name: '-c',
+            usage: '-c <color>',
+            description: 'Sets a hex color for the embed in the format of `#RRGGBB`'
+        },
+        {
+            name: '-i',
+            usage: '-i <url>',
+            description: 'Sets an image for the embed'
+        }
+    ]
 };

@@ -25,7 +25,6 @@ const randomFooter = function () {
 exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let color = options.color || this.randomColor();
-    let footer = options.footer === undefined ? true : options.footer;
 
     if (fields.length > 0) fields.push({ name: '\u200b', value: '\u200b' });
     if (options.inline) {
@@ -41,7 +40,7 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setDescription(description)
         .setImage(options.image || url)
         .setTimestamp(options.timestamp ? new Date() : null)
-        .setFooter(footer ? randomFooter() : '', footer ? bot.client.user.avatarURL : undefined);
+        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined);
 };
 
 exports.parseArgs = function (args, options) {

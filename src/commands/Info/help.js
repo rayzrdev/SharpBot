@@ -27,7 +27,7 @@ exports.run = (bot, msg, args) => {
     }
 
     if (commands.length > 0) {
-        var fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c));
+        var fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c, commands.length === 1));
 
         // Temporary workaround for the 2k char limit
         var maxLength = 1900;
@@ -72,15 +72,35 @@ exports.run = (bot, msg, args) => {
     }
 };
 
-const getHelp = (bot, command) => ({
-    name: `${command.info.name}`,
-    value: stripIndents`
+const getHelp = (bot, command, single) => {
+
+    var description = stripIndents`
         **Usage:** \`${bot.config.prefix}${command.info.usage || command.info.name}\`
         **Description:** ${command.info.description || '<no description>'}
-        **Category:** __${command.info.category}__
-        ${command.info.examples ? `**Examples:**\n${command.info.examples.map(example => `\`${bot.config.prefix}${example}\``).join('\n')}` : ''}
-        ${command.info.credits ? `\n**Credits:** *${command.info.credits}*` : ''}`
-});
+        **Category:** __${command.info.category}__`;
+
+    if (single && command.info.examples)
+        description += `\n**Examples:**\n${command.info.examples.map(example => `\`${bot.config.prefix}${example}\``).join('\n')}`;
+
+    if (single && command.info.options instanceof Array) {
+        var options = command.info.options.map(option => {
+            return stripIndents`
+            **${option.name}**
+            *Usage:* \`${option.usage || option.name}\`
+            *Description:* ${option.description}
+            `;
+        });
+        description += `\n**Options:**\n\n${options.join('\n\n')}`;
+    }
+
+    if (command.info.credits)
+        description += `\n\n\n**Credits:** *${command.info.credits}*`;
+
+    return {
+        name: single ? '\u200b' : command.info.name,
+        value: description
+    };
+};
 
 exports.info = {
     name: 'help',
