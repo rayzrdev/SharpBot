@@ -61,8 +61,15 @@ exports.parseArgs = function (args, options) {
         var label = arg.substr(1);
 
         if (options.indexOf(label + ':') > -1) {
-            i++;
-            optionValues[label] = args[i];
+            var leftover = args.slice(i + 1).join(' ');
+            var matches = leftover.match(/^"(.+)"/);
+            if (matches) {
+                optionValues[label] = matches[1];
+                i += matches[0].split(' ').length;
+            } else {
+                i++;
+                optionValues[label] = args[i];
+            }
         } else if (options.indexOf(label) > -1) {
             optionValues[label] = true;
         } else {

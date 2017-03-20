@@ -15,8 +15,8 @@ exports.run = (bot, msg, args) => {
 
     msg.delete();
     msg.channel.sendEmbed(
-        bot.utils.embed((parsed.options.t || '').replace(/_/g, ' '), parsed.leftover.join(' '), [], {
-            footer: !!parsed.options.f || (parsed.options.ft || '').replace(/_/g, ' '),
+        bot.utils.embed(parsed.options.t, parsed.leftover.join(' '), [], {
+            footer: parsed.options.f || parsed.options.ft,
             color,
             image: parsed.options.i
         })
@@ -35,12 +35,12 @@ exports.info = {
         {
             name: '-ft',
             usage: '-ft <text>',
-            description: 'Sets the footer text, replacing `_` with spaces, implies `-f`'
+            description: 'Sets the footer text (use quotes for multiple words)'
         },
         {
             name: '-t',
             usage: '-t <text>',
-            description: 'Sets the embed title, replacing `_` with spaces'
+            description: 'Sets the embed title (use quotes for multiple words)'
         },
         {
             name: '-r',
