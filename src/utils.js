@@ -62,7 +62,7 @@ exports.parseArgs = function (args, options) {
 
         if (options.indexOf(label + ':') > -1) {
             var leftover = args.slice(i + 1).join(' ');
-            var matches = leftover.match(/^"(.+)"/);
+            var matches = leftover.match(/^"(.+?)"/);
             if (matches) {
                 optionValues[label] = matches[1];
                 i += matches[0].split(' ').length;
