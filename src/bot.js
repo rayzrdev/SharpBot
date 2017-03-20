@@ -49,6 +49,10 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
+    if (msg.guild && config.blacklistedServers && config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
+        return;
+    }
+
     if (msg.isMentioned(bot.user.id)) {
         console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
