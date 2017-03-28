@@ -1,7 +1,7 @@
 # SharpBot
 SharpBot is an ever-expanding selfbot for Discord.js v11 with mostly utilitarion commands, but also a few fun commands.
 
-> Selfbots are currently against the rules of Discord. This may change in the future, but for now, I would suggest not to use my selfbot or _any_ other selfbot. If you're found using a selfbot you can get ***banned***. If you have any questions about this, feel free to [join my Discord server](https://discord.io/rayzrdevofficial) and ask.
+> If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](/RULES.md)
 
 #### Table of contents
 - [Requirements](#requirements)
