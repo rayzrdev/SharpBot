@@ -49,6 +49,8 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
+    if (msg.author.id !== bot.user.id) return;
+
     if (msg.guild && config.blacklistedServers && config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
         return;
     }
@@ -57,11 +59,6 @@ bot.on('message', msg => {
         console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
-    if (msg.author.id !== bot.user.id) {
-        if (msg.isMentioned(bot.user.id) && bot.afk) msg.reply(`${bot.user.username} is \u200bAFK`).then(m => m.delete(5000));
-        return;
-    }
-    if (!msg.content.endsWith('is \u200bAFK') && bot.afk) bot.afk = false;
     if (!msg.content.startsWith(config.prefix)) return;
 
     var base = msg.content.split(' ')[0].substr(config.prefix.length);
