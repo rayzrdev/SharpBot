@@ -7,4 +7,4 @@ There is some question as to the rules about selfbots, whether you'll get banned
 
 > *Taken from [TheRacingLion/Discord-SelfBot](https://github.com/TheRacingLion/Discord-SelfBot)*
 
-*Because of rule \#3 I've had to remove the `//afk` feature, as it would reply to other users when you were @mentioned.*
+*Because of rule \#1 I've had to remove the `//afk` feature, as it would reply to other users when you were @mentioned.*
