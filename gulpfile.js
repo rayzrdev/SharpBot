@@ -1,4 +1,4 @@
-const moduleError = /module\.js:\d+\n\s+throw err\;\n\s+\^\n\nError: Cannot find module '([a-zA-Z0-9+_-]+)'/g;
+const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/g;
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
