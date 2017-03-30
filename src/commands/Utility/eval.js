@@ -1,12 +1,8 @@
 exports.run = (bot, msg, args) => {
-    var code = args.join(' ');
+    var parsed = bot.utils.parseArgs(args, ['l:']);
+    var lang = parsed.options.l || '';
 
-    var lang = '';
-
-    if (args.length >= 2 && (args[0] === '-l' || args[0] === '--lang')) {
-        lang = args[1];
-        args.splice(2);
-    }
+    var code = parsed.leftover.join(' ');
 
     try {
         var evaled = eval(code);
@@ -30,5 +26,12 @@ function clean(text) {
 exports.info = {
     name: 'eval',
     usage: 'eval <code>',
-    description: 'Evaluates arbitrary JavaScript'
+    description: 'Evaluates arbitrary JavaScript',
+    options: [
+        {
+            name: '-l',
+            usage: '-l <lang>',
+            description: 'Sets the output code-block syntax language'
+        }
+    ]
 };
