@@ -23,7 +23,7 @@ exports.run = function (bot, msg, args) {
     var message = new RichEmbed()
         .setColor(bot.utils.randomColor())
         .setTitle(`Total: ${results.result}`)
-        .setDescription(`${results.rolled.join(', ')}`)
+        .setDescription(`${[].concat.apply([], results.rolled).join(', ')}`)
         .addField('\u200b', footer);
 
     msg.channel.sendEmbed(message);
