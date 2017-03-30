@@ -26,11 +26,10 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let color = options.color || this.randomColor();
 
-    if (fields.length > 0) fields.push({ name: '\u200b', value: '\u200b' });
     if (options.inline) {
-        fields = fields.map(obj => { obj.inline = true; return obj; });
         if (fields.length % 3 === 2)
             fields.push({ name: '\u200b', value: '\u200b' });
+        fields = fields.map(obj => { obj.inline = true; return obj; });
     }
     if (url !== '') description += '\n';
 

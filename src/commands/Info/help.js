@@ -79,6 +79,9 @@ const getHelp = (bot, command, single) => {
         **Description:** ${command.info.description || '<no description>'}
         **Category:** __${command.info.category}__`;
 
+    if (command.info.credits)
+        description += `\n**Credits:** *${command.info.credits}*`;
+
     if (single && command.info.examples)
         description += `\n**Examples:**\n${command.info.examples.map(example => `\`${bot.config.prefix}${example}\``).join('\n')}`;
 
@@ -92,9 +95,6 @@ const getHelp = (bot, command, single) => {
         });
         description += `\n**Options:**\n\n${options.join('\n\n')}`;
     }
-
-    if (command.info.credits)
-        description += `\n\n\n**Credits:** *${command.info.credits}*`;
 
     return {
         name: single ? '\u200b' : command.info.name,

@@ -19,6 +19,7 @@
     "google-translate-api": "^2.2.2",
     "got": "^6.7.1",
     "leven": "^2.0.0",
+    "normalize-url": "^1.9.1",
     "path": "^0.12.7",
     "readdir-recursive": "^0.0.4",
     "roll": "^1.2.0",
