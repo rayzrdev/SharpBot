@@ -2,7 +2,7 @@ exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must provide something to search for!';
     }
-    msg.edit(`**Wow!** :arrow_right: http://www.lmgtfy.com/?q=${args.join('+')}`);
+    msg.edit(`**Wow!** :arrow_right: http://www.lmgtfy.com/?iie=1&q=${args.join('+')}`);
 };
 
 exports.info = {
