@@ -13,6 +13,16 @@ exports.run = (bot, msg, args) => {
         }
     }
 
+    if (color) {
+        if (!color.startsWith('#')) {
+            color = `#${color}`;
+        }
+
+        if (!/^#[a-fA-F0-9]{6}$/.test(color)) {
+            throw `Invalid color: \`${color}\`. Please use valid hex format (\`#RRGGBB\`)`;
+        }
+    }
+
     msg.delete();
     msg.channel.sendEmbed(
         bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
