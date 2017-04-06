@@ -6,7 +6,7 @@ const formatTime = (time) => {
 
     var hours = Math.floor(minutes / 60);
     minutes = minutes % 60;
-    return `${hours.toFixed(0)} hours, ${minutes.toFixed(0)} minutes and ${seconds.toFixed(0)} seconds`;
+    return `${hours.toFixed(0)}h ${minutes.toFixed(0)}m ${seconds.toFixed(0)}s`;
 };
 
 exports.run = (bot, msg) => {
