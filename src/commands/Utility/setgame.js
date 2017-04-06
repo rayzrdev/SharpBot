@@ -7,15 +7,15 @@ exports.run = (bot, msg, args) => {
         return msg.channel.sendMessage('Cleared your game! :ok_hand:').then(m => m.delete(3000));
     }
 
-    var parsed = bot.utils.parseArgs(args, ['l:']);
+    var parsed = bot.utils.parseArgs(args, ['s:']);
 
     var game = parsed.leftover.join(' ');
-    var stream = parsed.options.l;
+    var stream = parsed.options.s;
 
     var fields = [{ name: ':video_game: Game', value: game }];
 
     if (stream) {
-        stream = normalizeUrl(stream);
+        stream = normalizeUrl(`twitch.tv/${stream}`);
 
         fields.push({ name: ':headphones: Stream URL', value: stream });
     }
@@ -34,9 +34,9 @@ exports.info = {
     description: 'Sets your game (shows for other people)',
     options: [
         {
-            name: '-l',
-            usage: '-l <url>',
-            description: 'Sets your streaming URL'
+            name: '-s',
+            usage: '-s <url>',
+            description: 'Sets your streaming URL to http://twitch.tv/<url>'
         }
     ]
 };

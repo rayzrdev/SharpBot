@@ -22,6 +22,7 @@ const config = bot.config = require('./config.json');
 const logger = bot.logger = new Managers.Logger(bot);
 
 const commands = bot.commands = new Managers.CommandManager(bot);
+const stats = bot.stats = new Managers.Stats(bot);
 
 let dataFolder = path.join(__dirname, '../data/');
 if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
@@ -42,6 +43,8 @@ bot.on('ready', () => {
         - Guilds: ${bot.guilds.size}`
     );
 
+    stats.set('start-time', process.hrtime());
+
     delete bot.user.email;
     delete bot.user.verified;
 
@@ -49,6 +52,11 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
+    stats.increment(`messages-${bot.user.id === msg.author.id ? 'sent' : 'received'}`);
+    if (msg.isMentioned(bot.user)) {
+        stats.increment('mentions');
+    }
+
     if (msg.author.id !== bot.user.id) return;
 
     if (msg.guild && config.blacklistedServers && config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {

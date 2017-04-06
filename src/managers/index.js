@@ -1,5 +1,6 @@
 module.exports = {
     CommandManager: require('./commands'),
     Logger: require('./logger'),
-    Migrator: require('./migrator')
+    Migrator: require('./migrator'),
+    Stats: require('./stats')
 };
