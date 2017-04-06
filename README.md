@@ -18,7 +18,8 @@ SharpBot is an ever-expanding selfbot for Discord.js v11 with mostly utilitarion
 - [`node`](https://nodejs.org/en/download/current/)
 - [`yarn`](https://yarnpkg.com/docs/install)
 
-If you have NPM but not yarn, please install it. Yarn is faster and more reliable.
+> ### Important
+If you have NPM but not yarn, please install it. Yarn is faster and more reliable, *and the project depends on it.*
 
 ### Installing
 
