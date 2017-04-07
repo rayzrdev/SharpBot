@@ -27,7 +27,8 @@ exports.run = (bot, msg, args) => {
                 }
 
                 msg.channel.sendEmbed(
-                    bot.utils.embed(`${message.author.username}`, message.toString(), [], options)
+                    bot.utils.embed('', message.toString(), [], options)
+                        .setFooter(message.author.username, message.author.avatarURL)
                 );
             }
         }).catch(() => msg.error('That message could not be found!'));
