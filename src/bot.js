@@ -37,7 +37,8 @@ bot.on('ready', () => {
     commands.loadCommands(path.join(__dirname, 'commands'));
 
     logger.info(stripIndents`Stats:
-        - Users: ${bot.users.filter(user => !user.bot).size} 
+        - User: ${bot.user.username}#${bot.user.discriminator}
+        - Users: ${bot.users.filter(user => !user.bot).size}
         - Bots: ${bot.users.filter(user => user.bot).size}
         - Channels: ${bot.channels.size}
         - Guilds: ${bot.guilds.size}`
