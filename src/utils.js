@@ -5,7 +5,7 @@ exports.randomSelection = function () {
     return String(arguments[Math.floor(Math.random() * arguments.length)]);
 };
 
-exports.randomColor = function () {
+exports.randomColor = () => {
     return [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
 };
 
