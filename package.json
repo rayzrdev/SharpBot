@@ -23,7 +23,6 @@
     "path": "^0.12.7",
     "readdir-recursive": "^0.0.4",
     "roll": "^1.2.0",
-    "sqlite": "^2.3.0",
     "xkcd-imgs": "^1.0.1",
     "xpdb": "^1.0.1"
   },
