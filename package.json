@@ -17,11 +17,13 @@
     "discord.js": "^11.0.0",
     "figlet": "^1.2.0",
     "got": "^6.7.1",
+    "giphy-api": "^1.2.5",
     "leven": "^2.0.0",
     "path": "^0.12.7",
     "readdir-recursive": "^0.0.4",
     "sqlite": "^2.3.0",
     "xkcd-imgs": "^1.0.1",
+    "youtube-scrape": "^1.0.2",
     "xpdb": "^1.0.1"
   },
   "devDependencies": {
