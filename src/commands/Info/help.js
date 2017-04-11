@@ -6,13 +6,13 @@ exports.run = (bot, msg, args) => {
     var title = 'Categories';
 
     if (args.length > 0) {
-        if (/^c(ategory)?|t(ype)?$/i.test(args[0])) {
+        if (/^category|type$/i.test(args[0])) {
             if (args.length < 2) {
                 throw 'You must specify a category!';
             }
             commands = bot.commands.all(args[1]);
             title = `${args[1]} Commands`;
-        } else if (/^a(ll)?$/i.test(args[0])) {
+        } else if (/^all|full|every$/i.test(args[0])) {
             commands = bot.commands.all();
             title = 'All Commands';
         } else {
