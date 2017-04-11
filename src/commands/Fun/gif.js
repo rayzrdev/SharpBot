@@ -6,18 +6,16 @@ exports.run = (bot, msg, args) => {
     }
     giphy.random(`${params.join(" ")}`, function(err, res) {
 
-if (err) {
-throw err
-}else
-if (res) {
-msg.edit(`**Wow!** :arrow_down:
-${res.data.url}`)  
-};
-})
+        if (err) {
+            throw err
+        } else
+            msg.edit(`**Wow!** :arrow_down:
+${res.data.url}`)
+    })
 };
 
 exports.info = {
     name: 'gif',
     usage: 'gif [search text]',
     description: 'Fetches From Giphy your demanded GIF.'
-};  
+};
