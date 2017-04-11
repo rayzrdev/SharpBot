@@ -20,7 +20,7 @@ exports.run = function (bot, msg, args) {
         if (data['AnswerType'] === 'conversions') {
             msg.delete();
 
-            answer = answer.replace('=', '➔');
+            answer = answer.replace('=', '\u2794');
 
             message = new RichEmbed()
                 .setColor(bot.utils.randomColor())
@@ -42,7 +42,7 @@ exports.run = function (bot, msg, args) {
 
             message = new RichEmbed()
                 .setColor(bot.utils.randomColor())
-                .addField('Conversion:', `${prefix} ➔ ${answer}`);
+                .addField('Conversion:', `${prefix} \u2794 ${answer}`);
 
             msg.channel.sendEmbed(message);
         } else {
