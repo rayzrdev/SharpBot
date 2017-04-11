@@ -18,7 +18,8 @@ exports.run = (bot, msg, args) => {
             var key = res.data.url.substr(res.data.url.lastIndexOf('-') + 1);
             var url = `https://media.giphy.com/media/${key}/giphy.gif`;
 
-            msg.channel.sendFile(url).then(() => msg.delete()).catch(msg.error);
+            msg.channel.sendEmbed(bot.utils.embed('', '', [], { image: url }))
+                .then(() => msg.delete()).catch(msg.error);
         });
     });
 };
