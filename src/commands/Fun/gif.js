@@ -4,7 +4,7 @@ exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must provide something to search for!';
     }
-    giphy.random(`${params.join(" ")}`, function(err, res) {
+    giphy.random(`${args.join(" ")}`, function(err, res) {
 
         if (err) {
             throw err
