@@ -30,7 +30,7 @@ class CommandManager {
 
         read.fileSync(folder).forEach(file => {
             file = file.substr(folder.length + 1);
-            if (file.startsWith('_') || !file.endsWith('.js')) return;
+            if (file.indexOf('_') > -1 || !file.endsWith('.js')) return;
             var command = require(`${folder}/${file}`);
             var error = this._validateCommand(command);
             if (error) {

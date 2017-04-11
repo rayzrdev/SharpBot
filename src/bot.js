@@ -115,9 +115,9 @@ bot.login(config.botToken);
 
 process.on('uncaughtException', (err) => {
     let errorMsg = err.stack.replace(new RegExp(`${__dirname}\/`, 'g'), './');
-    console.error(errorMsg);
+    logger.severe(errorMsg);
 });
 
 process.on('unhandledRejection', err => {
-    console.error('Uncaught Promise Error: \n' + err.stack);
+    logger.severe('Uncaught Promise error: \n' + err.stack);
 });
