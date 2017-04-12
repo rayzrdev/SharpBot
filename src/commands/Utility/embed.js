@@ -3,7 +3,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify something to embed!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['f', 'ft:', 't:', 'c:', 'r', 'i:', 'a:']);
+    var parsed = bot.utils.parseArgs(args, ['f', 'ft:', 't:', 'c:', 'r', 'i:']);
 
     var color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
@@ -28,8 +28,7 @@ exports.run = (bot, msg, args) => {
         bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
             footer: parsed.options.f || parsed.options.ft,
             color,
-            image: parsed.options.i,
-            author: parsed.options.a
+            image: parsed.options.i
         })
     );
 };
@@ -66,11 +65,6 @@ exports.info = {
             name: '-i',
             usage: '-i <url>',
             description: 'Sets an image for the embed'
-        },
-        {
-            name: '-a',
-            usage: '-a <author>',
-            description: 'Sets the author'
         }
     ]
 };
