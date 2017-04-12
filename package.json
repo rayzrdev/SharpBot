@@ -21,6 +21,7 @@
     "leven": "^2.0.0",
     "path": "^0.12.7",
     "readdir-recursive": "^0.0.4",
+    "request": "^2.81.0",
     "sqlite": "^2.3.0",
     "xkcd-imgs": "^1.0.1",
     "youtube-scrape": "^1.0.2",
