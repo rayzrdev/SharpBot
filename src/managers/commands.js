@@ -30,7 +30,7 @@ class CommandManager {
 
         read.fileSync(folder).forEach(file => {
             file = file.substr(folder.length + 1);
-            var basename = file.substr(file.lastIndexOf('/') + 1);
+            var basename = path.basename(file);
 
             if (basename.startsWith('_') || !basename.endsWith('.js')) return;
 
