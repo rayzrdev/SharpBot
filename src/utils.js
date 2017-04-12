@@ -25,6 +25,7 @@ const randomFooter = function () {
 exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let color = options.color || this.randomColor();
+    let author = options.author;
 
     if (options.inline) {
         if (fields.length % 3 === 2)
@@ -39,7 +40,8 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setDescription(description)
         .setImage(options.image || url)
         .setTimestamp(options.timestamp ? new Date() : null)
-        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined);
+        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined)
+        .setAuthor(options.author === undefined ? '' : options.author);
 };
 
 exports.parseArgs = function (args, options) {
