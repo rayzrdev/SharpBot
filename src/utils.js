@@ -37,7 +37,6 @@ const randomFooter = function () {
 exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let color = options.color || this.randomColor();
-    let author = options.author;
 
     if (options.inline) {
         if (fields.length % 3 === 2)
