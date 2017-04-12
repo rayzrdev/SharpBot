@@ -70,14 +70,17 @@ class CommandManager {
 
     execute(msg, command, args) {
         msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
-        msg.error = ((message, delay) => msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`).then(m => m.delete(delay || 2000))).bind(msg);
+        msg.error = ((message, delay) => {
+            this.bot.logger.severe(message.toString());
+            msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`)
+                .then(m => m.delete(delay || 2000));
+        }).bind(msg);
 
 
         try {
             command.run(this.bot, msg, args);
         } catch (e) {
             msg.error(e);
-            console.error(e);
         }
     }
 

@@ -147,5 +147,5 @@ exports.playAnimation = (msg, delay, list) => {
         setTimeout(() => {
             this.playAnimation(msg, delay, list);
         }, Math.max(50, delay - elapsed));
-    }).catch(console.error);
+    }).catch(bot.client.logger.severe);
 };

@@ -1,6 +1,7 @@
 /**
  * @typedef {Discord.Client} SharpBot
  * @property {Object} config The bot config
+ * @prop {Object} logger The bot's logger
  */
 
 
@@ -31,6 +32,8 @@ const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
 
 bot.on('ready', () => {
     Managers.Migrator.migrate(bot, __dirname);
+
+    logger.inject();
 
     bot.utils = require('./utils');
 

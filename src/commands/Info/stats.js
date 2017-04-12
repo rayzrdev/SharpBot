@@ -50,7 +50,7 @@ exports.run = (bot, msg) => {
                 value: (bot.user.presence.game || {}).name || 'None'
             }
         ], { inline: true })
-    ).catch(console.error).then(m => m.delete(15000));
+    ).catch(msg.error).then(m => m.delete(15000));
 };
 
 exports.info = {

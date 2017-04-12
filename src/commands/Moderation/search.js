@@ -16,11 +16,7 @@ exports.run = (bot, msg, args) => {
                         .join('\n');
                     m.editCode('log', output);
 
-                }).catch(err => {
-                    console.error(err);
-                    m.edit(':no_entry_sign: An error has occurred!').then(m => m.delete(2000));
-                });
-
+                }).catch(msg.error);
         });
 
 };
