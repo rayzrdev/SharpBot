@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/Rayzr522/SharpBot/badges/gpa.svg)](https://codeclimate.com/github/Rayzr522/SharpBot) [![Test Coverage](https://codeclimate.com/github/Rayzr522/SharpBot/badges/coverage.svg)](https://codeclimate.com/github/Rayzr522/SharpBot/coverage)
+
 # SharpBot
 SharpBot is an ever-expanding selfbot for Discord.js v11 with mostly utilitarion commands, but also a few fun commands.
 
