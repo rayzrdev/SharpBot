@@ -117,7 +117,7 @@ bot.on('disconnect', console.warn);
 bot.login(config.botToken);
 
 process.on('uncaughtException', (err) => {
-    let errorMsg = err.stack.replace(new RegExp(`${__dirname}\/`, 'g'), './');
+    let errorMsg = (err.stack || err || '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
     logger.severe(errorMsg);
 });
 
