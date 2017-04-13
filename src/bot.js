@@ -21,6 +21,7 @@ const bot = exports.client = new Discord.Client();
 const config = bot.config = require('./config.json');
 
 const logger = bot.logger = new Managers.Logger(bot);
+logger.inject();
 
 const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.stats = new Managers.Stats(bot);
@@ -32,8 +33,6 @@ const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
 
 bot.on('ready', () => {
     Managers.Migrator.migrate(bot, __dirname);
-
-    logger.inject();
 
     bot.utils = require('./utils');
 
