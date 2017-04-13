@@ -1,4 +1,7 @@
 ## Discord Rules
+
+> Thanks to [@abyssvi](https://github.com/abyssvi), I know have [this quote](https://github.com/hammerandchisel/discord-api-docs/issues/69#issuecomment-223898291) as proof of these rules.
+
 There is some question as to the rules about selfbots, whether you'll get banned for having one, stuff like that. I've had a hard time finding any _official_ statement one way or another, but as far as I can tell these are the general rules:
 
 1.  A selfbot must not, under any circumstance, respond to other user's messages. This means it should not respond to commands, should not autoreply to certain keywords, etc. You must be the only one that can control it.
