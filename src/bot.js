@@ -72,8 +72,9 @@ bot.on('message', msg => {
 
     if (!msg.content.startsWith(config.prefix)) return;
 
-    var base = msg.content.split(' ')[0].substr(config.prefix.length);
-    var args = msg.content.split(' ').splice(1);
+    var split = msg.content.split(/[ \n]/);
+    var base = split[0].substr(config.prefix.length);
+    var args = split.slice(1);
 
     var command = commands.get(base);
 
