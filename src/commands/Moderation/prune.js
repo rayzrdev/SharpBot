@@ -9,7 +9,7 @@ exports.run = (bot, msg, args) => {
                 .then(() => {
                     msg.channel.sendMessage(`:white_check_mark: Pruned \`${count}\` messages.`).then(m => m.delete(2000));
                 });
-        }).catch(console.error);
+        }).catch(msg.error);
 
 };
 

@@ -5,11 +5,12 @@ exports.run = (bot, msg, args) => {
     msg.channel.fetchMessages({ limit: Math.min(count, 100), before: msg.id })
         .then(messages => {
             Promise.all(messages.map(m => m.delete()))
-                .catch(console.error)
+                .catch(msg.error)
                 .then(() => {
-                    msg.channel.sendMessage(`:white_check_mark: Purged \`${count}\` messages.`).then(m => m.delete(2000));
+                    msg.channel.sendMessage(`:white_check_mark: Purged \`${count}\` messages.`)
+                        .then(m => m.delete(2000));
                 });
-        }).catch(console.error);
+        }).catch(msg.error);
 };
 
 exports.info = {

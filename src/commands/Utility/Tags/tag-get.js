@@ -11,7 +11,7 @@ exports.run = (bot, msg, args) => {
         msg.edit(args.slice(1).join(' ') + tag.contents);
 
         tag.used++;
-        bot.db.put(`tags.${args[0]}`, tag).catch(console.error);
+        bot.db.put(`tags.${args[0]}`, tag).catch(bot.logger.severe);
     });
 };
 

@@ -30,7 +30,10 @@ class CommandManager {
 
         read.fileSync(folder).forEach(file => {
             file = file.substr(folder.length + 1);
-            if (file.startsWith('_') || !file.endsWith('.js')) return;
+            var basename = path.basename(file);
+
+            if (basename.startsWith('_') || !basename.endsWith('.js')) return;
+
             var command = require(`${folder}/${file}`);
             var error = this._validateCommand(command);
             if (error) {
@@ -67,14 +70,17 @@ class CommandManager {
 
     execute(msg, command, args) {
         msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
-        msg.error = ((message, delay) => msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`).then(m => m.delete(delay || 2000))).bind(msg);
+        msg.error = ((message, delay) => {
+            this.bot.logger.severe(message.toString());
+            msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`)
+                .then(m => m.delete(delay || 2000));
+        }).bind(msg);
 
 
         try {
             command.run(this.bot, msg, args);
         } catch (e) {
             msg.error(e);
-            console.error(e);
         }
     }
 

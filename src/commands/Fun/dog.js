@@ -8,12 +8,11 @@ exports.run = function (bot, msg) {
     msg.edit(':arrows_counterclockwise:');
     this.getDog((err, res) => {
         if (err) {
-            console.error(err);
-            return msg.error();
+            return msg.error(err);
         }
 
         msg.channel.sendFile(res).then(() => msg.delete()).catch(err2 => {
-            console.error(err2);
+            bot.logger.severe(err2);
             msg.error('Failed to send the file!');
         });
     });

@@ -32,6 +32,6 @@ exports.run = function (bot, msg, args) {
 exports.info = {
     name: 'roll',
     usage: 'roll XdY <reason>',
-    description: 'rolls X dice with Y sides. Supports standard dice notation'
+    description: 'rolls X dice with Y sides. Supports standard dice notation',
+    credits: '<@136641861073764352>' // Abyss#0473
 };
- 

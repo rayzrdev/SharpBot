@@ -1,6 +1,7 @@
 /**
  * @typedef {Discord.Client} SharpBot
  * @property {Object} config The bot config
+ * @prop {Object} logger The bot's logger
  */
 
 
@@ -20,6 +21,7 @@ const bot = exports.client = new Discord.Client();
 const config = bot.config = require('./config.json');
 
 const logger = bot.logger = new Managers.Logger(bot);
+logger.inject();
 
 const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.stats = new Managers.Stats(bot);
@@ -37,7 +39,8 @@ bot.on('ready', () => {
     commands.loadCommands(path.join(__dirname, 'commands'));
 
     logger.info(stripIndents`Stats:
-        - Users: ${bot.users.filter(user => !user.bot).size} 
+        - User: ${bot.user.username}#${bot.user.discriminator} <ID: ${bot.user.id}>
+        - Users: ${bot.users.filter(user => !user.bot).size}
         - Bots: ${bot.users.filter(user => user.bot).size}
         - Channels: ${bot.channels.size}
         - Guilds: ${bot.guilds.size}`
@@ -113,10 +116,10 @@ bot.on('disconnect', console.warn);
 bot.login(config.botToken);
 
 process.on('uncaughtException', (err) => {
-    let errorMsg = err.stack.replace(new RegExp(`${__dirname}\/`, 'g'), './');
-    console.error(errorMsg);
+    let errorMsg = (err.stack || err || '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
+    logger.severe(errorMsg);
 });
 
 process.on('unhandledRejection', err => {
-    console.error('Uncaught Promise Error: \n' + err.stack);
+    logger.severe('Uncaught Promise error: \n' + err.stack);
 });

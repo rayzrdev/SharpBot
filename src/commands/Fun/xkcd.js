@@ -1,15 +1,14 @@
 const xkcd = require('xkcd-imgs');
 
 exports.run = function (bot, msg) {
-    msg.edit(':arrows_counterclockwise:').then(m => {
+    msg.edit(':arrows_counterclockwise:').then(() => {
         xkcd.img((err, res) => {
             if (err) {
-                console.error(err);
-                return m.error();
+                return msg.error(err);
             }
-            m.edit('', {
-                embed: bot.utils.embed('', res.title, [], { url: res.url })
-            });
+            msg.editEmbed(
+                bot.utils.embed('', res.title, [], { url: res.url })
+            );
         });
     });
 };

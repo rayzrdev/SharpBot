@@ -15,10 +15,7 @@ exports.run = function (bot, msg) {
     ).then(subMsgs => {
         msg.delete();
         subMsgs.forEach(m => m.delete(30000));
-    }).catch(err => {
-        console.error(err);
-        msg.edit(':no_entry_sign: An error has occurred!').then(m => m.delete(2000));
-    });
+    }).catch(msg.error);
 
 };
 

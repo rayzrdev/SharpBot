@@ -5,8 +5,20 @@ exports.randomSelection = function () {
     return String(arguments[Math.floor(Math.random() * arguments.length)]);
 };
 
-exports.randomColor = function () {
+exports.randomColor = () => {
     return [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
+};
+
+exports.formatNumber = (number) => {
+    if (isNaN(number)) return NaN;
+    var input = `${number}`;
+    if (number < 1e4) return input;
+    var out = [];
+    while (input.length > 3) {
+        out.push(input.substr(input.length - 3, input.length));
+        input = input.substr(0, input.length - 3);
+    }
+    return `${input},${out.reverse().join(',')}`;
 };
 
 const randomFooter = function () {
@@ -25,7 +37,6 @@ const randomFooter = function () {
 exports.embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
     let color = options.color || this.randomColor();
-    let author = options.author;
 
     if (options.inline) {
         if (fields.length % 3 === 2)
@@ -137,5 +148,5 @@ exports.playAnimation = (msg, delay, list) => {
         setTimeout(() => {
             this.playAnimation(msg, delay, list);
         }, Math.max(50, delay - elapsed));
-    }).catch(console.error);
+    }).catch(bot.client.logger.severe);
 };
