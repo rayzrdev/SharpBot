@@ -66,6 +66,11 @@ exports.info = {
             name: '-i',
             usage: '-i <url>',
             description: 'Sets an image for the embed'
+        },
+        {
+            name: '-a',
+            usage: '-a <name>',
+            description: 'Sets the author of the embed'
         }
     ]
 };
