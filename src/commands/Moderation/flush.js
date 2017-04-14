@@ -1,5 +1,5 @@
 exports.run = function (bot, msg, args) {
-    let count = parseInt(args[0]) || 100;
+    let count = parseInt(args[0]) || 1;
 
     msg.delete();
     msg.channel.fetchMessages({ limit: Math.min(count, 100), before: msg.id })
@@ -14,6 +14,6 @@ exports.run = function (bot, msg, args) {
 
 exports.info = {
     name: 'flush',
-    usage: 'flush <ammount>',
+    usage: 'flush <amount>',
     description: 'Deletes messages sent by bots'
 };
