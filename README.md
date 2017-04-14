@@ -1,9 +1,11 @@
 [![Code Climate](https://codeclimate.com/github/Rayzr522/SharpBot/badges/gpa.svg)](https://codeclimate.com/github/Rayzr522/SharpBot) [![Test Coverage](https://codeclimate.com/github/Rayzr522/SharpBot/badges/coverage.svg)](https://codeclimate.com/github/Rayzr522/SharpBot/coverage)
 
 # SharpBot
-SharpBot is an ever-expanding selfbot for Discord.js v11 with mostly utilitarion commands, but also a few fun commands.
+**SharpBot** is an ever-expanding [Discord](http://discordapp.com) selfbot written with [discord.js](https://discord.js.org/#/) that has a bunch of fun and useful commands.
 
-> If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](/RULES.md)
+### [FAQ](FAQ.md)
+
+> If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](/RULES.md).
 
 #### Table of contents
 - [Requirements](#requirements)
