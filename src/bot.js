@@ -72,7 +72,7 @@ bot.on('message', msg => {
 
     if (!msg.content.startsWith(config.prefix)) return;
 
-    var split = msg.content.split(/[ \n]/);
+    var split = msg.content.split(' ');
     var base = split[0].substr(config.prefix.length);
     var args = split.slice(1);
 
