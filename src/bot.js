@@ -73,7 +73,7 @@ bot.on('message', msg => {
     if (!msg.content.startsWith(config.prefix)) return;
 
     var split = msg.content.split(' ');
-    var base = split[0].substr(config.prefix.length);
+    var base = split[0].substr(config.prefix.length).toLowerCase();
     var args = split.slice(1);
 
     var command = commands.get(base);
@@ -95,7 +95,7 @@ bot.on('message', msg => {
                         .then(m => m.delete(5000));
                 }
             } else {
-                base = sc.command.split(' ')[0];
+                base = sc.command.split(' ')[0].toLowerCase();
                 args = sc.command.split(' ').splice(1).concat(args);
 
                 command = commands.get(base);
