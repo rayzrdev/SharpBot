@@ -13,7 +13,7 @@ exports.run = (bot, msg, args) => {
         if (args.length < 3) {
             throw `Usage: \`${bot.config.prefix}shortcut add <id> <command>\``;
         }
-        let id = args[1];
+        let id = args[1].toLowerCase();
         var command = args.slice(2).join(' ');
         bot.db.get(`shortcuts.${id}`).then(sc => {
             if (sc) {
