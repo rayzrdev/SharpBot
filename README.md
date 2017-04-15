@@ -28,13 +28,15 @@
 ### Installing
 
 ```bash
+# Download the bot
 git clone https://github.com/Rayzr522/SharpBot.git
+# Enter the bot folder
 cd SharpBot
+# Install dependencies
 yarn
 ```
 
-- Rename `config.json.example` in the `src` folder to `config.json`
-- Edit `config.json` and enter your [user-token](#getting-your-user-token)
+Now run `yarn start` to start the bot. **Note:** The first time you start the bot you will enter the setup wizard. It takes about a minute, and it helps you set up the bot.
 
 ### Updating
 Minor updates can be acquired by running `//exec git pull` in Discord to run the `git pull` command on your computer. Some updates, however, change too much to be updated like that, and instead you must do the following commands in your terminal/command prompt:
