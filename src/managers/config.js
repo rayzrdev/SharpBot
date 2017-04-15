@@ -49,6 +49,10 @@ class ConfigManager {
             `);
 
             prompt.get(questions, (err, res) => {
+                if (!res) {
+                    process.exit(666);
+                }
+
                 res.blacklistedServers = res.blacklistedServers || [
                     '226865538247294976',
                     '239010380385484801'

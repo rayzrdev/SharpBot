@@ -48,6 +48,9 @@ New modules have been installed. The bot will now restart.
         if (code === 42) {
             console.error('Restart code detected.');
             gulp.start('main');
+        } else if (code === 666) {
+            console.log('Process exit code detected.');
+            process.exit(1);
         } else {
             console.log('Bot has exited. Waiting for changes...');
         }
