@@ -23,7 +23,7 @@
 - [`yarn`](https://yarnpkg.com/docs/install)
 
 > ### Important
-If you have NPM but not yarn, please install it. Yarn is faster and more reliable, *and the project depends on it.*
+> If you have NPM but not yarn, please install it. Yarn is faster and more reliable, *and the project depends on it.*
 
 ### Installing
 
