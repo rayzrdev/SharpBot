@@ -45,11 +45,11 @@ New modules have been installed. The bot will now restart.
         }
     });
     bot.on('close', code => {
-        if (code === 8) {
-            console.error('Error detected, attempting to restart the bot...');
+        if (code === 42) {
+            console.error('Restart code detected.');
             gulp.start('main');
         } else {
-            console.log('Bot has gracefully exited. Waiting for changes...');
+            console.log('Bot has exited. Waiting for changes...');
         }
     });
 });

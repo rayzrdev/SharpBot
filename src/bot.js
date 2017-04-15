@@ -9,9 +9,10 @@ const stripIndents = require('common-tags').stripIndents;
 const Managers = require('./managers');
 
 const bot = exports.client = new Discord.Client();
-
 Managers.Migrator.migrate(bot, __dirname);
-const config = bot.config = Managers.Config.load(bot, __dirname);
+
+const configManager = bot.configManager = new Managers.Config(bot, __dirname);
+const config = bot.config = configManager.load();
 
 const logger = bot.logger = new Managers.Logger(bot);
 const commands = bot.commands = new Managers.CommandManager(bot);
@@ -24,7 +25,6 @@ if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
 const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
 
 bot.on('ready', () => {
-
     bot.utils = require('./utils');
 
     commands.loadCommands(path.join(__dirname, 'commands'));
