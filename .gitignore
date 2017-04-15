@@ -6,3 +6,4 @@ node_modules/
 data/
 *.sqlite
 src/config.json
+/config.json

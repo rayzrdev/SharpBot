@@ -1,38 +1,29 @@
-/**
- * @typedef {Discord.Client} SharpBot
- * @property {Object} config The bot config
- * @prop {Object} logger The bot's logger
- */
-
-
 'use strict';
-const Managers = require('./managers');
 
 const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const didYouMean = require('didyoumean2');
-
 const XPDB = require('xpdb');
-
 const stripIndents = require('common-tags').stripIndents;
+const Managers = require('./managers');
 
 const bot = exports.client = new Discord.Client();
-const config = bot.config = require('./config.json');
+
+Managers.Migrator.migrate(bot, __dirname);
+const config = bot.config = Managers.Config.load(bot, __dirname);
 
 const logger = bot.logger = new Managers.Logger(bot);
-logger.inject();
-
 const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.stats = new Managers.Stats(bot);
 
+logger.inject();
+
 let dataFolder = path.join(__dirname, '../data/');
 if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
-
 const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
 
 bot.on('ready', () => {
-    Managers.Migrator.migrate(bot, __dirname);
 
     bot.utils = require('./utils');
 
@@ -114,8 +105,6 @@ bot.on('error', console.error);
 bot.on('warn', console.warn);
 bot.on('disconnect', console.warn);
 
-bot.login(config.botToken);
-
 process.on('uncaughtException', (err) => {
     let errorMsg = (err.stack || err || '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
     logger.severe(errorMsg);
@@ -124,3 +113,5 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', err => {
     logger.severe('Uncaught Promise error: \n' + err.stack);
 });
+
+config && bot.login(config.botToken);
