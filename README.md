@@ -41,7 +41,9 @@ cd SharpBot
 yarn
 ```
 
-Now run `yarn start` to start the bot. **Note:** The first time you start the bot you will enter the setup wizard. It takes about a minute, and it helps you set up the bot.
+Now run `yarn start` to start the bot. 
+
+**Note:** The first time you start the bot you will enter the setup wizard. It takes about a minute, and it helps you set up the bot.
 
 ### Updating
 Minor updates can be acquired by running `//exec git pull` in Discord to run the `git pull` command on your computer. Some updates, however, change too much to be updated like that, and instead you must do the following commands in your terminal/command prompt:

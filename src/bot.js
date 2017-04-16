@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const fs = require('fs');
+const fse = require('fs-extra');
 const path = require('path');
 const didYouMean = require('didyoumean2');
 const XPDB = require('xpdb');
@@ -21,7 +21,7 @@ const stats = bot.stats = new Managers.Stats(bot);
 logger.inject();
 
 let dataFolder = path.join(__dirname, '../data/');
-if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
+if (!fse.existsSync(dataFolder)) fse.mkdirSync(dataFolder);
 const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
 
 bot.on('ready', () => {
