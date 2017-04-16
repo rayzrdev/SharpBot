@@ -27,6 +27,11 @@
 
 ### Installing
 
+> For those of you running ***nix**, this nifty little command should do everything for you:
+> ```bash
+> curl -fsSL https://rawgit.com/Rayzr522/SharpBot-installer/master/install.sh | bash -
+> ```
+
 ```bash
 # Download the bot
 git clone https://github.com/Rayzr522/SharpBot.git
