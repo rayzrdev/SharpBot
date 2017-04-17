@@ -1,8 +1,8 @@
 const bot = require('./bot');
 const RichEmbed = require('discord.js').RichEmbed;
 
-exports.randomSelection = function () {
-    return String(arguments[Math.floor(Math.random() * arguments.length)]);
+exports.randomSelection = (choices) => {
+    return choices[Math.floor(Math.random() * choices.length)];
 };
 
 exports.randomColor = () => {
@@ -21,8 +21,8 @@ exports.formatNumber = (number) => {
     return `${input},${out.reverse().join(',')}`;
 };
 
-const randomFooter = function () {
-    return exports.randomSelection(
+const randomFooter = () => {
+    return exports.randomSelection([
         'just add water!',
         'Powered by squirrels!',
         'codeisluvcodeislife',
@@ -31,7 +31,7 @@ const randomFooter = function () {
         'D-D-D-DROP THE BASS',
         'Eat, Sleep, Dubstep',
         '#BlameRayzr522'
-    );
+    ]);
 };
 
 exports.embed = (title, description = '', fields = [], options = {}) => {
@@ -55,7 +55,7 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setAuthor(options.author === undefined ? '' : options.author);
 };
 
-exports.parseArgs = function (args, options) {
+exports.parseArgs = (args, options) => {
     if (!options)
         return args;
     if (typeof options === 'string')
@@ -95,7 +95,7 @@ exports.parseArgs = function (args, options) {
     };
 };
 
-exports.multiSend = function (channel, messages, delay) {
+exports.multiSend = (channel, messages, delay) => {
     delay = delay || 100;
     messages.forEach((m, i) => {
         setTimeout(() => {
@@ -104,7 +104,7 @@ exports.multiSend = function (channel, messages, delay) {
     });
 };
 
-exports.sendLarge = function (channel, largeMessage, options = {}) {
+exports.sendLarge = (channel, largeMessage, options = {}) => {
     var message = largeMessage;
     var messages = [];
     var prefix = options.prefix || '';
