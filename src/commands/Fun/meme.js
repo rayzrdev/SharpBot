@@ -74,8 +74,8 @@ exports.run = (bot, msg, args) => {
     var input = args.join(' ');
     var parts = input.split('|').map(p => p.trim());
 
-    if (parts < 3) {
-        throw `Do \`${bot.config.prefix}help ${this.info.name}\` for info on how to use this`;
+    if (parts.length < 3) {
+        throw `No message was provided! Do \`${bot.config.prefix}help ${this.info.name}\` for info on how to use this.`;
     }
 
     var meme = getMeme(args[0]);
@@ -83,13 +83,21 @@ exports.run = (bot, msg, args) => {
         throw `That is not a valid meme! Do \`${bot.config.prefix}${this.info.name} list\` to see available memes.`;
     }
 
+    var topText = cleanInput(parts[1]);
+    var bottomText = cleanInput(parts[2]);
+
+    if (!topText || !bottomText) {
+        throw 'Empty message!';
+    }
+
     var url = `${meme.url}/${cleanInput(parts[1])}/${cleanInput(parts[2])}.jpg`;
     if (parts[3]) url += `?alt=${parts[3]}`;
 
-    msg.edit(':arrows_counterclockwise:');
-    msg.channel.sendFile(url, parts[0] + '.jpg')
-        .then(() => msg.delete())
-        .catch(msg.error);
+    msg.edit(':arrows_counterclockwise:').then(() => {
+        msg.channel.sendFile(url, parts[0] + '.jpg')
+            .then(() => msg.delete())
+            .catch(msg.error);
+    });
 };
 
 exports.info = {
