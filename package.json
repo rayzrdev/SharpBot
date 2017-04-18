@@ -19,7 +19,6 @@
     "fs-extra": "^2.1.2",
     "giphy": "^0.0.4",
     "giphy-api": "^1.2.5",
-    "google-translate-api": "^2.2.2",
     "got": "^6.7.1",
     "leven": "^2.0.0",
     "normalize-url": "^1.9.1",

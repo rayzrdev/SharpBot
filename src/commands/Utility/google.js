@@ -17,27 +17,31 @@ exports.run = (bot, msg, args) => {
 
     msg.channel.sendMessage(':arrows_counterclockwise: Searching...').then(m => {
         request.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'), (err, res, body) => {
-            if (!err && res.statusCode === 200) {
-                let $ = cheerio.load(body);
-                var results = [];
-                $('.g').each((i) => {
-                    results[i] = {};
-                });
-                $('.g>.r>a').each((i, e) => {
-                    var raw = e.attribs['href'];
-                    results[i]['link'] = raw.substr(7, raw.indexOf('&sa=U') - 7);
-                });
-                $('.g>.s>.st').each((i, e) => {
-                    results[i]['description'] = getText(e);
-                });
-
-                results = results.filter(r => r.link && r.description);
-                results = results.splice(0, 5);
-
-                m.edit('', { embed: bot.utils.embed(`Search results for \`${args.join(' ')}\``, results.map(r => r.link + '\n\t' + r.description + '\n').join('\n')) });
-            } else {
-                m.edit(`:no_entry_sign: Error! (${res.statusCode}): ${res.statusMessage}`);
+            if (err || res.statusCode !== 200) {
+                return m.edit(`:no_entry_sign: Error! (${res.statusCode}): ${res.statusMessage}`);
             }
+
+            let $ = cheerio.load(body);
+            var results = [];
+            $('.g').each((i) => {
+                results[i] = {};
+            });
+            $('.g>.r>a').each((i, e) => {
+                var raw = e.attribs['href'];
+                results[i]['link'] = raw.substr(7, raw.indexOf('&sa=U') - 7);
+            });
+            $('.g>.s>.st').each((i, e) => {
+                results[i]['description'] = getText(e);
+            });
+
+            var output = results.filter(r => r.link && r.description)
+                .slice(0, 5)
+                .map(r => `${r.link}\n\t${r.description}\n`)
+                .join('\n');
+
+            m.edit('', {
+                embed: bot.utils.embed(`Search results for \`"${args.join(' ')}"\``, output)
+            });
         });
     });
 };
