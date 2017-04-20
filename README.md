@@ -21,7 +21,7 @@
 ### Requirements
 - `git` ([Windows](https://git-scm.com/download/win) | [Linux](https://git-scm.com/download/linux) | [macOS](https://git-scm.com/download/mac))
 - `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/))
-- `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows) | [Linux](https://yarnpkg.com/en/docs/install#linux) | [macOS](https://yarnpkg.com/en/docs/install#mac))
+- `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows-tab) | [Linux](https://yarnpkg.com/en/docs/install#linux-tab) | [macOS](https://yarnpkg.com/en/docs/install#mac-tab))
 
 > If you want a simple reason to use `yarn` instead of `npm`, see [here](https://github.com/Rayzr522/SharpBot/wiki/Why-Yarn%3F).
 
