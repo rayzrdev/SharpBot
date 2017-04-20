@@ -3,15 +3,15 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify what to search for!';
     }
 
-    var query = args.join(' ');
+    let query = args.join(' ');
 
     msg.edit(`:arrows_counterclockwise: Searching the last \`100\` messages for \`${query}\``)
         .then(m => {
 
             msg.channel.fetchMessages({ limit: 100, before: msg.id })
                 .then(messages => {
-                    var results = messages.filter(it => it.content.toLowerCase().indexOf(query.toLowerCase()) != -1);
-                    var output = results
+                    let results = messages.filter(it => it.content.toLowerCase().indexOf(query.toLowerCase()) != -1);
+                    let output = results
                         .map(it => `${formatDate(it.createdAt)} ${it.author.username}: ${it.content}`)
                         .join('\n');
                     m.editCode('log', output);

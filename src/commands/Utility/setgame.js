@@ -7,12 +7,12 @@ exports.run = (bot, msg, args) => {
         return msg.channel.sendMessage('Cleared your game! :ok_hand:').then(m => m.delete(3000));
     }
 
-    var parsed = bot.utils.parseArgs(args, ['s:']);
+    let parsed = bot.utils.parseArgs(args, ['s:']);
 
-    var game = parsed.leftover.join(' ');
-    var stream = parsed.options.s;
+    let game = parsed.leftover.join(' ');
+    let stream = parsed.options.s;
 
-    var fields = [{ name: ':video_game: Game', value: game }];
+    let fields = [{ name: ':video_game: Game', value: game }];
 
     if (stream) {
         stream = normalizeUrl(`twitch.tv/${stream}`);

@@ -3,7 +3,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must provide something to search for!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['i']);
+    let parsed = bot.utils.parseArgs(args, ['i']);
 
     msg.edit(`**Wow!** :arrow_right: http://www.lmgtfy.com/?iie=${parsed.options.i ? 1 : 0}&q=${parsed.leftover.join('+')}`);
 };

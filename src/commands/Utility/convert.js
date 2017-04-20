@@ -6,16 +6,16 @@ exports.run = function (bot, msg, args) {
         throw 'You must specify something to convert';
     }
 
-    var input = args.join(' ');
-    var url = `https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json`;
+    let input = args.join(' ');
+    let url = `https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json`;
     msg.edit(':arrows_counterclockwise:  Loading conversion...');
 
     got(url).then(res => {
 
-        var data = JSON.parse(res.body);
+        let data = JSON.parse(res.body);
 
-        var answer = data['Answer'];
-        var message;
+        let answer = data['Answer'];
+        let message;
 
         if (data['AnswerType'] === 'conversions') {
             msg.delete();
@@ -31,8 +31,8 @@ exports.run = function (bot, msg, args) {
         } else if (data['AnswerType'] === 'timezone_converter') {
             msg.delete();
 
-            var matches = input.match(/(.*?)\s*(to|in)\s*(.*)/);
-            var prefix;
+            let matches = input.match(/(.*?)\s*(to|in)\s*(.*)/);
+            let prefix;
 
             if (matches) {
                 prefix = matches[1];

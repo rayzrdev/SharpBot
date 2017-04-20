@@ -3,11 +3,11 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify something to embed!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['f', 'ft:', 't:', 'c:', 'r', 'i:', 'a:']);
+    let parsed = bot.utils.parseArgs(args, ['f', 'ft:', 't:', 'c:', 'r', 'i:', 'a:']);
 
-    var color = parsed.options.c;
+    let color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
-        var member = msg.guild.members.get(msg.author.id);
+        let member = msg.guild.members.get(msg.author.id);
         if (member) {
             color = member.highestRole.hexColor;
         }

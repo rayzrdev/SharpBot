@@ -63,18 +63,18 @@ bot.on('message', msg => {
 
     if (!msg.content.startsWith(config.prefix)) return;
 
-    var split = msg.content.split(' ');
-    var base = split[0].substr(config.prefix.length).toLowerCase();
-    var args = split.slice(1);
+    let split = msg.content.split(' ');
+    let base = split[0].substr(config.prefix.length).toLowerCase();
+    let args = split.slice(1);
 
-    var command = commands.get(base);
+    let command = commands.get(base);
 
     if (command) {
         commands.execute(msg, command, args);
     } else {
         db.get(`shortcuts.${base}`).then(sc => {
             if (!sc) {
-                var maybe = didYouMean(base, commands.all().map(c => c.info.name), {
+                let maybe = didYouMean(base, commands.all().map(c => c.info.name), {
                     threshold: 5,
                     thresholdType: 'edit-distance'
                 });

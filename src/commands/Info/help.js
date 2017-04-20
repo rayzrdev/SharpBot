@@ -2,8 +2,8 @@ const stripIndents = require('common-tags').stripIndents;
 
 exports.run = (bot, msg, args) => {
 
-    var commands = [];
-    var title = 'Categories';
+    let commands = [];
+    let title = 'Categories';
 
     if (args.length > 0) {
         if (/^category|type$/i.test(args[0])) {
@@ -27,20 +27,20 @@ exports.run = (bot, msg, args) => {
     }
 
     if (commands.length > 0) {
-        var fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c, commands.length === 1));
+        let fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c, commands.length === 1));
 
         // Temporary workaround for the 2k char limit
-        var maxLength = 1900;
-        var messages = [];
+        let maxLength = 1900;
+        let messages = [];
 
         while (fields.length > 0) {
-            var len = 0;
-            var i = 0;
+            let len = 0;
+            let i = 0;
             while (len < maxLength) {
                 if (i >= fields.length) {
                     break;
                 }
-                var field = fields[i];
+                let field = fields[i];
                 len += field.name.length + field.value.length;
                 if (len >= maxLength) {
                     break;
@@ -58,7 +58,7 @@ exports.run = (bot, msg, args) => {
             ).then(m => m.delete(30000));
         });
     } else {
-        var categories = bot.commands.categories().sort();
+        let categories = bot.commands.categories().sort();
         msg.editEmbed(
             bot.utils.embed(title, stripIndents`
             **Available categories:**
@@ -74,7 +74,7 @@ exports.run = (bot, msg, args) => {
 
 const getHelp = (bot, command, single) => {
 
-    var description = stripIndents`
+    let description = stripIndents`
         **Usage:** \`${bot.config.prefix}${command.info.usage || command.info.name}\`
         **Description:** ${command.info.description || '<no description>'}
         **Category:** __${command.info.category}__`;
@@ -86,7 +86,7 @@ const getHelp = (bot, command, single) => {
         description += `\n**Examples:**\n${command.info.examples.map(example => `\`${bot.config.prefix}${example}\``).join('\n')}`;
 
     if (single && command.info.options instanceof Array) {
-        var options = command.info.options.map(option => {
+        let options = command.info.options.map(option => {
             return stripIndents`
             **${option.name}**
             *Usage:* \`${option.usage || option.name}\`

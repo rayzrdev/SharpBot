@@ -1,7 +1,7 @@
 exports.run = function (bot, msg) {
-    var users = msg.guild.members.map(m => `${m.user} ${(m.user.bot ? '**`[BOT]`**' : '')}`).sort();
+    let users = msg.guild.members.map(m => `${m.user} ${(m.user.bot ? '**`[BOT]`**' : '')}`).sort();
 
-    var messages = [];
+    let messages = [];
     while (users.length > 50) {
         messages.push(users.splice(0, 50));
     }

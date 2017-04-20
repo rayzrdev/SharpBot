@@ -11,9 +11,9 @@ exports.randomColor = () => {
 
 exports.formatNumber = (number) => {
     if (isNaN(number)) return NaN;
-    var input = `${number}`;
+    let input = `${number}`;
     if (number < 1e4) return input;
-    var out = [];
+    let out = [];
     while (input.length > 3) {
         out.push(input.substr(input.length - 3, input.length));
         input = input.substr(0, input.length - 3);
@@ -61,20 +61,20 @@ exports.parseArgs = (args, options) => {
     if (typeof options === 'string')
         options = [options];
 
-    var optionValues = {};
+    let optionValues = {};
 
-    var i;
+    let i;
     for (i = 0; i < args.length; i++) {
-        var arg = args[i];
+        let arg = args[i];
         if (!arg.startsWith('-')) {
             break;
         }
 
-        var label = arg.substr(1);
+        let label = arg.substr(1);
 
         if (options.indexOf(label + ':') > -1) {
-            var leftover = args.slice(i + 1).join(' ');
-            var matches = leftover.match(/^"(.+?)"/);
+            let leftover = args.slice(i + 1).join(' ');
+            let matches = leftover.match(/^"(.+?)"/);
             if (matches) {
                 optionValues[label] = matches[1];
                 i += matches[0].split(' ').length;
@@ -105,16 +105,16 @@ exports.multiSend = (channel, messages, delay) => {
 };
 
 exports.sendLarge = (channel, largeMessage, options = {}) => {
-    var message = largeMessage;
-    var messages = [];
-    var prefix = options.prefix || '';
-    var suffix = options.suffix || '';
+    let message = largeMessage;
+    let messages = [];
+    let prefix = options.prefix || '';
+    let suffix = options.suffix || '';
 
-    var max = 2000 - prefix.length - suffix.length;
+    let max = 2000 - prefix.length - suffix.length;
 
     while (message.length >= max) {
-        var part = message.substr(0, max);
-        var cutTo = max;
+        let part = message.substr(0, max);
+        let cutTo = max;
         if (options.cutOn) {
             cutTo = part.lastIndexOf(options.cutOn);
             part = part.substr(0, cutTo);
@@ -131,7 +131,7 @@ exports.sendLarge = (channel, largeMessage, options = {}) => {
 };
 
 exports.now = () => {
-    var now = process.hrtime();
+    let now = process.hrtime();
     return now[0] * 1e3 + now[1] / 1e6;
 };
 
@@ -139,11 +139,11 @@ exports.playAnimation = (msg, delay, list) => {
     if (list.length < 1)
         return;
 
-    var next = list.shift();
-    var start = this.now();
+    let next = list.shift();
+    let start = this.now();
 
     msg.edit(next).then(() => {
-        var elapsed = this.now() - start;
+        let elapsed = this.now() - start;
 
         setTimeout(() => {
             this.playAnimation(msg, delay, list);

@@ -6,8 +6,8 @@ exports.migrate = function (bot, base) {
 };
 
 function migrateConfig(bot, base) {
-    var oldPath = path.resolve(base, 'config.json');
-    var newPath = path.resolve(base, '../config.json');
+    let oldPath = path.resolve(base, 'config.json');
+    let newPath = path.resolve(base, '../config.json');
     if (fse.existsSync(oldPath)) {
         try {
             fse.moveSync(oldPath, newPath);

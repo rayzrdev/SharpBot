@@ -1,11 +1,11 @@
 exports.run = (bot, msg, args) => {
-    var parsed = bot.utils.parseArgs(args, ['l:']);
-    var lang = parsed.options.l || '';
+    let parsed = bot.utils.parseArgs(args, ['l:']);
+    let lang = parsed.options.l || '';
 
-    var code = parsed.leftover.join(' ');
+    let code = parsed.leftover.join(' ');
 
     try {
-        var evaled = eval(code);
+        let evaled = eval(code);
         if (typeof evaled !== 'string')
             evaled = require('util').inspect(evaled);
         msg.channel.sendMessage(`\`\`\`${lang}\n${clean(evaled)}\n\`\`\``);

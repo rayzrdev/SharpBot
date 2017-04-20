@@ -1,7 +1,7 @@
 exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         return bot.db.entries().then(entries => {
-            var shortcuts = entries.filter(e => e.key.startsWith('shortcuts.')).map(e => e.value);
+            let shortcuts = entries.filter(e => e.key.startsWith('shortcuts.')).map(e => e.value);
             if (shortcuts.length < 1) {
                 throw 'You have no shortcuts!';
             }
@@ -14,7 +14,7 @@ exports.run = (bot, msg, args) => {
             throw `Usage: \`${bot.config.prefix}shortcut add <id> <command>\``;
         }
         let id = args[1].toLowerCase();
-        var command = args.slice(2).join(' ');
+        let command = args.slice(2).join(' ');
         bot.db.get(`shortcuts.${id}`).then(sc => {
             if (sc) {
                 throw `The shortcut \`${id}\` already exists!`;
