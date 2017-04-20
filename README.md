@@ -76,7 +76,7 @@ yarn start
 7. Copy the value on the right side (omitting the quotes)
 
 ## Credits
-The bot was originally a modified version of [eslachance's djs-selfbot-v9]([here](https://github.com/eslachance/djs-selfbot-v9), but over time I've completely rewritten it. The commands are a compilation of my own work as well as snippets found online.
+The bot was originally a modified version of [eslachance's djs-selfbot-v9](https://github.com/eslachance/djs-selfbot-v9), but over time I've completely rewritten it. The commands are a compilation of my own work as well as snippets found online.
 
 ## Join Me
 If you need help with my bot, have a feature to request or just want to chat, you can join my Discord server! If you don't have Discord, don't worry. It only takes a few moments to sign up.
