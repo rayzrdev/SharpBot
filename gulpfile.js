@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const spawn = require('child_process').spawn;
 
-var bot;
+let bot;
 
 const paths = {
     srcFiles: 'src/**/!(_)*.js',

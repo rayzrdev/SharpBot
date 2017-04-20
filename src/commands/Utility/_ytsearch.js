@@ -12,7 +12,7 @@ exports.run = (bot, msg, args) => {
 
         yts(`${args.join(' ')}`).then(data => {
             if (data && data.results && data.results[0]) {
-                var result = data.results[0];
+                let result = data.results[0];
 
                 msg.editEmbed(
                     bot.utils.embed('', `[${result.title}](${result.link})`, [

@@ -34,7 +34,7 @@ class ConfigManager {
     }
 
     load() {
-        var configFile = path.resolve(this.base, '../config.json');
+        let configFile = path.resolve(this.base, '../config.json');
 
         if (!fse.existsSync(configFile)) {
             console.log(stripIndents`

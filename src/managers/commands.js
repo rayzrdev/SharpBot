@@ -26,22 +26,22 @@ class CommandManager {
         this._commands = [];
         this._categories = [];
 
-        var bot = this.bot;
+        let bot = this.bot;
 
         read.fileSync(folder).forEach(file => {
             file = file.substr(folder.length + 1);
-            var basename = path.basename(file);
+            let basename = path.basename(file);
 
             if (basename.startsWith('_') || !basename.endsWith('.js')) return;
 
-            var command = require(`${folder}/${file}`);
-            var error = this._validateCommand(command);
+            let command = require(`${folder}/${file}`);
+            let error = this._validateCommand(command);
             if (error) {
                 return bot.logger.severe(`Failed to load '${file}': ${chalk.red(error)}`);
             }
 
             if (!command.category) {
-                var category = file.indexOf(path.sep) > -1 ? path.dirname(file) : 'Uncategorized';
+                let category = file.indexOf(path.sep) > -1 ? path.dirname(file) : 'Uncategorized';
                 command.info.category = category;
 
                 if (this._categories.indexOf(category) === -1)

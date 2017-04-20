@@ -6,7 +6,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must have something to upload!';
     }
 
-    var parsed = bot.utils.parseArgs(args, 'r');
+    let parsed = bot.utils.parseArgs(args, 'r');
 
     msg.edit(':arrows_counterclockwise: Uploading...').then(() => {
         got.post(url.resolve('https://hastebin.com', 'documents'), {
@@ -20,7 +20,7 @@ exports.run = (bot, msg, args) => {
                 msg.error('Failed to upload, no key was returned!');
                 return;
             }
-            var key = res.body.key || res.body;
+            let key = res.body.key || res.body;
             if (parsed.options.r) {
                 msg.edit(`:white_check_mark: https://hastebin.com/raw/${key}`);
             } else {

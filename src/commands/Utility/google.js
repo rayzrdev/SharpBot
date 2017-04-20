@@ -22,19 +22,19 @@ exports.run = (bot, msg, args) => {
             }
 
             let $ = cheerio.load(body);
-            var results = [];
+            let results = [];
             $('.g').each((i) => {
                 results[i] = {};
             });
             $('.g>.r>a').each((i, e) => {
-                var raw = e.attribs['href'];
+                let raw = e.attribs['href'];
                 results[i]['link'] = raw.substr(7, raw.indexOf('&sa=U') - 7);
             });
             $('.g>.s>.st').each((i, e) => {
                 results[i]['description'] = getText(e);
             });
 
-            var output = results.filter(r => r.link && r.description)
+            let output = results.filter(r => r.link && r.description)
                 .slice(0, 5)
                 .map(r => `${r.link}\n\t${r.description}\n`)
                 .join('\n');

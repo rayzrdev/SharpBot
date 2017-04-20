@@ -1,10 +1,10 @@
 const formatTime = (time) => {
-    var seconds = time[0] + time[1] / 1e9;
+    let seconds = time[0] + time[1] / 1e9;
 
-    var minutes = Math.floor(seconds / 60);
+    let minutes = Math.floor(seconds / 60);
     seconds = seconds % 60;
 
-    var hours = Math.floor(minutes / 60);
+    let hours = Math.floor(minutes / 60);
     minutes = minutes % 60;
     return `${hours.toFixed(0)}h ${minutes.toFixed(0)}m ${seconds.toFixed(0)}s`;
 };

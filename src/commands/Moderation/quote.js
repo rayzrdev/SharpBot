@@ -14,13 +14,13 @@ exports.run = (bot, msg, args) => {
             if (!messages || messages.size < 1) {
                 return msg.error('That message could not be found!');
             } else {
-                var message = messages.first();
+                let message = messages.first();
 
-                var options = {
+                let options = {
                     timestamp: message.editedTimestamp || message.createdTimestamp,
                     footer: false
                 };
-                var attachment = message.attachments.first();
+                let attachment = message.attachments.first();
 
                 if (attachment && (attachment.width || attachment.height)) {
                     options.image = attachment.url;

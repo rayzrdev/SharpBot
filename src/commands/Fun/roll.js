@@ -1,5 +1,5 @@
-var Roll = require('roll');
-var roller = new Roll();
+let Roll = require('roll');
+let roller = new Roll();
 const RichEmbed = require('discord.js').RichEmbed;
 
 exports.run = function (bot, msg, args) {
@@ -7,8 +7,8 @@ exports.run = function (bot, msg, args) {
         throw 'You must specify in dice notation (XdY)';
     }
 
-    var reason = '';
-    var footer = '';
+    let reason = '';
+    let footer = '';
 
     footer += `:game_die: **${args[0]}**`;
     if (args.length > 1) {
@@ -16,11 +16,11 @@ exports.run = function (bot, msg, args) {
         footer += ` | ${reason}`;
     }
 
-    var results = roller.roll(args[0]);
+    let results = roller.roll(args[0]);
 
     msg.delete();
 
-    var message = new RichEmbed()
+    let message = new RichEmbed()
         .setColor(bot.utils.randomColor())
         .setTitle(`Total: ${results.result}`)
         .setDescription(`${[].concat.apply([], results.rolled).join(', ')}`)

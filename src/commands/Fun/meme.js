@@ -1,11 +1,11 @@
 const got = require('got');
-var templates = [];
+let templates = [];
 
 got('https://memegen.link/templates/').then(res => {
-    var data = JSON.parse(res.body);
+    let data = JSON.parse(res.body);
     templates = [];
-    var promises = [];
-    for (var key in data) {
+    let promises = [];
+    for (let key in data) {
         promises.push(_loadMeme(data[key]));
     }
 
@@ -17,7 +17,7 @@ got('https://memegen.link/templates/').then(res => {
 
 function _loadMeme(url) {
     return got(url).then(res => {
-        var singleData = JSON.parse(res.body);
+        let singleData = JSON.parse(res.body);
 
         templates.push({
             name: url.replace(/https\:\/\/memegen\.link\/api\/templates\/(.*)/, '$1'),
@@ -60,7 +60,7 @@ exports.run = (bot, msg, args) => {
             throw 'You must provide a meme to get info about!';
         }
 
-        var info = getMeme(args[1]);
+        let info = getMeme(args[1]);
         if (!info) {
             throw `That is not a valid meme! Do \`${bot.config.prefix}${this.info.name} list\` to see available memes.`;
         }
@@ -71,26 +71,26 @@ exports.run = (bot, msg, args) => {
         ).then(m => m.delete(15000));
     }
 
-    var input = args.join(' ');
-    var parts = input.split('|').map(p => p.trim());
+    let input = args.join(' ');
+    let parts = input.split('|').map(p => p.trim());
 
     if (parts.length < 3) {
         throw `No message was provided! Do \`${bot.config.prefix}help ${this.info.name}\` for info on how to use this.`;
     }
 
-    var meme = getMeme(args[0]);
+    let meme = getMeme(args[0]);
     if (!meme) {
         throw `That is not a valid meme! Do \`${bot.config.prefix}${this.info.name} list\` to see available memes.`;
     }
 
-    var topText = cleanInput(parts[1]);
-    var bottomText = cleanInput(parts[2]);
+    let topText = cleanInput(parts[1]);
+    let bottomText = cleanInput(parts[2]);
 
     if (!topText || !bottomText) {
         throw 'Empty message!';
     }
 
-    var url = `${meme.url}/${cleanInput(parts[1])}/${cleanInput(parts[2])}.jpg`;
+    let url = `${meme.url}/${cleanInput(parts[1])}/${cleanInput(parts[2])}.jpg`;
     if (parts[3]) url += `?alt=${parts[3]}`;
 
     msg.edit(':arrows_counterclockwise:').then(() => {

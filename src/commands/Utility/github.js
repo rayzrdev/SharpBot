@@ -34,7 +34,7 @@ exports.run = function (bot, msg, args) {
             msg.delete();
             msg.channel.sendMessage(':white_check_mark: Top 3 results:');
 
-            for (var i = 0; i < 3; i++) {
+            for (let i = 0; i < 3; i++) {
                 if (!json.items[i]) {
                     break;
                 }

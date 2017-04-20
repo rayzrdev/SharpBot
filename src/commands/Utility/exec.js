@@ -6,14 +6,14 @@ exports.run = (bot, msg, args) => {
         throw 'You must provide a command to run!';
     }
 
-    var parsed = bot.utils.parseArgs(args, 'l:');
+    let parsed = bot.utils.parseArgs(args, 'l:');
 
-    var ps = exec(parsed.leftover.join(' '));
+    let ps = exec(parsed.leftover.join(' '));
     if (!ps) {
         throw 'Failed to start process!';
     }
 
-    var opts = {
+    let opts = {
         prefix: `\`\`\`${parsed.options.l || 'bash'}\n`,
         suffix: '\n```',
         delay: 10,

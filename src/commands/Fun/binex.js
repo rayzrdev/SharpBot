@@ -1,7 +1,7 @@
 exports.run = (bot, msg, args) => {
-    var a = parseInt(args[0]).toString(2);
-    var b = parseInt(args[1]).toString(2);
-    var len = Math.max(a.length, b.length);
+    let a = parseInt(args[0]).toString(2);
+    let b = parseInt(args[1]).toString(2);
+    let len = Math.max(a.length, b.length);
     a = '0'.repeat(len - a.length) + a;
     b = '0'.repeat(len - b.length) + b;
 

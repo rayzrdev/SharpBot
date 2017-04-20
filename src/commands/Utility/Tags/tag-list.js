@@ -1,7 +1,7 @@
 exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         return bot.db.entries().then(entries => {
-            var tags = entries
+            let tags = entries
                 .filter(e => e.key.startsWith('tags.'))
                 .map(e => e.value)
                 .sort((a, b) => b.used - a.used);

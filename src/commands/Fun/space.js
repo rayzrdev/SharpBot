@@ -2,7 +2,7 @@ exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must provide text to space out!';
     }
-    var amount = 2;
+    let amount = 2;
     if (!isNaN(args[0])) {
         amount = parseInt(args[0]);
         (amount < 1) && (amount = 1);

@@ -6,7 +6,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must provide a language and some text to translate!';
     }
 
-    var parsed = bot.utils.parseArgs(args, ['e', 'f:']);
+    let parsed = bot.utils.parseArgs(args, ['e', 'f:']);
 
     let lang = parsed.leftover[0];
     let input = parsed.leftover.slice(1).join(' ');

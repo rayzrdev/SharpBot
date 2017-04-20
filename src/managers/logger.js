@@ -37,7 +37,7 @@ class Logger {
     inject() {
         if (console._original) throw 'Logger already injected!';
 
-        var original = {
+        let original = {
             log: console.log,
             info: console.info,
             error: console.error
@@ -51,7 +51,7 @@ class Logger {
     }
 
     _wrap(func) {
-        var self = this;
+        let self = this;
         return function () {
             func.call(self, Array.from(arguments));
         };

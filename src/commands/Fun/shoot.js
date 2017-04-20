@@ -3,7 +3,7 @@ exports.run = function (bot, msg) {
         throw '@mention some people to shoot!';
     }
 
-    var output = msg.mentions.users.map(m => `**${m}** :gun:`).join('\n');
+    let output = msg.mentions.users.map(m => `**${m}** :gun:`).join('\n');
 
     msg.delete();
     msg.channel.sendEmbed(
