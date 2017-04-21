@@ -47,7 +47,7 @@ exports.run = (bot, msg) => {
             },
             {
                 name: ':video_game: Game',
-                value: (bot.user.presence.game || {}).name || 'None'
+                value: bot.user.presence.game.name === null || bot.user.presence.game === null ? 'None' : bot.user.presence.game.streaming ? `Streaming: **${bot.user.presence.game.name}**` : `Playing: **${bot.user.presence.game.name}**`
             }
         ], { inline: true })
     ).catch(msg.error).then(m => m.delete(15000));
