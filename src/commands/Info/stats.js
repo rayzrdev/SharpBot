@@ -11,6 +11,8 @@ const formatTime = (time) => {
 
 exports.run = (bot, msg) => {
 
+    const game = bot.user.presence.game || {};
+
     msg.editEmbed(
         bot.utils.embed('SharpBot Stats', '***This message will dissappear in 15 seconds.***', [
             {
@@ -47,7 +49,7 @@ exports.run = (bot, msg) => {
             },
             {
                 name: ':video_game: Game',
-                value: bot.user.presence.game.name === null || bot.user.presence.game === null ? 'None' : bot.user.presence.game.streaming ? `Streaming: **${bot.user.presence.game.name}**` : `Playing: **${bot.user.presence.game.name}**`
+                value: `${game.name || 'None'} ${game.streaming ? `[(Streaming)](${game.url})` : ''}`
             }
         ], { inline: true })
     ).catch(msg.error).then(m => m.delete(15000));
