@@ -19,4 +19,4 @@ exports.info = {
             description: 'Enables Internet Explainer'
         }
     ]
-};  
+};

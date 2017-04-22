@@ -1,5 +1,5 @@
-let Roll = require('roll');
-let roller = new Roll();
+const Roll = require('roll');
+const roller = new Roll();
 const RichEmbed = require('discord.js').RichEmbed;
 
 exports.run = function (bot, msg, args) {

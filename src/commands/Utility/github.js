@@ -62,7 +62,7 @@ function getInfo(json) {
 
 \t**Description:** _${json.description || 'None provided'}_
 \t**Owner:** [${json.owner.login}](${json.owner.html_url})
-\t**Primary Language:** \`${json.language}\` 
+\t**Primary Language:** \`${json.language}\`
 
 \t:house:  [Home page](${json.html_url})  :small_red_triangle_down:  [Downloads](${json.html_url}/releases)  :exclamation:  [Issues](${json.html_url}/issues)
 

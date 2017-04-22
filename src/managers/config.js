@@ -41,7 +41,7 @@ class ConfigManager {
             ${chalk.gray('----------------------------------------------------------')}
             ${chalk.gray('==============<') + chalk.yellow(' SharpBot Setup Wizard v1.0 ') + chalk.gray('>==============')}
             ${chalk.gray('----------------------------------------------------------')}
-            
+
             To get your token, see the instructions at ${chalk.green('https://github.com/Rayzr522/SharpBot#getting-your-user-token')}
 
             Please enter your ${chalk.yellow('bot token')} and desired ${chalk.yellow('command prefix')} for the bot:
