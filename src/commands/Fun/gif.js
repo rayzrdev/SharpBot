@@ -1,4 +1,4 @@
-let giphy = require('giphy-api')();
+const giphy = require('giphy-api')();
 
 exports.run = (bot, msg, args) => {
     if (args.length < 1) {

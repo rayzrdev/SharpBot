@@ -2,14 +2,14 @@ const chalk = require('chalk');
 
 /**
  * The SharpBot logger
- * 
+ *
  * @class Logger
  */
 class Logger {
     /**
      * Creates an instance of Logger.
-     * @param {SharpBot} bot 
-     * 
+     * @param {SharpBot} bot
+     *
      * @memberOf Logger
      */
     constructor(bot) {

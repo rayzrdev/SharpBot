@@ -26,7 +26,7 @@ class CommandManager {
         this._commands = [];
         this._categories = [];
 
-        let bot = this.bot;
+        const bot = this.bot;
 
         read.fileSync(folder).forEach(file => {
             file = file.substr(folder.length + 1);

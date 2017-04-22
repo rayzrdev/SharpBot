@@ -63,7 +63,7 @@ exports.run = (bot, msg, args) => {
             bot.utils.embed(title, stripIndents`
             **Available categories:**
             ${categories.map(c => `- __${c}__`).join('\n')}
-            
+
             **Usage:**
             Do \`${bot.config.prefix}help category <name>\` for a list of commands in a specific category.
             Do \`${bot.config.prefix}help all\` for a list of every command available in this bot.

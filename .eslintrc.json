@@ -32,6 +32,10 @@
         ],
         "no-var": [
             "warn"
+        ],
+        "eol-last": [
+            "warn",
+            "always"
         ]
     }
 }
