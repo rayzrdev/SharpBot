@@ -41,6 +41,7 @@ bot.on('ready', () => {
 
     delete bot.user.email;
     delete bot.user.verified;
+    bot.user.setStatus('invisible');
 
     logger.info('Bot loaded');
 });
