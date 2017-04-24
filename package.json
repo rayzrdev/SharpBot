@@ -22,6 +22,7 @@
     "google-translate-api": "abyssvi/google-translate-api",
     "got": "^6.7.1",
     "leven": "^2.0.0",
+    "math-expression-evaluator": "^1.2.16",
     "normalize-url": "^1.9.1",
     "path": "^0.12.7",
     "prompt": "^1.0.0",
