@@ -71,8 +71,10 @@ class CommandManager {
     execute(msg, command, args) {
         msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
         msg.error = ((message, delay) => {
+            if (message.message) message = message.message;
+
             this.bot.logger.severe(message.toString());
-            msg.edit(`:no_entry_sign: ${message || 'An error has occurred!'}`)
+            msg.edit(`:x: ${message || 'Something failed!'}`)
                 .then(m => m.delete(delay || 2000));
         }).bind(msg);
 
