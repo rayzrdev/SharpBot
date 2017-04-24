@@ -6,29 +6,23 @@ exports.run = (bot, msg, args) => {
         throw 'You must provide a equation to be solved on the calculator';
     }
 
-    let question = args.join(' ');
-    msg.delete();
-    msg.channel.sendMessage(':1234: **Calculating Your Question**...').then(() => {
-        let evaled;
-        try {
-            evaled = math.eval(question);
-        } catch (err) {
-            throw err;
-        }
-        if (evaled) {
-            msg.channel.sendEmbed(
-                bot.utils.embed('', stripIndents`
+    const question = args.join(' ');
+    const answer = math.eval(question);
+
+    if (answer) {
+        msg.delete();
+        msg.channel.sendEmbed(
+            bot.utils.embed('', stripIndents`
                 **Equation:**\n\`\`\`\n${question}\n\`\`\`
-                **Answer:**\n\`\`\`\n${evaled}\n\`\`\`
+                **Answer:**\n\`\`\`\n${answer}\n\`\`\`
                 `)
-            ).catch(msg.error);
-        }
-    });
+        ).catch(msg.error);
+    }
 };
 
 exports.info = {
     name: 'calc',
     usage: 'calc <equation>',
-    description: 'Calculates Any Math Equations',
+    description: 'Calculates any math equation',
     credits: 'Carbowix',
 };
