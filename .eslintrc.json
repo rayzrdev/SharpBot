@@ -13,8 +13,7 @@
             4
         ],
         "linebreak-style": [
-            "warn",
-            "unix"
+            "off"
         ],
         "quotes": [
             "warn",
