@@ -1,30 +1,30 @@
-var math = require('math-expression-evaluator');
+const math = require('math-expression-evaluator');
 const stripIndents = require('common-tags').stripIndents;
 
 exports.run = (bot, msg, args) => {
-
     if (args.length < 1) {
-        throw 'You must provide a equation to be solved on the calculator'
+        throw 'You must provide a equation to be solved on the calculator';
     }
 
-    var question = args.join(" ");
+    let question = args.join(' ');
     msg.delete();
-    msg.channel.sendMessage(":1234: **Calculating Your Question.**..").then(() => {
+    msg.channel.sendMessage(':1234: **Calculating Your Question**...').then(() => {
+        let evaled;
         try {
-            var evaled = math.eval(question);
+            evaled = math.eval(question);
         } catch (err) {
             throw err;
         }
         if (evaled) {
             msg.channel.sendEmbed(
-                bot.utils.embed('', stripIndents `
+                bot.utils.embed('', stripIndents`
                 **Equation:**\n\`\`\`\n${question}\n\`\`\`
                 **Answer:**\n\`\`\`\n${evaled}\n\`\`\`
                 `)
             ).catch(msg.error);
-        };
+        }
     });
-}
+};
 
 exports.info = {
     name: 'calc',
