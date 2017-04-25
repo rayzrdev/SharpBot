@@ -3,12 +3,15 @@ const richEmbed = require('discord.js').RichEmbed;
 
 exports.run = function (bot, msg, args) {
     msg.edit(':arrows_counterclockwise:');
+
+    if(args.length < 1) {
+        msg.edit('Please provide a word to search!').then(m => m.delete(30000));
+    }
+
     let word = args[0];
+
     webdict('urbandictionary', word)
         .then(resp => {
-            if(args.length < 1) {
-                msg.edit('Please provide a word to search!').then(m => m.delete(30000));
-            }
             msg.delete();
             msg.channel.sendEmbed(
                 new richEmbed()
