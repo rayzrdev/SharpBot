@@ -6,6 +6,9 @@ exports.run = function (bot, msg, args) {
     let word = args[0];
     webdict('dictionary', word)
         .then(resp => {
+            if(args.length < 1) {
+                msg.edit('Please provide a word to search!').then(m => m.delete(30000));
+            }
             msg.delete();
             msg.channel.sendEmbed(
                 new richEmbed()
