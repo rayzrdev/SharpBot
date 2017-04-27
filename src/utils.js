@@ -50,10 +50,20 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setColor(color)
         .setDescription(description)
         .setImage(options.image || url)
-        .setTimestamp(options.timestamp ? new Date() : null)
+        .setTimestamp(timestampToDate(options.timestamp))
         .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined)
         .setAuthor(options.author === undefined ? '' : options.author);
 };
+
+function timestampToDate(timestamp) {
+    if (timestamp === true) {
+        return new Date();
+    }
+    if (typeof timestamp === 'number') {
+        return new Date(timestamp);
+    }
+    return timestamp;
+}
 
 exports.parseArgs = (args, options) => {
     if (!options)
