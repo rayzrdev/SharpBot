@@ -2793,6 +2793,13 @@ vinyl@^0.5.0:
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
 
+webdict@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/webdict/-/webdict-0.1.0.tgz#67550bc0d0b5d8cee34b78b53989b3a17594f3ed"
+  dependencies:
+    cheerio "^0.22.0"
+    got "^6.7.1"
+
 which@^1.2.12:
   version "1.2.12"
   resolved "https://registry.yarnpkg.com/which/-/which-1.2.12.tgz#de67b5e450269f194909ef23ece4ebe416fa1192"
