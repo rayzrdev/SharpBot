@@ -5,6 +5,7 @@
 ![SharpBot installer GIF](/res/sharpbot-install.gif)
 
 ### [FAQ](FAQ.md)
+### [Commands](COMMANDS.md)
 
 > If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](https://github.com/Rayzr522/SharpBot/wiki/SelfBot-Rules).
 
