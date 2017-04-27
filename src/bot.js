@@ -22,7 +22,7 @@ logger.inject();
 
 let dataFolder = path.join(__dirname, '../data/');
 if (!fse.existsSync(dataFolder)) fse.mkdirSync(dataFolder);
-const db = bot.db = new XPDB(path.join(dataFolder, 'tags'));
+const db = bot.db = new XPDB(path.join(dataFolder, 'db'));
 
 bot.on('ready', () => {
     bot.utils = require('./utils');
