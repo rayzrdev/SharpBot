@@ -16,14 +16,8 @@ exports.run = function (bot, msg) {
     let embed = bot.utils.embed(
         `${msg.guild.name}`,
         stripIndents`
-        ***This message will dissappear in 30 seconds.***`
-        /*Created on: ${dateFormat(msg.guild.createdAt)}
-        ${('Days since creation: ' + days.toFixed(0))}*/,
+        ***This message will dissappear in 30 seconds.***`,
         [
-            /*{
-                name: 'Server Name',
-                value: `${msg.guild.name}`,
-            },*/
             {
                 name: 'Created on',
                 value: `${dateFormat(msg.guild.createdAt)}`,
