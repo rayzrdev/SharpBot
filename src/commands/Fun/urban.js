@@ -6,7 +6,17 @@ exports.run = function (bot, msg, args) {
         throw 'Please provide a word to search!';
     }
 
+    
     let word = args[0];
+    
+    if(word == '-e') {
+        word = args[1];
+        webdict('urbandictionary', word)
+        .then(resp => {
+            msg.edit(resp.definition[0]);
+        });
+        return;
+    }
 
     webdict('urbandictionary', word)
         .then(resp => {
