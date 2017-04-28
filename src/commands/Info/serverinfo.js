@@ -19,11 +19,11 @@ exports.run = function (bot, msg) {
         ***This message will dissappear in 30 seconds.***`,
         [
             {
-                name: 'Created on',
+                name: 'Created On',
                 value: `${dateFormat(msg.guild.createdAt)}`,
             },
             {
-                name: 'Days since creation',
+                name: 'Days Since Creation',
                 value: `${days.toFixed(0)}`,
             },
             {
