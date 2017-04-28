@@ -8,6 +8,15 @@ exports.run = function (bot, msg, args) {
 
     let word = args[0];
 
+    if(word == '-e') {
+        word = args[1];
+        webdict('dictionary', word)
+        .then(resp => {
+            msg.edit(resp.definition[0]);
+        });
+        return;
+    }
+
     webdict('dictionary', word)
         .then(resp => {
             msg.delete();
