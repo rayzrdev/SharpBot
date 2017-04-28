@@ -6,15 +6,15 @@ dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
 
 exports.run = function (bot, msg) {
     
+    if (!msg.guild) {
+        throw 'This can only be used in a guild!';
+    }
+    
     const millis = new Date().getTime() - msg.guild.createdAt.getTime();
     const days = millis/1000/60/60/24;
     
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane'];
 
-    
-    if (!msg.guild) {
-        throw 'This can only be used in a guild!';
-    }
 
     let embed = bot.utils.embed(
         `${msg.guild.name}`,
