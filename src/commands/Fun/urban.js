@@ -6,20 +6,16 @@ exports.run = function (bot, msg, args) {
         throw 'Please provide a word to search!';
     }
 
-    
-    let word = args[0];
-    
-    if(word == '-e') {
-        word = args[1];
-        webdict('urbandictionary', word)
-        .then(resp => {
-            msg.edit(resp.definition[0]);
-        });
-        return;
-    }
+    let parsed = bot.utils.parseArgs(args, ['e']);
+
+    let word = parsed.leftover[0];
 
     webdict('urbandictionary', word)
         .then(resp => {
+            if(parsed.options.e){
+                msg.edit(resp.definition[0]);
+                return;
+            }
             msg.delete();
             msg.channel.sendEmbed(
                 bot.utils.embed(
