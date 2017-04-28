@@ -102,6 +102,10 @@ bot.on('message', msg => {
     }
 });
 
+process.on('exit', () => {
+    bot.db.unwrap().close();
+});
+
 bot.on('error', console.error);
 bot.on('warn', console.warn);
 bot.on('disconnect', console.warn);

@@ -50,9 +50,10 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setColor(color)
         .setDescription(description)
         .setImage(options.image || url)
-        .setTimestamp(timestampToDate(options.timestamp))
+        .setTimestamp(options.timestamp ? timestampToDate(options.timestamp) : null)
         .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined)
-        .setAuthor(options.author === undefined ? '' : options.author);
+        .setAuthor(options.author === undefined ? '' : options.author)
+        .setThumbnail(options.thumbnail || url);
 };
 
 function timestampToDate(timestamp) {

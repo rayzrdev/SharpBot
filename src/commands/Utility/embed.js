@@ -3,7 +3,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify something to embed!';
     }
 
-    let parsed = bot.utils.parseArgs(args, ['f', 'ft:', 't:', 'c:', 'r', 'i:', 'a:']);
+    let parsed = bot.utils.parseArgs(args, ['f', 'ft:', 'd', 't:', 'c:', 'r', 'i:', 'a:']);
 
     let color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
@@ -27,6 +27,7 @@ exports.run = (bot, msg, args) => {
     msg.channel.sendEmbed(
         bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
             footer: parsed.options.f || parsed.options.ft,
+            timestamp: parsed.options.d,
             color,
             image: parsed.options.i,
             author: parsed.options.a
@@ -47,6 +48,11 @@ exports.info = {
             name: '-ft',
             usage: '-ft <text>',
             description: 'Sets the footer text (use quotes for multiple words)'
+        },
+        {
+            name: '-d',
+            usage: '-d',
+            description: 'Enables the timestamp (date) in the footer'
         },
         {
             name: '-t',
