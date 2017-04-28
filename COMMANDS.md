@@ -1,231 +1,187 @@
+## Fun
 ### `anim`  
 *Description:* `"Animates" a series of emojis`  
-*Usage:* `anim [-d <delay>] <emoji> [emoji2] [...]`  
-*Category:* `Fun`  
+*Usage:* `anim [-d <delay>] <emoji> [emoji2] [...]`
 
 ### `binary`  
 *Description:* `Encodes/decodes your input to/from binary`  
-*Usage:* `binary <encode|decode> <input>`  
-*Category:* `Fun`  
-
-### `binex`  
-*Description:* `Explains binary crap`  
-*Usage:* `binex <num1> <num2>`  
-*Category:* `Fun`  
+*Usage:* `binary <encode|decode> <input>`
 
 ### `cat`  
 *Description:* `Shows you pictures of random cats`  
-*Usage:* `cat`  
-*Category:* `Fun`  
+*Usage:* `cat`
 
 ### `dog`  
 *Description:* `Shows you pictures of random dogs`  
-*Usage:* `dog`  
-*Category:* `Fun`  
+*Usage:* `dog`
 
 ### `fanceh`  
 *Description:* `Renders text in big emoji letters`  
-*Usage:* `fanceh <text>`  
-*Category:* `Fun`  
+*Usage:* `fanceh <text>`
 
 ### `figlet`  
 *Description:* `Renders fancy ASCII text`  
-*Usage:* `figlet <text>`  
-*Category:* `Fun`  
+*Usage:* `figlet <text>`
 
 ### `gif`  
 *Description:* `Searches Giphy for GIFs`  
-*Usage:* `gif <query>`  
-*Category:* `Fun`  
+*Usage:* `gif <query>`
 
 ### `meme`  
 *Description:* `N/A`  
-*Usage:* `meme list | info <name> | [<name> | <line 1> | <line 2> | [style]]`  
-*Category:* `Fun`  
+*Usage:* `meme list | info <name> | [<name> | <line 1> | <line 2> | [style]]`
 
 ### `reverse`  
 *Description:* `Reverses the text you input`  
-*Usage:* `reverse <text>`  
-*Category:* `Fun`  
+*Usage:* `reverse <text>`
 
 ### `roll`  
 *Description:* `rolls X dice with Y sides. Supports standard dice notation`  
 *Usage:* `roll XdY <reason>`  
-*Credits:* `<@136641861073764352>` 
-*Category:* `Fun`  
+*Credits:* `<@136641861073764352>
 
 ### `shoot`  
 *Description:* `Shoots yer friendz!`  
-*Usage:* `shoot <user>`  
-*Category:* `Fun`  
+*Usage:* `shoot <user>`
 
 ### `sigh`  
 *Description:* `Dramatic sigh text`  
-*Usage:* `sigh`  
-*Category:* `Fun`  
+*Usage:* `sigh`
 
 ### `space`  
 *Description:* `Spaces out text to look all dramatic n' stuff`  
-*Usage:* `space [amount] <text>`  
-*Category:* `Fun`  
+*Usage:* `space [amount] <text>`
 
 ### `tiny`  
 *Description:* `Converts your text to tiny letters!`  
-*Usage:* `tiny <text>`  
-*Category:* `Fun`  
+*Usage:* `tiny <text>`
 
 ### `urban`  
 *Description:* `Searches the given word on urbandictionary.com`  
 *Usage:* `urban <word>`  
-*Credits:* `NITEHAWK` 
-*Category:* `Fun`  
+*Credits:* `NITEHAWK
 
 ### `xkcd`  
 *Description:* `Shows you random xkcd comics`  
-*Usage:* `xkcd`  
-*Category:* `Fun`  
+*Usage:* `xkcd`
 
+## Info
 ### `guilds`  
 *Description:* `Lists all guilds that you're a member of`  
-*Usage:* `guilds`  
-*Category:* `Info`  
+*Usage:* `guilds`
 
 ### `help`  
 *Description:* `Shows you help for all commands or just a single command`  
-*Usage:* `help all|[command]|[category <name>]`  
-*Category:* `Info`  
+*Usage:* `help all|[command]|[category <name>]`
 
 ### `stats`  
 *Description:* `Shows you stats about SharpBot`  
-*Usage:* `stats`  
-*Category:* `Info`  
+*Usage:* `stats`
 
 ### `users`  
 *Description:* `Lists all users on your current server`  
-*Usage:* `users`  
-*Category:* `Info`  
+*Usage:* `users`
 
+## Moderation
 ### `flush`  
 *Description:* `Deletes messages sent by bots`  
-*Usage:* `flush <amount>`  
-*Category:* `Moderation`  
+*Usage:* `flush <amount>`
 
 ### `prune`  
 *Description:* `Deletes a certain number of messages sent by you`  
-*Usage:* `prune [amount]`  
-*Category:* `Moderation`  
+*Usage:* `prune [amount]`
 
 ### `purge`  
 *Description:* `Deletes a certain number of messages`  
-*Usage:* `purge [amount]`  
-*Category:* `Moderation`  
+*Usage:* `purge [amount]`
 
 ### `quote`  
 *Description:* `Quotes the message with the given ID`  
-*Usage:* `quote <id>`  
-*Category:* `Moderation`  
+*Usage:* `quote <id>`
 
 ### `search`  
 *Description:* `Searches a number of messages for some text`  
-*Usage:* `search <#> <text>`  
-*Category:* `Moderation`  
+*Usage:* `search <#> <text>`
 
+## Tags
 ### `addtag`  
 *Description:* `Adds a tag`  
-*Usage:* `addtag <tag> <text>`  
-*Category:* `Tags`  
+*Usage:* `addtag <tag> <text>`
 
 ### `deltag`  
 *Description:* `Deletes a saved tag`  
-*Usage:* `deltag <tag>`  
-*Category:* `Tags`  
+*Usage:* `deltag <tag>`
 
 ### `tag`  
 *Description:* `Displays a saved tag`  
-*Usage:* `tag <tag>`  
-*Category:* `Tags`  
+*Usage:* `tag <tag>`
 
 ### `tags`  
 *Description:* `Lists all saved tags`  
-*Usage:* `tags [add|delete] [id]`  
-*Category:* `Tags`  
+*Usage:* `tags [add|delete] [id]`
 
+## Utility
 ### `calc`  
 *Description:* `Calculates any math equation`  
 *Usage:* `calc <equation>`  
-*Credits:* `Carbowix` 
-*Category:* `Utility`  
+*Credits:* `Carbowix
 
 ### `convert`  
 *Description:* `converts practically any unit, or timezones to another, using DuckDuckGo searches`  
 *Usage:* `convert <measurement> to <unit>`  
-*Credits:* `<@136641861073764352>` 
-*Category:* `Utility`  
+*Credits:* `<@136641861073764352>
 
 ### `dictionary`  
 *Description:* `Searches the given word on dictionary.com`  
 *Usage:* `dictionary [word]`  
-*Credits:* `NITEHAWK` 
-*Category:* `Utility`  
+*Credits:* `NITEHAWK
 
 ### `embed`  
 *Description:* `Sends a message via embeds`  
-*Usage:* `embed [text]`  
-*Category:* `Utility`  
+*Usage:* `embed [text]`
 
 ### `eval`  
 *Description:* `Evaluates arbitrary JavaScript`  
-*Usage:* `eval <code>`  
-*Category:* `Utility`  
+*Usage:* `eval <code>`
 
 ### `exec`  
 *Description:* `Executes a command in the console`  
-*Usage:* `exec [-l <lang>] <command>`  
-*Category:* `Utility`  
+*Usage:* `exec [-l <lang>] <command>`
 
 ### `github`  
 *Description:* `Links to a GitHub repository`  
-*Usage:* `github user/repo`  
-*Category:* `Utility`  
+*Usage:* `github user/repo`
 
 ### `google`  
 *Description:* `Searches Google using magic`  
-*Usage:* `google <search>`  
-*Category:* `Utility`  
+*Usage:* `google <search>`
 
 ### `haste`  
 *Description:* `Uploads some text to Hastebin`  
-*Usage:* `haste [-r|--raw] <text>`  
-*Category:* `Utility`  
+*Usage:* `haste [-r|--raw] <text>`
 
 ### `lmgtfy`  
 *Description:* `Links to LMGTFY with the given search text`  
-*Usage:* `lmgtfy [search text]`  
-*Category:* `Utility`  
+*Usage:* `lmgtfy [search text]`
 
 ### `ping`  
 *Description:* `Pings the bot`  
-*Usage:* `ping`  
-*Category:* `Utility`  
+*Usage:* `ping`
 
 ### `restart`  
 *Description:* `Restarts the bot`  
-*Usage:* `restart`  
-*Category:* `Utility`  
+*Usage:* `restart`
 
 ### `setgame`  
 *Description:* `Sets your game (shows for other people)`  
-*Usage:* `setgame <game>`  
-*Category:* `Utility`  
+*Usage:* `setgame <game>`
 
 ### `shortcuts`  
 *Description:* `Controls or lists your shortcuts`  
-*Usage:* `shortcuts [add|delete] [id]`  
-*Category:* `Utility`  
+*Usage:* `shortcuts [add|delete] [id]`
 
 ### `translate`  
 *Description:* `Translates text from/to any language`  
 *Usage:* `translate <lang> <text>`  
-*Credits:* `Carbowix` 
-*Category:* `Utility`  
+*Credits:* `Carbowix
 
