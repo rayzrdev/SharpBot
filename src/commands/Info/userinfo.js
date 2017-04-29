@@ -26,6 +26,10 @@ exports.run = function (bot, msg) {
     const millisJoined = new Date().getTime() - member.joinedAt.getTime();
     const daysJoined = millisJoined/1000/60/60/24;
 
+// Slice off the first item (the @everyone)
+    let roles = member.roles.array().slice(1).sort((a, b) => a.comparePositionTo(b)).reverse().map(role => role.name);
+    if (roles.length < 1) roles = ['None'];
+    
     let embed = bot.utils.embed(
         `${user.username}#${msg.mentions.users.first().discriminator}`,
         stripIndents`
@@ -52,12 +56,12 @@ exports.run = function (bot, msg) {
                 value: `${dateFormat(member.joinedAt)}`,
             },
             {
-                name: 'Days Since Joined',
+                name: 'Days Since Joining',
                 value: `${daysJoined.toFixed(0)}`,
             },
             {
                 name: 'Roles',
-                value: `${member.roles.map(r => r.name).reverse().join(', ')}`,
+                value: `${roles.join(', ')}`,
                 inline: false,
             },
         ],
