@@ -10,6 +10,7 @@ function migrateConfig(bot, base) {
     let oldPath = path.resolve(base, 'config.json');
     let newPath = path.resolve(base, '../config.json');
     let newNewPath = path.resolve(base, '../data/configs/config.json');
+
     if (fse.existsSync(oldPath)) {
         try {
             fse.moveSync(oldPath, newPath);
@@ -28,6 +29,7 @@ function migrateConfig(bot, base) {
         }
     }
 }
+
 function migrateDB(bot, base) {
     let oldDataPath = path.resolve(base, '../data/tags');
     let newDataPath = path.resolve(base, '../data/db');
