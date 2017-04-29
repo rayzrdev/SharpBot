@@ -29,6 +29,8 @@ bot.on('ready', () => {
 
     commands.loadCommands(path.join(__dirname, 'commands'));
 
+    process.title = `SharpBot - ${bot.user.username}`;
+
     logger.info(stripIndents`Stats:
         - User: ${bot.user.username}#${bot.user.discriminator} <ID: ${bot.user.id}>
         - Users: ${bot.users.filter(user => !user.bot).size}
