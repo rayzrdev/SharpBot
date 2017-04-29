@@ -1,8 +1,7 @@
 const dateFormat = require('dateformat');
 const stripIndents = require('common-tags').stripIndents;
 
-const now = new Date();
-dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
+dateFormat('dddd, mmmm dS, yyyy, h:MM:ss TT');
 
 exports.run = function (bot, msg) {
 
@@ -70,9 +69,7 @@ exports.run = function (bot, msg) {
             footer: `User ID: ${user.id}`
         });
 
-    if (msg.guild.iconURL != null) {
-        embed.setThumbnail(`${user.avatarURL}`);
-    }
+    embed.setThumbnail(`${user.displayAvatarURL}`);
 
     msg.editEmbed(embed).then(m => m.delete(30000));
 
