@@ -8,7 +8,7 @@ let bot;
 
 const paths = {
     srcFiles: 'src/**/!(_)*.js',
-    configFiles: 'config.json',
+    configFiles: 'data/configs/config.json',
     gulpFile: 'gulpfile.js'
 };
 
