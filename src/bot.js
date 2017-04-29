@@ -29,7 +29,10 @@ bot.on('ready', () => {
 
     commands.loadCommands(path.join(__dirname, 'commands'));
 
-    process.title = `SharpBot - ${bot.user.username}`;
+    (title => {
+        process.title = title;
+        process.stdout.write(`\u001B]0;${title}\u0007`);
+    })(`SharpBot - ${bot.user.username}`);
 
     logger.info(stripIndents`Stats:
         - User: ${bot.user.username}#${bot.user.discriminator} <ID: ${bot.user.id}>
