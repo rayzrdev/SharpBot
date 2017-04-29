@@ -76,7 +76,7 @@ exports.run = function (bot, msg) {
 
 exports.info = {
     name: 'userinfo',
-    usage: 'userinfo',
+    usage: 'userinfo <user>',
     description: 'Shows info about a user'
 };
 
