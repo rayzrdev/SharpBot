@@ -8,7 +8,7 @@ exports.run = function (bot, msg, args) {
 
     let parsed = bot.utils.parseArgs(args, ['e']);
 
-    let word = parsed.leftover[0];
+    let word = parsed.leftover.join(' ');
 
     webdict('dictionary', word)
         .then(resp => {
