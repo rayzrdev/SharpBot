@@ -12,6 +12,14 @@ const paths = {
     gulpFile: 'gulpfile.js'
 };
 
+function killBot() {
+    if (bot) bot.kill();
+}
+
+gulp.task('kill', () => {
+    killBot();
+});
+
 gulp.task('lint', () =>
     gulp.src([
         paths.srcFiles,
@@ -22,9 +30,9 @@ gulp.task('lint', () =>
         .pipe(eslint.failAfterError())
 );
 
-gulp.task('main', ['lint'], () => {
-    if (bot) bot.kill();
+gulp.task('main', ['kill', 'lint'], () => {
     bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] });
+
     bot.stderr.on('data', data => {
         process.stderr.write(data);
         if (moduleError.test(data.toString())) {
@@ -44,14 +52,23 @@ New modules have been installed. The bot will now restart.
             });
         }
     });
+
     bot.on('close', code => {
+        if (code === null) {
+            // Killed by killBot()
+            return;
+        }
+
         if (code === 42) {
+            // Restart
             console.error('Restart code detected.');
             gulp.start('main');
         } else if (code === 666) {
+            // Full process stop
             console.log('Process exit code detected.');
             process.exit(1);
         } else {
+            // Wait for changes
             console.log('Bot has exited. Waiting for changes...');
         }
     });
@@ -67,5 +84,5 @@ gulp.task('watch', () => {
 gulp.task('default', ['main', 'watch']);
 
 process.on('exit', () => {
-    if (bot) bot.kill();
+    killBot();
 });

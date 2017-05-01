@@ -1,22 +1,28 @@
 'use strict';
 
-const Discord = require('discord.js');
-const fse = require('fs-extra');
 const path = require('path');
-const didYouMean = require('didyoumean2');
+const fse = require('fs-extra');
+const Discord = require('discord.js');
 const XPDB = require('xpdb');
+const readline = require('readline');
+const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
+
 const Managers = require('./managers');
 
 const bot = exports.client = new Discord.Client();
 Managers.Migrator.migrate(bot, __dirname);
 
-const configManager = bot.configManager = new Managers.Config(bot, __dirname);
+bot.managers = {};
+
+const configManager = bot.managers.config = new Managers.Config(bot, __dirname);
 const config = bot.config = configManager.load();
+
+bot.managers.notifications = new Managers.Notifications();
 
 const logger = bot.logger = new Managers.Logger(bot);
 const commands = bot.commands = new Managers.CommandManager(bot);
-const stats = bot.stats = new Managers.Stats(bot);
+const stats = bot.managers.stats = new Managers.Stats(bot);
 
 logger.inject();
 
@@ -27,6 +33,8 @@ let configsFolder = path.join(dataFolder, 'configs');
 if (!fse.existsSync(configsFolder)) fse.mkdirSync(configsFolder);
 
 const db = bot.db = new XPDB(path.join(dataFolder, 'db'));
+
+let loaded = false;
 
 bot.on('ready', () => {
     bot.utils = require('./utils');
@@ -53,6 +61,22 @@ bot.on('ready', () => {
     bot.user.setStatus('invisible');
 
     logger.info('Bot loaded');
+
+    readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        prompt: ''
+    }).on('line', line => {
+        try {
+            console.log(eval(line) || 'undefined');
+        } catch (err) {
+            console.error(err);
+        }
+    }).on('SIGINT', () => {
+        process.exit();
+    });
+
+    loaded = true;
 });
 
 bot.on('message', msg => {
@@ -73,54 +97,63 @@ bot.on('message', msg => {
 
     if (!msg.content.startsWith(config.prefix)) return;
 
-    let split = msg.content.split(' ');
-    let base = split[0].substr(config.prefix.length).toLowerCase();
+    let split = msg.content.substr(config.prefix.length).trim().split(' ');
+    let base = split[0].toLowerCase();
     let args = split.slice(1);
 
     let command = commands.get(base);
 
     if (command) {
         commands.execute(msg, command, args);
-    } else {
-        db.get(`shortcuts.${base}`).then(sc => {
-            if (!sc) {
-                let maybe = didYouMean(base, commands.all().map(c => c.info.name), {
-                    threshold: 5,
-                    thresholdType: 'edit-distance'
-                });
-
-                if (maybe) {
-                    msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
-                } else {
-                    msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${base}\``)
-                        .then(m => m.delete(5000));
-                }
-            } else {
-                base = sc.command.split(' ')[0].toLowerCase();
-                args = sc.command.split(' ').splice(1).concat(args);
-
-                command = commands.get(base);
-
-                if (command) {
-                    commands.execute(msg, command, args);
-                } else {
-                    return msg.edit(`:no_entry_sign: The shortcut \`${sc.name}\` is improperly set up!`).then(m => m.delete(2000));
-                }
-            }
-        });
+        return;
     }
+
+    db.get(`shortcuts.${base}`).then(sc => {
+        if (sc) {
+            base = sc.command.split(' ')[0].toLowerCase();
+            args = sc.command.split(' ').splice(1).concat(args);
+
+            command = commands.get(base);
+
+            if (command) {
+                commands.execute(msg, command, args);
+            } else {
+                return msg.edit(`:no_entry_sign: The shortcut \`${sc.name}\` is improperly set up!`).then(m => m.delete(2000));
+            }
+            return;
+        }
+
+        const maybe = didYouMean(base, commands.all().map(c => c.info.name), {
+            threshold: 5,
+            thresholdType: 'edit-distance'
+        });
+
+        if (maybe) {
+            msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
+        } else {
+            msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${base}\``)
+                .then(m => m.delete(5000));
+        }
+    });
 });
 
 process.on('exit', () => {
     bot.db.unwrap().close();
+    loaded && bot.destroy();
 });
 
 bot.on('error', console.error);
 bot.on('warn', console.warn);
-bot.on('disconnect', console.warn);
+bot.on('disconnect', event => {
+    if (event.code === 1000) {
+        logger.info('Disconnected from Discord cleanly');
+    } else {
+        logger.warn(`Disconnected from Discord with code ${event.code}`);
+    }
+});
 
 process.on('uncaughtException', (err) => {
-    let errorMsg = (err.stack || err || '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
+    let errorMsg = (err ? err.stack || err : '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
     logger.severe(errorMsg);
 });
 

@@ -17,15 +17,15 @@ exports.run = (bot, msg) => {
         bot.utils.embed('SharpBot Stats', '***This message will dissappear in 15 seconds.***', [
             {
                 name: ':outbox_tray: Messages sent',
-                value: bot.stats.get('messages-sent') || 0,
+                value: bot.managers.stats.get('messages-sent') || 0,
             },
             {
                 name: ':inbox_tray: Messages received',
-                value: bot.stats.get('messages-received') || 0,
+                value: bot.managers.stats.get('messages-received') || 0,
             },
             {
                 name: ':mailbox: Mentions',
-                value: bot.stats.get('mentions') || 0
+                value: bot.managers.stats.get('mentions') || 0
             },
             {
                 name: ':baby: Users',
@@ -45,7 +45,7 @@ exports.run = (bot, msg) => {
             },
             {
                 name: ':stopwatch: Uptime',
-                value: formatTime(process.hrtime(bot.stats.get('start-time')))
+                value: formatTime(process.hrtime(bot.managers.stats.get('start-time')))
             },
             {
                 name: ':video_game: Game',

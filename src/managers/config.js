@@ -1,6 +1,7 @@
 const prompt = require('prompt');
 const chalk = require('chalk');
 const stripIndents = require('common-tags').stripIndents;
+const dateFormat = require('dateformat');
 
 const fse = require('fs-extra');
 const path = require('path');
@@ -29,14 +30,14 @@ const questions = {
 
 class ConfigManager {
     constructor(bot, base) {
-        this.bot = bot;
-        this.base = base;
+        this._bot = bot;
+        this._base = base;
+
+        this._configPath = path.resolve(base, '../data/configs/config.json');
     }
 
     load() {
-        let configFile = path.resolve(this.base, '../data/configs/config.json');
-
-        if (!fse.existsSync(configFile)) {
+        if (!fse.existsSync(this._configPath)) {
             console.log(stripIndents`
             ${chalk.gray('----------------------------------------------------------')}
             ${chalk.gray('==============<') + chalk.yellow(' SharpBot Setup Wizard v1.0 ') + chalk.gray('>==============')}
@@ -58,13 +59,41 @@ class ConfigManager {
                     '239010380385484801'
                 ];
 
-                fse.writeJSONSync(configFile, res);
+                fse.writeJSONSync(this._configPath, res);
                 process.exit(42);
             });
             return null;
         }
 
-        return require(configFile);
+        this._config = fse.readJSONSync(this._configPath);
+
+        return this._config;
+    }
+
+    _backup() {
+        const backupPath = `${this._configPath}.${dateFormat('dd-mm-yy-HH-MM-ss')}.bak`;
+        fse.copySync(this._configPath, backupPath);
+
+        return backupPath;
+    }
+
+    save() {
+        const backupPath = this._backup();
+
+        try {
+            fse.writeJSONSync(this._configPath, this._config);
+            fse.removeSync(backupPath);
+        } catch (e) {
+            this._bot.logger.severe('Failed to save config file!');
+        }
+    }
+
+    set(key, value) {
+        // Convert to string if it's not a string already
+        const realKey = `${key}`;
+        this._config[realKey] = value;
+
+        this.save();
     }
 }
 
