@@ -9,7 +9,7 @@
 ### [FAQ](FAQ.md)
 ### [Commands](COMMANDS.md)
 
-> If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](https://github.com/Rayzr522/SharpBot/wiki/SelfBot-Rules).
+> If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](https://github.com/RayzrDev/SharpBot/wiki/SelfBot-Rules).
 
 #### Table of contents
 - [Requirements](#requirements)
@@ -26,18 +26,18 @@
 - `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/))
 - `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows-tab) | [Linux](https://yarnpkg.com/en/docs/install#linux-tab) | [macOS](https://yarnpkg.com/en/docs/install#mac-tab))
 
-> If you want a simple reason to use `yarn` instead of `npm`, see [here](https://github.com/Rayzr522/SharpBot/wiki/Why-Yarn%3F).
+> If you want a simple reason to use `yarn` instead of `npm`, see [here](https://github.com/RayzrDev/SharpBot/wiki/Why-Yarn%3F).
 
 ### Installing
 #### Linux & macOS quick-installer
 For those of you running Linux/Unix, this nifty little command should do everything for you:
 
-    curl -fsSL https://rawgit.com/Rayzr522/SharpBot-installer/master/install.sh | bash -
+    curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh | bash -
 
 #### Normal installation
 ```
 # Download the bot
-git clone https://github.com/Rayzr522/SharpBot.git
+git clone https://github.com/RayzrDev/SharpBot.git
 # Enter the bot folder
 cd SharpBot
 # Install dependencies
