@@ -3,7 +3,7 @@ exports.run = (bot, msg, args) => {
         throw 'You must specify something to embed!';
     }
 
-    let parsed = bot.utils.parseArgs(args, ['f', 'ft:', 'd', 't:', 'c:', 'r', 'i:', 'a:', 'tb:']);
+    let parsed = bot.utils.parseArgs(args, ['f', 'ft:', 'd', 't:', 'c:', 'r', 'i:', 'a:', 'th:']);
 
     let color = parsed.options.c;
     if (parsed.options.r && msg.guild && msg.guild.members) {
@@ -31,7 +31,7 @@ exports.run = (bot, msg, args) => {
             color,
             image: parsed.options.i,
             author: parsed.options.a,
-            thumbnail: parsed.options.tb
+            thumbnail: parsed.options.th
         })
     );
 };
@@ -80,8 +80,8 @@ exports.info = {
             description: 'Sets the author of the embed'
         },
         {
-            name: '-tb',
-            usage: '-tb <url>',
+            name: '-th',
+            usage: '-th <url>',
             description: 'Sets a thumbnail for the embed'
         }
     ]
