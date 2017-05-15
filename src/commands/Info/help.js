@@ -54,8 +54,8 @@ exports.run = (bot, msg, args) => {
         msg.delete();
         messages.map(m => m.fields).forEach(fields => {
             msg.channel.sendEmbed(
-                bot.utils.embed(title, '_This message will self-destruct in 30 seconds._', fields)
-            ).then(m => m.delete(30000));
+                bot.utils.embed(title, '_This message will self-destruct in 90 seconds._ :boom:', fields)
+            ).then(m => m.delete(90000));
         });
     } else {
         let categories = bot.commands.categories().sort();
@@ -68,7 +68,7 @@ exports.run = (bot, msg, args) => {
             Do \`${bot.config.prefix}help category <name>\` for a list of commands in a specific category.
             Do \`${bot.config.prefix}help all\` for a list of every command available in this bot.
             Do \`${bot.config.prefix}help <command>\` for help with a specific command.`)
-        ).then(m => m.delete(10000));
+        ).then(m => m.delete(15000));
     }
 };
 
