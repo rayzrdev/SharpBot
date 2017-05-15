@@ -74,9 +74,17 @@
 *Description:* `Shows you help for all commands or just a single command`  
 *Usage:* `help all|[command]|[category <name>]`
 
+### `serverinfo`  
+*Description:* `Shows info of the server you are in`  
+*Usage:* `serverinfo`
+
 ### `stats`  
 *Description:* `Shows you stats about SharpBot`  
 *Usage:* `stats`
+
+### `userinfo`  
+*Description:* `Shows info about a user`  
+*Usage:* `userinfo <user>`
 
 ### `users`  
 *Description:* `Lists all users on your current server`  
@@ -126,11 +134,6 @@
 *Usage:* `calc <equation>`  
 *Credits:* `Carbowix
 
-### `convert`  
-*Description:* `converts practically any unit, or timezones to another, using DuckDuckGo searches`  
-*Usage:* `convert <measurement> to <unit>`  
-*Credits:* `<@136641861073764352>
-
 ### `dictionary`  
 *Description:* `Searches the given word on dictionary.com`  
 *Usage:* `dictionary [word]`  
@@ -166,7 +169,11 @@
 
 ### `ping`  
 *Description:* `Pings the bot`  
-*Usage:* `ping`
+*Usage:* `ping [-o]`
+
+### `prefix`  
+*Description:* `Sets the bot prefix`  
+*Usage:* `prefix <new prefix>`
 
 ### `restart`  
 *Description:* `Restarts the bot`  
@@ -179,6 +186,11 @@
 ### `shortcuts`  
 *Description:* `Controls or lists your shortcuts`  
 *Usage:* `shortcuts [add|delete] [id]`
+
+### `timezone`  
+*Description:* `converts between timezones, using DuckDuckGo searches`  
+*Usage:* `timezone <time> to <time>`  
+*Credits:* `<@136641861073764352>
 
 ### `translate`  
 *Description:* `Translates text from/to any language`  

@@ -2,10 +2,13 @@ exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         return bot.db.entries().then(entries => {
             let shortcuts = entries.filter(e => e.key.startsWith('shortcuts.')).map(e => e.value);
+
             if (shortcuts.length < 1) {
                 throw 'You have no shortcuts!';
             }
-            msg.edit(shortcuts.map(sc => `**${sc.name}:** \`${sc.command}\``).join('\n')).then(m => m.delete(15000));
+
+            msg.delete();
+            bot.utils.sendLarge(msg.channel, shortcuts.map(sc => `**${sc.name}:** \`${sc.command}\``), { cutOn: '\n' });
         });
     }
 
