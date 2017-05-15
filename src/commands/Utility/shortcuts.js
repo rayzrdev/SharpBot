@@ -8,7 +8,7 @@ exports.run = (bot, msg, args) => {
             }
 
             msg.delete();
-            bot.utils.sendLarge(msg.channel, shortcuts.map(sc => `**${sc.name}:** \`${sc.command}\``), { cutOn: '\n' });
+            bot.utils.sendLarge(msg.channel, shortcuts.map(sc => `**${sc.name}:** \`${sc.command}\``).join('\n'), { cutOn: '\n' });
         });
     }
 
