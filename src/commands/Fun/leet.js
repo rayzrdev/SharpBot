@@ -1,6 +1,8 @@
 exports.run = function(bot, message, args) {
 
-    if (params.length < 1) return message.channel.sendMessage(':x: Provide text to be leeted.')
+    if (params.length < 1) {
+    throw 'provide text to be leeted.'
+    }
 
 
     var parsed = args.join(' ').replace(/[a-z]/g, function f(a) {
