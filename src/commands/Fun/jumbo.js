@@ -1,8 +1,7 @@
-
 exports.run = function (bot, msg, args) {
 
     if (args.length < 1) {
-        throw 'Please provide a emoji to enlarge';
+        throw 'Please provide an emoji to enlarge';
     }
 
     if (args[0].charCodeAt(0) >= 55296) {
@@ -21,6 +20,10 @@ exports.run = function (bot, msg, args) {
     }
 
     const emoji = bot.emojis.get(match[1]);
+
+    if(!emoji) {
+        throw 'That emoji could not be identified.';
+    }
 
     msg.delete();
     msg.channel.send({
