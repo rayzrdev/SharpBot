@@ -1,6 +1,7 @@
 <h1 align="center">SharpBot</h1>
 
-![Discord Badge](https://discordapp.com/api/guilds/282207139752050688/embed.png)
+[![Patreon](http://ionicabizau.github.io/badges/patreon.svg)](https://patreon.com/Rayzr522)
+[![Discord Badge](https://discordapp.com/api/guilds/282207139752050688/embed.png)](https://discord.io/rayzrdevofficial)
 
 **SharpBot** is an ever-expanding [Discord](http://discordapp.com) selfbot written with [discord.js](https://discord.js.org/#/) that has a bunch of fun and useful commands.
 
