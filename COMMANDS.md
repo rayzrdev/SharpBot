@@ -3,6 +3,10 @@
 *Description:* `"Animates" a series of emojis`  
 *Usage:* `anim [-d <delay>] <emoji> [emoji2] [...]`
 
+### `bill`  
+*Description:* `Be like Bill!`  
+*Usage:* `bill`
+
 ### `binary`  
 *Description:* `Encodes/decodes your input to/from binary`  
 *Usage:* `binary <encode|decode> <input>`
@@ -26,6 +30,14 @@
 ### `gif`  
 *Description:* `Searches Giphy for GIFs`  
 *Usage:* `gif <query>`
+
+### `jumbo`  
+*Description:* `Enlarges emojis!`  
+*Usage:* `jumbo <emoji>`
+
+### `leet`  
+*Description:* `Talk like true gamers`  
+*Usage:* `leet <text>`
 
 ### `meme`  
 *Description:* `N/A`  
@@ -66,6 +78,10 @@
 *Usage:* `xkcd`
 
 ## Info
+### `emoji`  
+*Description:* `Shows information about an emoji`  
+*Usage:* `emoji <emoji>`
+
 ### `guilds`  
 *Description:* `Lists all guilds that you're a member of`  
 *Usage:* `guilds`
@@ -73,6 +89,10 @@
 ### `help`  
 *Description:* `Shows you help for all commands or just a single command`  
 *Usage:* `help all|[command]|[category <name>]`
+
+### `playerinfo`  
+*Description:* `Shows information about a Minecraft player`  
+*Usage:* `playerinfo <username>`
 
 ### `serverinfo`  
 *Description:* `Shows info of the server you are in`  
@@ -129,6 +149,10 @@
 *Usage:* `tags [add|delete] [id]`
 
 ## Utility
+### `avatar`  
+*Description:* `Gives you the avatar of a user`  
+*Usage:* `avatar <user>`
+
 ### `calc`  
 *Description:* `Calculates any math equation`  
 *Usage:* `calc <equation>`  
