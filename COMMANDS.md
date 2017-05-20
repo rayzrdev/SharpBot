@@ -214,10 +214,15 @@
 ### `timezone`  
 *Description:* `converts between timezones, using DuckDuckGo searches`  
 *Usage:* `timezone <time> to <time>`  
-*Credits:* `<@136641861073764352>
+*Credits:* `<@136641861073764352>`
 
 ### `translate`  
 *Description:* `Translates text from/to any language`  
 *Usage:* `translate <lang> <text>`  
-*Credits:* `Carbowix
+*Credits:* `Carbowix`
+
+### `spotify`  
+*Description:* `Shows information about spotify tracks`  
+*Usage:* `spotify <trackUrl>`  
+*Credits:* `Doxylamin <@140541588915879936>`
 
