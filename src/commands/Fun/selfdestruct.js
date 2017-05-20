@@ -6,11 +6,7 @@ exports.run = function (bot, msg, args) {
         time = parsed.options.t;
     }
 
-    msg.edit(parsed.leftover.join(' ')).then(m => {
-        setInterval(() => {
-            m.delete();
-        }, time);
-    });
+    msg.edit(parsed.leftover.join(' ')).then(m => m.delete(time));
 };
 
 exports.info = {
