@@ -48,5 +48,17 @@ exports.info = {
     name: 'destruct',
     usage: 'destruct [-d delay in ms]  [-s <embed|inline|code>] <message>',
     description: 'creates a self-destructing message',
+    options:[
+        {
+            name: '-d',
+            usage: '-d <delay in ms>',
+            description: 'Sets the time (in ms) for the message to be deleted. (Default: 5 seconds)'
+        },
+        {
+            name: '-s',
+            usage: '-s <embed|inline|code|plain>',
+            description: 'Sets the message style (default: plain)'
+        }
+    ],
     credits: '<@140541588915879936>' // Doxylamin#4539
 };
