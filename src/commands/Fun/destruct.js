@@ -46,7 +46,7 @@ exports.run = function(bot,msg,args) {
 
 exports.info = {
     name: 'destruct',
-    usage: 'destruct [-d delay in ms]  [-s <embed|inline|code>] <message>',
+    usage: 'destruct [-d delay in ms]  [-s <embed|inline|code|plain>] <message>',
     description: 'creates a self-destructing message',
     options:[
         {
