@@ -22,8 +22,7 @@ exports.run = function(bot,msg,args) {
                 [],
                 {
                     inline: true,
-                    footer: 'Secret Message',
-                    color: [255, 0, 0]
+                    footer: 'Secret Message'
                 }
             )
         };
