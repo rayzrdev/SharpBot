@@ -13,13 +13,19 @@ exports.run = function (bot, msg, args) {
     let input = args.join(' ')
         .replace('https://open.spotify.com/track/','')
         .replace('spotify:track:','');
-    let url = `https://api.spotify.com/v1/tracks/${input}`;
+    let url = `https://api.spotify.com/v1/track/${input}`;
     msg.edit(':arrows_counterclockwise:  Loading track info for ' + input);
 
-    got(url)
-    .then(res => {
+    got(url).then(res => {
 
-        let data = JSON.parse(res.body);
+        let data;
+
+        try {
+            data = JSON.parse(res.body);
+        } catch (e) {
+            msg.error('SpotifyAPI returned weird data. See console.');
+            bot.logger.severe(e);
+        }
 
         if (data['type'] === 'track') {
             
@@ -75,8 +81,7 @@ exports.run = function (bot, msg, args) {
             msg.error(`No info found for ${input}`);
         }
 
-    })
-    .catch(err => {
+    }).catch(err => {
         msg.error('SpotifyAPI returned an error. See console.');
         bot.logger.severe(err);
     });
