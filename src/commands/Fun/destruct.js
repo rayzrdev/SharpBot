@@ -1,6 +1,6 @@
 exports.run = function(bot,msg,args) {
 
-    let parsedArgs = bot.utils.parseArgs(args, ['d:','s:']);
+    const parsedArgs = bot.utils.parseArgs(args, ['d:','s:']);
 
     if(parsedArgs.leftover.length < 1) {
         throw 'Please provide a secret message';
@@ -9,7 +9,7 @@ exports.run = function(bot,msg,args) {
     let message = parsedArgs.leftover.join(' ');
     let delay = isNaN(parsedArgs.options.d) ? 5000 : parseInt(parsedArgs.options.d);
     delay = (delay < 100) ? 100 : delay;
-    let style = (typeof parsedArgs.options.s === 'string') ? parsedArgs.options.s : 'plain';
+    const style = (typeof parsedArgs.options.s === 'string') ? parsedArgs.options.s : 'plain';
 
     msg.delete();
 
