@@ -13,7 +13,7 @@ exports.run = function (bot, msg, args) {
     let input = args.join(' ')
         .replace('https://open.spotify.com/track/','')
         .replace('spotify:track:','');
-    let url = `https://api.spotify.com/v1/track/${input}`;
+    let url = `https://api.spotify.com/v1/tracks/${input}`;
     msg.edit(':arrows_counterclockwise:  Loading track info for ' + input);
 
     got(url).then(res => {
