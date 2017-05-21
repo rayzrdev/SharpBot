@@ -6,40 +6,37 @@ exports.run = function(bot,msg,args) {
         throw 'Please provide a secret message';
     }
 
-    let text = parsedArgs.leftover;
-    let message = text.join(' ');
-    let delay = isNaN(parsedArgs.options.d) ? 5000 : parsedArgs.options.d;
+    let message = parsedArgs.leftover.join(' ');
+    let delay = isNaN(parsedArgs.options.d) ? 5000 : parseInt(parsedArgs.options.d);
+    delay = (delay < 100) ? 100 : delay;
     let style = (typeof parsedArgs.options.s === 'string') ? parsedArgs.options.s : 'plain';
 
     msg.delete();
 
     switch(style) {
     case 'embed':
-        message = bot.utils.embed(
-            `This message self-destructs in ${delay/1000} seconds.`,
-            `${message}`,
-            [],
-            {
-                inline: true,
-                footer: 'Secret Message',
-                color: [255, 0, 0]
-            }
-        );
-        msg.channel.sendEmbed(message).then(m => { m.delete(delay); });
+        message = {
+            embed: bot.utils.embed(
+                `This message self-destructs in ${delay/1000} seconds.`,
+                message,
+                [],
+                {
+                    inline: true,
+                    footer: 'Secret Message',
+                    color: [255, 0, 0]
+                }
+            )
+        };
         break;
     case 'inline':
         message = `*This message self-destructs in ${delay/1000} seconds.*\n${message}`;
-        msg.channel.send(message).then(m => { m.delete(delay); });
         break;
     case 'code':
         message = `*This message self-destructs in ${delay/1000} seconds.*\n\`\`\`${message}\`\`\``;
-        msg.channel.send(message).then(m => { m.delete(delay); });
-        break;
-    default:
-        message = `${message}`;
-        msg.channel.send(message).then(m => { m.delete(delay); });
         break;
     }
+
+    msg.channel.send(message).then(m => m.delete(delay));
 
 };
 
