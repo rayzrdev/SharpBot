@@ -158,7 +158,13 @@ process.on('uncaughtException', (err) => {
 });
 
 process.on('unhandledRejection', err => {
-    logger.severe('Uncaught Promise error: \n' + err.stack);
+    // Force the user to reconfigure if their token is invalid
+    if (err.message === 'Incorrect login details were provided.') {
+        logger.severe(err.message);
+        configManager.load(true);
+    } else {
+        logger.severe('Uncaught Promise error: \n' + err.stack);
+    }
 });
 
 config && bot.login(config.botToken);

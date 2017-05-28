@@ -5,7 +5,8 @@
   "main": "src/bot.js",
   "scripts": {
     "start": "gulp",
-    "background": "screen -dmS sharpBot gulp"
+    "background": "screen -dmS sharpBot gulp",
+    "config": "node src/scripts/configure.js"
   },
   "author": "",
   "license": "MIT",

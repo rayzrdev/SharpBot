@@ -7,3 +7,4 @@ data/
 *.sqlite
 src/config.json
 /config.json
+.idea
