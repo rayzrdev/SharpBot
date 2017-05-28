@@ -8,23 +8,20 @@ exports.run = (bot, msg, args) => {
         let evaled = eval(code);
         if (typeof evaled !== 'string')
             evaled = require('util').inspect(evaled);
-        if(evaled === bot.token) {
-            evaled = 'Don\'t eval your token, that is... Hmm, bad.';
-        }
         msg.channel.sendMessage(`\`\`\`${lang}\n${clean(evaled)}\n\`\`\``);
     } catch (err) {
         msg.channel.sendMessage(`:x: Error! \`\`\`xl\n${clean(err)}\n\`\`\``).then(m => m.delete(15000));
     }
-};
 
-function clean(text) {
-    if (typeof (text) === 'string') {
-        return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
+    function clean(text) {
+        if (typeof (text) === 'string') {
+            return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203)).replace(bot.token, 'BOT_TOKEN' + String.fromCharCode(8203));
+        }
+        else {
+            return text;
+        }
     }
-    else {
-        return text;
-    }
-}
+};
 
 exports.info = {
     name: 'eval',
