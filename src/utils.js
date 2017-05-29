@@ -128,7 +128,16 @@ exports.sendLarge = (channel, largeMessage, options = {}) => {
         let cutTo = max;
         if (options.cutOn) {
             cutTo = part.lastIndexOf(options.cutOn);
-            part = part.substr(0, cutTo);
+
+            // Prevent infinite loop when cutOn isnt found in message
+            if (cutTo === -1) {
+                cutTo = max;
+            } else {
+                if (options.cutAfter) {
+                    cutTo += 1;
+                }
+                part = part.substr(0, cutTo);
+            }
         }
         messages.push(prefix + part + suffix);
         message = message.substr(cutTo);
