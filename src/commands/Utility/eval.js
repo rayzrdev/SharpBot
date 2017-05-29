@@ -5,13 +5,29 @@ exports.run = (bot, msg, args) => {
     let code = parsed.leftover.join(' ');
 
     try {
+        const options = {
+            prefix: '```',
+            suffix: '```'
+        };
+
         let evaled = eval(code);
-        if (typeof evaled !== 'string')
+        if (typeof evaled !== 'string') {
             evaled = require('util').inspect(evaled);
+            if (!lang) {
+                lang = 'javascript';
+                options.cutOn = ',';
+                options.cutAfter = true;
+            }
+        }
         if(evaled === bot.token) {
             evaled = 'Don\'t eval your token, that is... Hmm, bad.';
         }
-        msg.channel.sendMessage(`\`\`\`${lang}\n${clean(evaled)}\n\`\`\``);
+
+        if (lang) {
+            options.prefix += lang + '\n';
+        }
+
+        bot.utils.sendLarge(msg.channel, clean(evaled), options);
     } catch (err) {
         msg.channel.sendMessage(`:x: Error! \`\`\`xl\n${clean(err)}\n\`\`\``).then(m => m.delete(15000));
     }
