@@ -28,7 +28,7 @@ exports.run = (bot, msg, args) => {
             msg.channel.send({
                 embed: bot.utils.embed('', stripIndents`
                 **Input:**\n\`\`\`js\n${code}\n\`\`\`
-                **Output:**${evaled.split('').length < 1900 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\nhttps://hastebin.com/${output2}\n`}
+                **Output:**${evaled.split('').length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\nhttps://hastebin.com/${output2}\n`}
             `)});
         });
     } catch (err) {
