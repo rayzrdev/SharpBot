@@ -7,6 +7,7 @@ const XPDB = require('xpdb');
 const readline = require('readline');
 const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
+const chalk = require('chalk');
 
 const Managers = require('./managers');
 
@@ -158,7 +159,13 @@ process.on('uncaughtException', (err) => {
 });
 
 process.on('unhandledRejection', err => {
-    logger.severe('Uncaught Promise error: \n' + err.stack);
+    // Force the user to reconfigure if their token is invalid
+    if (err.message === 'Incorrect login details were provided.') {
+        logger.severe(`${err.message} Please reconfigure with ${chalk.green('yarn run config')}`);
+        process.exit(666);
+    } else {
+        logger.severe('Uncaught Promise error: \n' + err.stack);
+    }
 });
 
 config && bot.login(config.botToken);
