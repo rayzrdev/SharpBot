@@ -1,3 +1,6 @@
+const got = require('got');
+const url = require('url');
+const stripIndents = require('common-tags').stripIndents;
 exports.run = (bot, msg, args) => {
     let parsed = bot.utils.parseArgs(args, ['l:']);
     let lang = parsed.options.l || '';
@@ -6,14 +9,34 @@ exports.run = (bot, msg, args) => {
 
     try {
         let evaled = eval(code);
-        if (typeof evaled !== 'string')
+        if (typeof evaled !== 'string') {
             evaled = require('util').inspect(evaled);
-        if(evaled === bot.token) {
-            evaled = 'Don\'t eval your token, that is... Hmm, bad.';
         }
-        msg.channel.sendMessage(`\`\`\`${lang}\n${clean(evaled)}\n\`\`\``);
+        msg.delete();
+        let output = clean(evaled).replace(bot.token, 'BOT_TOKEN' + String.fromCharCode(8203));
+        got.post(url.resolve('https://hastebin.com', 'documents'), {
+            body: output,
+            json: true,
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        }).then(res => {
+            if (!res.body || !res.body.key) {
+                return 'Failed to upload, no key was returned!';
+            }
+            let output2 = res.body.key || res.body;
+            msg.channel.send({
+                embed: bot.utils.embed('', stripIndents`
+                **Input:**\n\`\`\`js\n${code}\n\`\`\`
+                **Output:**${evaled.split('').length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\nhttps://hastebin.com/${output2}\n`}
+            `)});
+        });
     } catch (err) {
-        msg.channel.sendMessage(`:x: Error! \`\`\`xl\n${clean(err)}\n\`\`\``).then(m => m.delete(15000));
+        msg.delete();
+        msg.channel.send({
+            embed: bot.utils.embed('', `**Input:**\n\`\`\`js\n${code}\n\`\`\`\n:x: **Error!**\n\`\`\`xl\n${clean(err)}\n\`\`\``, [], {
+                color: '#ff0000'
+            })}).then(m => m.delete(15000));
     }
 };
 
