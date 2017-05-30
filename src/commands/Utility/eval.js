@@ -2,7 +2,7 @@ const got = require('got');
 const url = require('url');
 const stripIndents = require('common-tags').stripIndents;
 exports.run = (bot, msg, args) => {
-    let parsed = bot.utils.parseArgs(args, ['l:']);
+    let parsed = bot.utils.parseArgs(args, ['l:', 'i']);
     let lang = parsed.options.l || '';
 
     let code = parsed.leftover.join(' ');
@@ -11,9 +11,13 @@ exports.run = (bot, msg, args) => {
         let evaled = eval(code);
         if (typeof evaled !== 'string') {
             evaled = require('util').inspect(evaled);
+            if (!lang) {
+                lang = 'javascript';
+            }
         }
         msg.delete();
         let output = clean(evaled).replace(bot.token, 'BOT_TOKEN' + String.fromCharCode(8203));
+
         got.post(url.resolve('https://hastebin.com', 'documents'), {
             body: output,
             json: true,
@@ -28,8 +32,17 @@ exports.run = (bot, msg, args) => {
             msg.channel.send({
                 embed: bot.utils.embed('', stripIndents`
                 **Input:**\n\`\`\`js\n${code}\n\`\`\`
-                **Output:**${evaled.split('').length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\nhttps://hastebin.com/${output2}\n`}
+                **Output:**${output.length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\nhttps://hastebin.com/${output2}\n`}
             `)});
+
+            if (output.length > 1500 && parsed.options.i) {
+                bot.utils.sendLarge(msg.channel, output, {
+                    prefix: '```' + lang + '\n',
+                    suffix: '```',
+                    cutOn: ',',
+                    cutAfter: true
+                });
+            }
         });
     } catch (err) {
         msg.delete();
@@ -58,6 +71,11 @@ exports.info = {
             name: '-l',
             usage: '-l <lang>',
             description: 'Sets the output code-block syntax language'
+        },
+        {
+            name: '-i',
+            usage: '-i',
+            description: 'Inline extra-long output in addition to uploading to hastebin'
         }
     ]
 };
