@@ -16,6 +16,7 @@
     "dateformat": "^2.0.0",
     "didyoumean2": "^1.2.0",
     "discord.js": "^11.0.0",
+    "escape-string-regexp": "^1.0.5",
     "figlet": "^1.2.0",
     "fs-extra": "^2.1.2",
     "giphy": "^0.0.4",
