@@ -4,5 +4,6 @@ module.exports = {
     Migrator: require('./migrator'),
     Stats: require('./stats'),
     Config: require('./config'),
-    Notifications: require('./notifications')
+    Notifications: require('./notifications'),
+    Storage: require('./storage')
 };

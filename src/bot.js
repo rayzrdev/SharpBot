@@ -11,13 +11,14 @@ const chalk = require('chalk');
 
 const Managers = require('./managers');
 
-const bot = exports.client = new Discord.Client();
+const bot = global.bot = exports.client = new Discord.Client();
 Managers.Migrator.migrate(bot, __dirname);
 
 bot.managers = {};
 
 const configManager = bot.managers.config = new Managers.Config(bot, __dirname);
-const config = bot.config = configManager.load();
+const config = bot.config = global.config = configManager.load();
+const storage = bot.storage = new Managers.Storage();
 
 bot.managers.notifications = new Managers.Notifications();
 
@@ -27,20 +28,22 @@ const stats = bot.managers.stats = new Managers.Stats(bot);
 
 logger.inject();
 
-let dataFolder = path.join(__dirname, '../data/');
-if (!fse.existsSync(dataFolder)) fse.mkdirSync(dataFolder);
+const settings = global.settings = {
+    dataFolder: path.resolve(__dirname, '..', 'data'),
+    configsFolder: path.resolve(__dirname, '..', 'data', 'configs')
+};
 
-let configsFolder = path.join(dataFolder, 'configs');
-if (!fse.existsSync(configsFolder)) fse.mkdirSync(configsFolder);
+if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
+if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
 
-const db = bot.db = new XPDB(path.join(dataFolder, 'db'));
+const db = bot.db = new XPDB(path.resolve(settings.dataFolder, 'db'));
 
 let loaded = false;
 
 bot.on('ready', () => {
     bot.utils = require('./utils');
 
-    commands.loadCommands(path.join(__dirname, 'commands'));
+    commands.loadCommands(path.resolve(__dirname, 'commands'));
 
     (title => {
         process.title = title;
@@ -139,6 +142,7 @@ bot.on('message', msg => {
 });
 
 process.on('exit', () => {
+    bot.storage.saveAll();
     bot.db.unwrap().close();
     loaded && bot.destroy();
 });
