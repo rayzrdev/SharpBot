@@ -24,6 +24,11 @@ exports.run = (bot, msg, args) => {
         let id = args[1].toLowerCase();
         let command = args.slice(2).join(' ');
 
+        // People keep accidentally putting their command prefix in
+        if (command.startsWith(bot.config.prefix)) {
+            command = command.substr(bot.config.prefix.length);
+        }
+
         const shortcut = this.storage.get(id);
         if (shortcut) {
             throw `The shortcut \`${id}\` already exists!`;

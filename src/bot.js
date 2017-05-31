@@ -36,7 +36,7 @@ const settings = global.settings = {
 if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
 if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
 
-const db = bot.db = new XPDB(path.resolve(settings.dataFolder, 'db'));
+bot.db = new XPDB(path.resolve(settings.dataFolder, 'db'));
 
 let loaded = false;
 
@@ -106,6 +106,7 @@ bot.on('message', msg => {
     let base = split[0].toLowerCase();
     let args = split.slice(1);
 
+    // Try to find a built in command first
     let command = commands.get(base);
 
     if (command) {
@@ -113,33 +114,35 @@ bot.on('message', msg => {
         return;
     }
 
-    db.get(`shortcuts.${base}`).then(sc => {
-        if (sc) {
-            base = sc.command.split(' ')[0].toLowerCase();
-            args = sc.command.split(' ').splice(1).concat(args);
+    // If that fails, look for a shortcut
+    const shortcut = bot.storage('shortcuts').get(base);
 
-            command = commands.get(base);
+    if (shortcut) {
+        base = shortcut.command.split(' ')[0].toLowerCase();
+        args = shortcut.command.split(' ').splice(1).concat(args);
 
-            if (command) {
-                commands.execute(msg, command, args);
-            } else {
-                return msg.edit(`:no_entry_sign: The shortcut \`${sc.name}\` is improperly set up!`).then(m => m.delete(2000));
-            }
-            return;
-        }
+        command = commands.get(base);
 
-        const maybe = didYouMean(base, commands.all().map(c => c.info.name), {
-            threshold: 5,
-            thresholdType: 'edit-distance'
-        });
-
-        if (maybe) {
-            msg.edit(`:question: Did you mean \`${prefix}${maybe}\`?`).then(m => m.delete(5000));
+        if (command) {
+            commands.execute(msg, command, args);
         } else {
-            msg.edit(`:no_entry_sign: No commands were found that were similar to \`${prefix}${base}\``)
-                .then(m => m.delete(5000));
+            return msg.edit(`:no_entry_sign: The shortcut \`${shortcut.name}\` is improperly set up!`).then(m => m.delete(2000));
         }
+        return;
+    }
+
+    // If no shortcuts could be found either, try finding the closest command
+    const maybe = didYouMean(base, commands.all().map(c => c.info.name), {
+        threshold: 5,
+        thresholdType: 'edit-distance'
     });
+
+    if (maybe) {
+        msg.edit(`:question: Did you mean \`${prefix}${maybe}\`?`).then(m => m.delete(5000));
+    } else {
+        msg.edit(`:no_entry_sign: No commands were found that were similar to \`${prefix}${base}\``)
+            .then(m => m.delete(5000));
+    }
 });
 
 process.on('exit', () => {
