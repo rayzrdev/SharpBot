@@ -8,7 +8,6 @@ const readline = require('readline');
 const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
-
 const Managers = require('./managers');
 
 const bot = global.bot = exports.client = new Discord.Client();
@@ -17,8 +16,9 @@ Managers.Migrator.migrate(bot, __dirname);
 bot.managers = {};
 
 const configManager = bot.managers.config = new Managers.Config(bot, __dirname);
-const config = bot.config = global.config = configManager.load();
-const storage = bot.storage = new Managers.Storage();
+
+bot.config = global.config = configManager.load();
+bot.storage = new Managers.Storage();
 
 bot.managers.notifications = new Managers.Notifications();
 
@@ -91,7 +91,7 @@ bot.on('message', msg => {
 
     if (msg.author.id !== bot.user.id) return;
 
-    if (msg.guild && config.blacklistedServers && config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
+    if (msg.guild && bot.config.blacklistedServers && bot.config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
         return;
     }
 
@@ -99,9 +99,10 @@ bot.on('message', msg => {
         console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
-    if (!msg.content.startsWith(config.prefix)) return;
+    const prefix = bot.config.prefix;
+    if (!msg.content.startsWith(prefix)) return;
 
-    let split = msg.content.substr(config.prefix.length).trim().split(' ');
+    let split = msg.content.substr(prefix.length).trim().split(' ');
     let base = split[0].toLowerCase();
     let args = split.slice(1);
 
@@ -133,9 +134,9 @@ bot.on('message', msg => {
         });
 
         if (maybe) {
-            msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
+            msg.edit(`:question: Did you mean \`${prefix}${maybe}\`?`).then(m => m.delete(5000));
         } else {
-            msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${base}\``)
+            msg.edit(`:no_entry_sign: No commands were found that were similar to \`${prefix}${base}\``)
                 .then(m => m.delete(5000));
         }
     });
@@ -172,4 +173,4 @@ process.on('unhandledRejection', err => {
     }
 });
 
-config && bot.login(config.botToken);
+bot.config && bot.login(bot.config.botToken);
