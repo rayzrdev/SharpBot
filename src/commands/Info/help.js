@@ -15,6 +15,8 @@ exports.run = (bot, msg, args) => {
         } else if (/^all|full|every$/i.test(args[0])) {
             commands = bot.commands.all();
             title = 'All Commands';
+        } else if (/^cmds|list$/i.test(args[0])) {
+            title = 'Commands list';
         } else {
             let command = bot.commands.get(args[0]);
             if (!command) {
@@ -25,8 +27,16 @@ exports.run = (bot, msg, args) => {
             title = `Help for \`${command.info.name}\``;
         }
     }
-
-    if (commands.length > 0) {
+    if (/^cmds|list|commands|list commands$/i.test(args[0])) {
+        msg.delete();
+        let col = bot.utils.randomColor();
+        bot.commands.categories().forEach(cat => msg.channel.send({
+            embed: bot.utils.embed(
+                title,
+                 '_This message will self-destruct in 90 seconds._ :boom:\n' +
+                 '**' + cat + ':** `' + bot.commands.all().sort().filter(f => f.info.category === cat).map(a => a.info.name).join('` `') + '`', [], {color: col}
+                )}).then(m => m.delete(90000)));
+    } else if (commands.length > 0) {
         let fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c, commands.length === 1));
 
         // Temporary workaround for the 2k char limit
@@ -50,11 +60,11 @@ exports.run = (bot, msg, args) => {
 
             messages.push({ fields: fields.splice(0, i) });
         }
-
+        let col = bot.utils.randomColor();
         msg.delete();
         messages.map(m => m.fields).forEach(fields => {
             msg.channel.sendEmbed(
-                bot.utils.embed(title, '_This message will self-destruct in 90 seconds._ :boom:', fields)
+                bot.utils.embed(title, '_This message will self-destruct in 90 seconds._ :boom:', fields, {color: col})
             ).then(m => m.delete(90000));
         });
     } else {
@@ -104,6 +114,6 @@ const getHelp = (bot, command, single) => {
 
 exports.info = {
     name: 'help',
-    usage: 'help all|[command]|[category <name>]',
-    description: 'Shows you help for all commands or just a single command'
+    usage: 'help all|[command]|[category <name>]|list',
+    description: 'Shows you help for all commands, just a single command or lists all commands.'
 };
