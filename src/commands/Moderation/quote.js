@@ -30,18 +30,21 @@ exports.run = (bot, msg, args) => {
                 if (attachment && (attachment.width || attachment.height)) {
                     options.image = attachment.url;
                 }
+
                 let field = '';
-                if (!message.guild.id === ch.guild.id) {
-                    field = `in: ${ch.guild.name}/${ch.name}`;
-                } else if (cch) {
-                    field = `in: ${ch.name}`;
+
+                if (cch) {
+                    field = `**in: <#${ch.id}>:**`;
+                }
+                if (msg.guild.id !== ch.guild.id) {
+                    field = `**in: ${ch.guild.name}/<#${ch.id}>:**`;
                 }
 
-                msg.channel.sendEmbed(
-                    bot.utils.embed('', message.toString(), [], options)
+                msg.channel.send({
+                    embed: bot.utils.embed('', field + '\n\n' + message.toString(), [], options)
                         .setAuthor(message.author.username, message.author.avatarURL)
-                        .setTitle(field)
-                );
+                        // .setTitle(field)
+                });
             }
         }).catch(() => msg.error('That message could not be found!'));
 };
