@@ -33,12 +33,10 @@ exports.run = (bot, msg, args) => {
                 let field = '';
                 if (!message.guild.id === ch.guild.id) {
                     field = `in: ${ch.guild.name}/${ch.name}`;
-                    console.log(0);
                 } else if (cch) {
                     field = `in: ${ch.name}`;
-                    console.log(1);
                 }
-                console.log(field);
+
                 msg.channel.sendEmbed(
                     bot.utils.embed('', message.toString(), [], options)
                         .setAuthor(message.author.username, message.author.avatarURL)
