@@ -68,9 +68,9 @@ function migrateFromDB(bot, base) {
             tags.save();
             shortcuts.save();
 
-            db.unwrap().close();
-
-            fse.renameSync(dbPath, `${dbPath}.${Date.now()}.bak`);
+            db.unwrap().close(() => {
+                fse.renameSync(dbPath, `${dbPath}-backup-${Date.now()}`);
+            });
         }).catch(error => {
             console.error(error);
             process.exit(1);
