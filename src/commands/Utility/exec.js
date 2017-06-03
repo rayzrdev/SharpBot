@@ -2,15 +2,19 @@ const { exec } = require('child_process');
 const username = require('os').userInfo().username;
 
 exports.run = (bot, msg, args) => {
-    if (args.length < 1) {
+    let parsed = bot.utils.parseArgs(args, 's', 'l:');
+
+    if (parsed.length < 1) {
         throw 'You must provide a command to run!';
     }
-
-    let parsed = bot.utils.parseArgs(args, 'l:');
 
     let ps = exec(parsed.leftover.join(' '));
     if (!ps) {
         throw 'Failed to start process!';
+    }
+
+    if (parsed.options.s) {
+        return;
     }
 
     let opts = {

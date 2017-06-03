@@ -48,6 +48,14 @@ class CommandManager {
                     this._categories.push(category);
             }
 
+            if (typeof command.init === 'function') {
+                try {
+                    command.init(bot);
+                } catch (err) {
+                    return bot.logger.severe(`Failed to init '${file}':`, err);
+                }
+            }
+
             this._commands.push(command);
         });
     }

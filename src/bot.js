@@ -3,21 +3,20 @@
 const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
-const XPDB = require('xpdb');
 const readline = require('readline');
 const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
-
 const Managers = require('./managers');
 
-const bot = exports.client = new Discord.Client();
-Managers.Migrator.migrate(bot, __dirname);
+const bot = global.bot = exports.client = new Discord.Client();
 
 bot.managers = {};
 
 const configManager = bot.managers.config = new Managers.Config(bot, __dirname);
-const config = bot.config = configManager.load();
+
+bot.config = global.config = configManager.load();
+bot.storage = new Managers.Storage();
 
 bot.managers.notifications = new Managers.Notifications();
 
@@ -27,20 +26,22 @@ const stats = bot.managers.stats = new Managers.Stats(bot);
 
 logger.inject();
 
-let dataFolder = path.join(__dirname, '../data/');
-if (!fse.existsSync(dataFolder)) fse.mkdirSync(dataFolder);
+const settings = global.settings = {
+    dataFolder: path.resolve(__dirname, '..', 'data'),
+    configsFolder: path.resolve(__dirname, '..', 'data', 'configs')
+};
 
-let configsFolder = path.join(dataFolder, 'configs');
-if (!fse.existsSync(configsFolder)) fse.mkdirSync(configsFolder);
+if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
+if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
 
-const db = bot.db = new XPDB(path.join(dataFolder, 'db'));
+Managers.Migrator.migrate(bot, __dirname);
 
 let loaded = false;
 
 bot.on('ready', () => {
     bot.utils = require('./utils');
 
-    commands.loadCommands(path.join(__dirname, 'commands'));
+    commands.loadCommands(path.resolve(__dirname, 'commands'));
 
     (title => {
         process.title = title;
@@ -88,7 +89,7 @@ bot.on('message', msg => {
 
     if (msg.author.id !== bot.user.id) return;
 
-    if (msg.guild && config.blacklistedServers && config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
+    if (msg.guild && bot.config.blacklistedServers && bot.config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
         return;
     }
 
@@ -96,12 +97,14 @@ bot.on('message', msg => {
         console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
-    if (!msg.content.startsWith(config.prefix)) return;
+    const prefix = bot.config.prefix;
+    if (!msg.content.startsWith(prefix)) return;
 
-    let split = msg.content.substr(config.prefix.length).trim().split(' ');
+    let split = msg.content.substr(prefix.length).trim().split(' ');
     let base = split[0].toLowerCase();
     let args = split.slice(1);
 
+    // Try to find a built in command first
     let command = commands.get(base);
 
     if (command) {
@@ -109,37 +112,39 @@ bot.on('message', msg => {
         return;
     }
 
-    db.get(`shortcuts.${base}`).then(sc => {
-        if (sc) {
-            base = sc.command.split(' ')[0].toLowerCase();
-            args = sc.command.split(' ').splice(1).concat(args);
+    // If that fails, look for a shortcut
+    const shortcut = bot.storage('shortcuts').get(base);
 
-            command = commands.get(base);
+    if (shortcut) {
+        base = shortcut.command.split(' ')[0].toLowerCase();
+        args = shortcut.command.split(' ').splice(1).concat(args);
 
-            if (command) {
-                commands.execute(msg, command, args);
-            } else {
-                return msg.edit(`:no_entry_sign: The shortcut \`${sc.name}\` is improperly set up!`).then(m => m.delete(2000));
-            }
-            return;
-        }
+        command = commands.get(base);
 
-        const maybe = didYouMean(base, commands.all().map(c => c.info.name), {
-            threshold: 5,
-            thresholdType: 'edit-distance'
-        });
-
-        if (maybe) {
-            msg.edit(`:question: Did you mean \`${config.prefix}${maybe}\`?`).then(m => m.delete(5000));
+        if (command) {
+            commands.execute(msg, command, args);
         } else {
-            msg.edit(`:no_entry_sign: No commands were found that were similar to \`${config.prefix}${base}\``)
-                .then(m => m.delete(5000));
+            return msg.edit(`:no_entry_sign: The shortcut \`${shortcut.name}\` is improperly set up!`).then(m => m.delete(2000));
         }
+        return;
+    }
+
+    // If no shortcuts could be found either, try finding the closest command
+    const maybe = didYouMean(base, commands.all().map(c => c.info.name), {
+        threshold: 5,
+        thresholdType: 'edit-distance'
     });
+
+    if (maybe) {
+        msg.edit(`:question: Did you mean \`${prefix}${maybe}\`?`).then(m => m.delete(5000));
+    } else {
+        msg.edit(`:no_entry_sign: No commands were found that were similar to \`${prefix}${base}\``)
+            .then(m => m.delete(5000));
+    }
 });
 
 process.on('exit', () => {
-    bot.db.unwrap().close();
+    bot.storage.saveAll();
     loaded && bot.destroy();
 });
 
@@ -168,4 +173,4 @@ process.on('unhandledRejection', err => {
     }
 });
 
-config && bot.login(config.botToken);
+bot.config && bot.login(bot.config.botToken);

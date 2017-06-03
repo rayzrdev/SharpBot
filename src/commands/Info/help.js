@@ -51,11 +51,11 @@ exports.run = (bot, msg, args) => {
             messages.push({ fields: fields.splice(0, i) });
         }
 
-        msg.delete();
+        msg.delete().catch(() => { });
         messages.map(m => m.fields).forEach(fields => {
             msg.channel.sendEmbed(
                 bot.utils.embed(title, '_This message will self-destruct in 90 seconds._ :boom:', fields)
-            ).then(m => m.delete(90000));
+            ).then(m => m.delete(90000).catch(() => { }));
         });
     } else {
         let categories = bot.commands.categories().sort();
