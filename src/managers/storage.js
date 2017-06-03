@@ -1,57 +1,6 @@
 const path = require('path');
 const fse = require('fs-extra');
 
-function set(object, keyPath, value) {
-    if (typeof object !== 'object') {
-        throw new TypeError('object must be an object');
-    }
-
-    if (typeof keyPath !== 'string') {
-        throw new TypeError('keyPath must be a string');
-    }
-
-    const split = keyPath.split(/\./g);
-
-    let current = object;
-    for (let i = 0; i < split.length - 1; i++) {
-        const key = split[i];
-
-        current = current[key] || (current[key] = {});
-    }
-
-    current[split[split.length - 1]] = value;
-}
-
-function get(object, keyPath) {
-    if (typeof object !== 'object') {
-        throw new TypeError('object must be an object');
-    }
-
-    if (typeof keyPath !== 'string') {
-        throw new TypeError('keyPath must be a string');
-    }
-
-    const split = keyPath.split(/\./g);
-
-    let current = object;
-    let path = '';
-
-    for (let i = 0; i < split.length - 1; i++) {
-        const key = split[i];
-        const next = current[key];
-
-        path += key;
-
-        if (typeof next !== 'object') {
-            throw new TypeError(`value at ${path} was not an object`);
-        }
-
-        current = next;
-    }
-
-    return current[split[split.length - 1]];
-}
-
 class Storage {
     constructor() {
         const cache = this.cache = {};
@@ -182,7 +131,7 @@ class StorageAdapter {
             throw new TypeError('key must be a string');
         }
 
-        return get(this.data, key);
+        return this.data[key];
     }
 
     /**
@@ -205,7 +154,11 @@ class StorageAdapter {
 
         const oldValue = this.get(key);
 
-        set(this.data, key, value);
+        if (value === undefined) {
+            delete this.data[key];
+        } else {
+            this.data[key] = value;
+        }
 
         return oldValue;
     }

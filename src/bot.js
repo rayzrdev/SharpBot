@@ -3,7 +3,6 @@
 const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
-const XPDB = require('xpdb');
 const readline = require('readline');
 const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
@@ -11,7 +10,6 @@ const chalk = require('chalk');
 const Managers = require('./managers');
 
 const bot = global.bot = exports.client = new Discord.Client();
-Managers.Migrator.migrate(bot, __dirname);
 
 bot.managers = {};
 
@@ -36,7 +34,7 @@ const settings = global.settings = {
 if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
 if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
 
-bot.db = new XPDB(path.resolve(settings.dataFolder, 'db'));
+Managers.Migrator.migrate(bot, __dirname);
 
 let loaded = false;
 
@@ -147,7 +145,6 @@ bot.on('message', msg => {
 
 process.on('exit', () => {
     bot.storage.saveAll();
-    bot.db.unwrap().close();
     loaded && bot.destroy();
 });
 
