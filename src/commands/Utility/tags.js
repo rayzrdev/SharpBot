@@ -4,7 +4,7 @@ exports.init = bot => {
 
 exports.run = (bot, message, args) => {
     if (args.length < 1) {
-        throw `Do \`${bot.config.prefix}help tags\` for info on how to use this command.`;
+        throw `Do \`${bot.config.prefix}help tag\` for info on how to use this command.`;
     }
 
     const sub = args[0].toLowerCase();
