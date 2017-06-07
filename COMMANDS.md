@@ -15,6 +15,11 @@
 *Description:* `Shows you pictures of random cats`  
 *Usage:* `cat`
 
+### `destruct`  
+*Description:* `creates a self-destructing message`  
+*Usage:* `destruct [-d delay in ms]  [-s <embed|inline|code|plain>] <message>`  
+*Credits:* `<@140541588915879936>
+
 ### `dog`  
 *Description:* `Shows you pictures of random dogs`  
 *Usage:* `dog`
@@ -30,6 +35,10 @@
 ### `gif`  
 *Description:* `Searches Giphy for GIFs`  
 *Usage:* `gif <query>`
+
+### `initial`  
+*Description:* `Transforms the text you input into Initial Caps`  
+*Usage:* `initial <text>`
 
 ### `jumbo`  
 *Description:* `Enlarges emojis!`  
@@ -131,23 +140,6 @@
 *Description:* `Searches a number of messages for some text`  
 *Usage:* `search <#> <text>`
 
-## Tags
-### `addtag`  
-*Description:* `Adds a tag`  
-*Usage:* `addtag <tag> <text>`
-
-### `deltag`  
-*Description:* `Deletes a saved tag`  
-*Usage:* `deltag <tag>`
-
-### `tag`  
-*Description:* `Displays a saved tag`  
-*Usage:* `tag <tag>`
-
-### `tags`  
-*Description:* `Lists all saved tags`  
-*Usage:* `tags [add|delete] [id]`
-
 ## Utility
 ### `avatar`  
 *Description:* `Gives you the avatar of a user`  
@@ -209,20 +201,24 @@
 
 ### `shortcuts`  
 *Description:* `Controls or lists your shortcuts`  
-*Usage:* `shortcuts [add|delete] [id]`
+*Usage:* `shortcuts [add <name> <command>|delete <name>|info <name>]`
+
+### `spotify`  
+*Description:* `shows detailed information about a spotify track`  
+*Usage:* `spotify <trackurl>`  
+*Credits:* `<@140541588915879936>
+
+### `tag`  
+*Description:* `Manages your tags`  
+*Usage:* `tag <name>|list|add <name> <content>|delete <name>`
 
 ### `timezone`  
 *Description:* `converts between timezones, using DuckDuckGo searches`  
 *Usage:* `timezone <time> to <time>`  
-*Credits:* `<@136641861073764352>`
+*Credits:* `<@136641861073764352>
 
 ### `translate`  
 *Description:* `Translates text from/to any language`  
 *Usage:* `translate <lang> <text>`  
-*Credits:* `Carbowix`
-
-### `spotify`  
-*Description:* `Shows information about spotify tracks`  
-*Usage:* `spotify <trackUrl>`  
-*Credits:* `Doxylamin <@140541588915879936>`
+*Credits:* `Carbowix
 
