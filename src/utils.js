@@ -127,12 +127,21 @@ exports.sendLarge = (channel, largeMessage, options = {}) => {
         let part = message.substr(0, max);
         let cutTo = max;
         if (options.cutOn) {
-            cutTo = part.lastIndexOf(options.cutOn);
+            /*
+            Prevent infinite loop where lastIndexOf(cutOn) is the first char in `part`
+            Later, we will correct by +1 since we did lastIndexOf on all but the first char in `part`
+            We *dont* correct immediately, since if cutOn is not found, cutTo will be -1, and we dont want that
+                to become 0
+             */
+            cutTo = part.slice(1).lastIndexOf(options.cutOn);
 
             // Prevent infinite loop when cutOn isnt found in message
             if (cutTo === -1) {
                 cutTo = max;
             } else {
+                // Correction necessary from a few lines above
+                cutTo += 1;
+
                 if (options.cutAfter) {
                     cutTo += 1;
                 }
