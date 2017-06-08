@@ -34,7 +34,9 @@
     "readdir-recursive": "^0.0.4",
     "roll": "^1.2.0",
     "webdict": "^0.1.0",
-    "xkcd-imgs": "^1.0.1",
+    "xkcd-imgs": "^1.0.1"
+  },
+  "peerDependencies": {
     "xpdb": "^1.0.1"
   },
   "devDependencies": {
