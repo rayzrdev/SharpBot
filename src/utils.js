@@ -1,5 +1,7 @@
 const bot = require('./bot');
 const RichEmbed = require('discord.js').RichEmbed;
+const got = require('got');
+const url = require('url');
 
 exports.randomSelection = (choices) => {
     return choices[Math.floor(Math.random() * choices.length)];
@@ -128,10 +130,10 @@ exports.sendLarge = (channel, largeMessage, options = {}) => {
         let cutTo = max;
         if (options.cutOn) {
             /*
-            Prevent infinite loop where lastIndexOf(cutOn) is the first char in `part`
-            Later, we will correct by +1 since we did lastIndexOf on all but the first char in `part`
-            We *dont* correct immediately, since if cutOn is not found, cutTo will be -1, and we dont want that
-                to become 0
+             Prevent infinite loop where lastIndexOf(cutOn) is the first char in `part`
+             Later, we will correct by +1 since we did lastIndexOf on all but the first char in `part`
+             We *dont* correct immediately, since if cutOn is not found, cutTo will be -1, and we dont want that
+             to become 0
              */
             cutTo = part.slice(1).lastIndexOf(options.cutOn);
 
@@ -178,4 +180,29 @@ exports.playAnimation = (msg, delay, list) => {
             this.playAnimation(msg, delay, list);
         }, Math.max(50, delay - elapsed));
     }).catch(bot.client.logger.severe);
+};
+
+exports.hastebinUpload = text => {
+    return got.post(url.resolve('https://hastebin.com', 'documents'), {
+        body: text,
+        json: true,
+        headers: {
+            'Content-Type': 'text/plain'
+        }
+    })
+        .then(res => {
+            if (res && res.body && res.body.key) {
+                const key = res.body.key;
+                return {
+                    key: key,
+                    success: true,
+                    url: `https://hastebin.com/${key}`,
+                    rawUrl: `https://hastebin.com/raw/${key}`
+                };
+            } else {
+                return {
+                    success: false
+                };
+            }
+        });
 };

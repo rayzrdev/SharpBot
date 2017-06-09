@@ -1,5 +1,3 @@
-const got = require('got');
-const url = require('url');
 const stripIndents = require('common-tags').stripIndents;
 exports.run = (bot, msg, args) => {
     let parsed = bot.utils.parseArgs(args, ['l:', 'i']);
@@ -18,21 +16,14 @@ exports.run = (bot, msg, args) => {
         msg.delete();
         let output = clean(evaled).replace(bot.token, 'BOT_TOKEN' + String.fromCharCode(8203));
 
-        got.post(url.resolve('https://hastebin.com', 'documents'), {
-            body: output,
-            json: true,
-            headers: {
-                'Content-Type': 'text/plain'
-            }
-        }).then(res => {
-            if (!res.body || !res.body.key) {
+        bot.utils.hastebinUpload(output).then(({url}) => {
+            if (!url) {
                 return 'Failed to upload, no key was returned!';
             }
-            let output2 = res.body.key || res.body;
             msg.channel.send({
                 embed: bot.utils.embed('', stripIndents`
                 **Input:**\n\`\`\`js\n${code}\n\`\`\`
-                **Output:**${output.length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\nhttps://hastebin.com/${output2}\n`}
+                **Output:**${output.length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\n${url}\n`}
             `)});
 
             if (output.length > 1500 && parsed.options.i) {
