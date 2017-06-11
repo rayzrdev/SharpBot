@@ -32,7 +32,7 @@ storage.save();
 // === Notes
 // StorageAdapter instances are cached, so calling
 // bot.storage('someName') from two different locations
-// will actually give you the same object. A new 
+// will actually give you the same object. A new
 // StorageAdapter is only constructed the first time
 // the adapter factory is called for a specific name.
 ```
