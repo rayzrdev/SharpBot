@@ -1,18 +1,26 @@
-const nn = require('node-notifier');
-const opn = require('opn');
-
-nn.on('click', () => {
-    opn('', { app: 'Discord' });
-});
+const {stripIndents} = require('common-tags');
 
 class NotificationManager {
+    constructor(bot) {
+        this._bot = bot;
+        this.availablePlugins = bot.plugins.getAllOfType(NotificationManager.PLUGIN_TYPE);
+    }
+
     notify(title, message) {
-        nn.notify({
-            title,
-            message,
-            wait: true
+        this.availablePlugins.forEach(plugin => {
+            try {
+                plugin.notify(title, message)
+                    .catch(() => {});
+            } catch (e) {} // eslint-disable-line no-empty
         });
+        console.log(stripIndents`
+        Notification:
+            Title: ${title}
+            Message: ${message}
+        `);
     }
 }
+
+NotificationManager.PLUGIN_TYPE = 'notifications';
 
 module.exports = NotificationManager;

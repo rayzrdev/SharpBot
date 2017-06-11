@@ -13,18 +13,26 @@ const bot = global.bot = exports.client = new Discord.Client();
 
 bot.managers = {};
 
-const configManager = bot.managers.config = new Managers.Config(bot, __dirname);
+const logger = bot.logger = new Managers.Logger(bot);
+logger.inject();
+
+bot.managers.dynamicImports = global.dynamicImports = new Managers.DynamicImports(bot, __dirname);
+bot.managers.dynamicImports.init();
+
+const configManager = bot.managers.config = new Managers.Config(bot, __dirname, bot.managers.dynamicImports);
 
 bot.config = global.config = configManager.load();
+
+const pluginManager = bot.plugins = bot.managers.pluginManager = new Managers.Plugins(bot);
+pluginManager.loadPlugins();
+
 bot.storage = new Managers.Storage();
 
-bot.managers.notifications = new Managers.Notifications();
+bot.managers.notifications = new Managers.Notifications(bot);
 
-const logger = bot.logger = new Managers.Logger(bot);
 const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.managers.stats = new Managers.Stats(bot);
 
-logger.inject();
 
 const settings = global.settings = {
     dataFolder: path.resolve(__dirname, '..', 'data'),
@@ -41,7 +49,7 @@ let loaded = false;
 bot.on('ready', () => {
     bot.utils = require('./utils');
 
-    commands.loadCommands(path.resolve(__dirname, 'commands'));
+    commands.loadCommands();
 
     (title => {
         process.title = title;

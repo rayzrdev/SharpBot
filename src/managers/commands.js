@@ -1,6 +1,5 @@
 const path = require('path');
 const chalk = require('chalk');
-const read = require('readdir-recursive');
 
 class CommandManager {
 
@@ -22,19 +21,16 @@ class CommandManager {
         return null;
     }
 
-    loadCommands(folder) {
+    loadCommands() {
         this._commands = [];
         this._categories = [];
 
         const bot = this.bot;
 
-        read.fileSync(folder).forEach(file => {
-            file = file.substr(folder.length + 1);
-            let basename = path.basename(file);
+        const commandImports = bot.managers.dynamicImports.getImport('commands');
+        Object.keys(commandImports).forEach(file => {
+            const command = commandImports[file];
 
-            if (basename.startsWith('_') || !basename.endsWith('.js')) return;
-
-            let command = require(`${folder}/${file}`);
             let error = this._validateCommand(command);
             if (error) {
                 return bot.logger.severe(`Failed to load '${file}': ${chalk.red(error)}`);

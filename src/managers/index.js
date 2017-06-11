@@ -5,5 +5,7 @@ module.exports = {
     Stats: require('./stats'),
     Config: require('./config'),
     Notifications: require('./notifications'),
-    Storage: require('./storage')
+    Storage: require('./storage'),
+    DynamicImports: require('./dynamic-imports'),
+    Plugins: require('./plugins')
 };
