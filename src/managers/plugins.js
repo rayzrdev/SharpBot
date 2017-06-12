@@ -6,6 +6,9 @@ class PluginsManager {
     }
 
     loadPlugins() {
+        if (!this._bot.config) {
+            return;
+        }
         const plugins = this._bot.managers.dynamicImports.getImport('plugins');
         Object.keys(plugins).forEach(plugin => {
             const pluginDefinition = plugins[plugin];
