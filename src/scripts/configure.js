@@ -1,6 +1,10 @@
 const path = require('path');
+
+const DynamicImportsManager = require('../managers/dynamic-imports');
 const ConfigManager = require('../managers/config');
 
-const manager = new ConfigManager(null, path.join(__dirname, '..'));
+const importManager = new DynamicImportsManager(null, path.join(__dirname, '..'));
+importManager.init();
+const configManager = new ConfigManager(null, path.join(__dirname, '..'), importManager);
 
-manager.load(true);
+configManager.load(true);

@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const {inspect} = require('util');
 
 /**
  * The SharpBot logger
@@ -34,13 +35,18 @@ class Logger {
         error && console.error(error);
     }
 
+    debug(message) {
+        this.info(inspect(message));
+    }
+
     inject() {
         if (console._original) throw 'Logger already injected!';
 
         let original = {
             log: console.log,
             info: console.info,
-            error: console.error
+            error: console.error,
+            debug: console.debug
         };
 
         console._original = original;
@@ -48,6 +54,7 @@ class Logger {
         console.log = this._wrap(this.info);
         console.info = this._wrap(this.warn);
         console.error = this._wrap(this.severe);
+        console.debug = this._wrap(this.debug);
     }
 
     _wrap(func) {

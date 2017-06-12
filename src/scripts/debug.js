@@ -7,7 +7,12 @@ const manager = new ConfigManager(null, path.join(__dirname, '..'));
 
 const config = manager.load();
 
-delete config.botToken;
+Object.keys(config).forEach(configName => {
+    const wordsToHide = ['token', 'password', 'auth'];
+    if (wordsToHide.some(word => configName.toLowerCase().indexOf(word) !== -1)) {
+        config[configName] = 'HIDDEN';
+    }
+});
 
 let debugMessage = `SharpBot ${packageJson.version} Debug Output:
 

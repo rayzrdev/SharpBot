@@ -9,34 +9,50 @@ const path = require('path');
 prompt.message = '';
 prompt.delimiter = chalk.green(' >');
 
-const getQuestions = currentConfig => ({
-    properties: {
-        botToken: {
-            pattern: /^"?[a-zA-Z0-9_\.\-]+"?$/,
-            type: 'string',
-            message: 'Token can only contain letters, numbers, underscores and dashes',
-            // Only require a token if one isnt already configured
-            required: !currentConfig.botToken,
-            // This will show up in the prompt as (<default hidden>)
-            default: currentConfig.botToken,
-            hidden: true,
-            replace: '*',
-            before: value => value.replace(/"/g, '')
-        },
-        prefix: {
-            type: 'string',
-            default: currentConfig.prefix || '//',
-            required: false
-        }
-    }
-});
-
 class ConfigManager {
-    constructor(bot, base) {
+    constructor(bot, base, dynamicImports) {
         this._bot = bot;
         this._base = base;
 
         this._configPath = path.resolve(base, '../data/configs/config.json');
+
+        this._dynamicImports = dynamicImports;
+    }
+
+    getQuestions(currentConfig, optionalConfigs) {
+        const questions = {
+            properties: {
+                botToken: {
+                    pattern: /^"?[a-zA-Z0-9_\.\-]+"?$/,
+                    type: 'string',
+                    message: 'Token can only contain letters, numbers, underscores and dashes',
+                    // Only require a token if one isnt already configured
+                    required: !currentConfig.botToken,
+                    // This will show up in the prompt as (<default hidden>)
+                    default: currentConfig.botToken,
+                    hidden: true,
+                    replace: '*',
+                    before: value => value.replace(/"/g, '')
+                },
+                prefix: {
+                    type: 'string',
+                    default: currentConfig.prefix || '//',
+                    required: false
+                }
+            }
+        };
+
+        Object.keys(optionalConfigs).forEach(configName => {
+            const config = optionalConfigs[configName];
+            const question = config.getQuestion(currentConfig, configName);
+            if (!question) {
+                return;
+            }
+            question.description = (question.description || configName) + ' (Optional)';
+            questions.properties[configName] = question;
+        });
+
+        return questions;
     }
 
     load(reconfiguring = false) {
@@ -59,7 +75,7 @@ class ConfigManager {
                 currentConfig = fse.readJSONSync(this._configPath);
             }
 
-            prompt.get(getQuestions(currentConfig), (err, res) => {
+            prompt.get(this.getQuestions(currentConfig, this._dynamicImports.getOptionalConfigs()), (err, res) => {
                 if (!res) {
                     process.exit(666);
                 }
