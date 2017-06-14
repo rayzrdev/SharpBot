@@ -47,6 +47,9 @@ Managers.Migrator.migrate(bot, __dirname);
 let loaded = false;
 
 bot.on('ready', () => {
+    // Fix mobile notifications
+    bot.user.setAFK(true);
+
     bot.utils = require('./utils');
 
     commands.loadCommands();
