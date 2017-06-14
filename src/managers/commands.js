@@ -54,7 +54,7 @@ class CommandManager {
             let category = 'Uncategorized';
             if (file.indexOf(path.sep) > -1) {
                 category = path.dirname(path.relative(base, file))
-                    .replace(new RegExp(path.sep, 'g'), '/');
+                    .replace(new RegExp(path.sep.replace('\\', '\\\\'), 'g'), '/');
             }
 
             command.info.category = category;
