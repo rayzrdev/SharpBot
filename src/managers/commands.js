@@ -29,31 +29,49 @@ class CommandManager {
 
         const commandImports = bot.managers.dynamicImports.getImport('commands');
         Object.keys(commandImports).forEach(file => {
-            const command = commandImports[file];
+            let command = commandImports[file];
+            let name = path.basename(file);
 
-            let error = this._validateCommand(command);
-            if (error) {
-                return bot.logger.severe(`Failed to load '${file}': ${chalk.red(error)}`);
+            if (command instanceof Array) {
+                command.forEach((e, i) => this._validateAndLoad(e, file, `${name}.${i}`));
+            } else {
+                this._validateAndLoad(command, file, name);
             }
-
-            if (!command.category) {
-                let category = file.indexOf(path.sep) > -1 ? path.dirname(file) : 'Uncategorized';
-                command.info.category = category;
-
-                if (this._categories.indexOf(category) === -1)
-                    this._categories.push(category);
-            }
-
-            if (typeof command.init === 'function') {
-                try {
-                    command.init(bot);
-                } catch (err) {
-                    return bot.logger.severe(`Failed to init '${file}':`, err);
-                }
-            }
-
-            this._commands.push(command);
         });
+    }
+
+    _validateAndLoad(command, file, name) {
+        let error = this._validateCommand(command);
+
+        if (error) {
+            return this.bot.logger.severe(`Failed to load '${name}': ${chalk.red(error)}`);
+        }
+
+        if (!command.category) {
+            // TODO: Any better way to do this?
+            let base = path.join(this.bot.managers.dynamicImports.base, 'commands');
+
+            let category = 'Uncategorized';
+            if (file.indexOf(path.sep) > -1) {
+                category = path.dirname(path.relative(base, file))
+                    .replace(new RegExp(path.sep, 'g'), '/');
+            }
+
+            command.info.category = category;
+
+            if (this._categories.indexOf(category) === -1)
+                this._categories.push(category);
+        }
+
+        if (typeof command.init === 'function') {
+            try {
+                command.init(this.bot);
+            } catch (err) {
+                return this.bot.logger.severe(`Failed to init '${name}':`, err);
+            }
+        }
+
+        this._commands.push(command);
     }
 
     all(category) {
@@ -65,7 +83,8 @@ class CommandManager {
     }
 
     get(name) {
-        return this.findBy('name', name);
+        return this.findBy('name', name)
+            || this._commands.find(command => command.info.aliases instanceof Array && command.info.aliases.indexOf(name) > -1);
     }
 
     findBy(key, value) {
@@ -81,7 +100,6 @@ class CommandManager {
             msg.edit(`:x: ${message || 'Something failed!'}`)
                 .then(m => m.delete(delay || 2000));
         }).bind(msg);
-
 
         try {
             command.run(this.bot, msg, args);

@@ -3,8 +3,9 @@ const path = require('path');
 
 class DynamicImportsManager {
     constructor(bot, base) {
-        this.bot = bot;
+        this._bot = bot;
         this._base = base;
+
         /*
         {
             folder: {
@@ -17,16 +18,59 @@ class DynamicImportsManager {
         this._optionalConfigs = {};
     }
 
+    /**
+     * The base path that all dynamic imports are loaded from.
+     *
+     * @type {string}
+     * @readonly
+     *
+     * @memberof DynamicImportsManager
+     */
+    get base() {
+        return this._base;
+    }
+
+    /**
+     * The bot reference.
+     *
+     * @readonly
+     *
+     * @memberof DynamicImportsManager
+     */
+    get bot() {
+        return this._bot;
+    }
+
+    /**
+     * Initializes the dynamic imports and loads all folders.
+     *
+     * @memberof DynamicImportsManager
+     */
     init() {
         DynamicImportsManager.FOLDERS_TO_LOAD.forEach(folder => {
             this.loadFolder(folder);
         });
     }
 
-    getOptionalConfigs() {
+    /**
+     * The optional configs object.
+     *
+     * @type {Object}
+     * @readonly
+     *
+     * @memberof DynamicImportsManager
+     */
+    get optionalConfigs() {
         return Object.assign({}, this._optionalConfigs);
     }
 
+    /**
+     * Loads the contents of a specific folder.
+     *
+     * @param {string} folderName The name of the folder to load, relative to the base path.
+     *
+     * @memberof DynamicImportsManager
+     */
     loadFolder(folderName) {
         const folder = path.resolve(this._base, folderName);
 

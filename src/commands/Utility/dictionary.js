@@ -1,35 +1,54 @@
 const webdict = require('webdict');
 
-exports.run = function (bot, msg, args) {
+const makeCommand = method => {
+    return (bot, msg, args) => {
+        if (args.length < 1) {
+            throw 'Please provide a word to search!';
+        }
 
-    if(args.length < 1) {
-        throw 'Please provide a word to search!';
-    }
+        const parsed = bot.utils.parseArgs(args, ['e']);
+        const word = parsed.leftover.join(' ');
 
-    let parsed = bot.utils.parseArgs(args, ['e']);
+        webdict(method, word).then(res => {
+            let result = res.definition[0];
+            if (!res.definition[0]) {
+                result = 'No results found.';
+            }
 
-    let word = parsed.leftover.join(' ');
-
-    webdict('dictionary', word)
-        .then(resp => {
-            if(parsed.options.e) {
-                msg.edit(resp.definition[0]);
+            if (parsed.options.e) {
+                msg.edit(result);
                 return;
             }
+
             msg.delete();
             msg.channel.sendEmbed(
                 bot.utils.embed(
                     `:book: ${word}`,
-                    resp.definition[0]
+                    result
                 )
             );
         });
+    };
 };
 
-
-exports.info = {
-    name: 'dictionary',
-    usage: 'dictionary [word]',
-    description: 'Searches the given word on dictionary.com',
-    credits: 'NITEHAWK'
-};
+module.exports = [
+    {
+        run: makeCommand('dictionary'),
+        info: {
+            name: 'dictionary',
+            aliases: ['dict'],
+            usage: 'dictionary <word>',
+            description: 'Looks a word up in the dictionary.',
+            credits: 'NITEHAWK'
+        }
+    },
+    {
+        run: makeCommand('urbandictionary'),
+        info: {
+            name: 'urban',
+            usage: 'urban <word>',
+            description: 'Looks a word up in the urban dictionary.',
+            credits: 'NITEHAWK'
+        }
+    }
+];
