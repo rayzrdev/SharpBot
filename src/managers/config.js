@@ -75,7 +75,7 @@ class ConfigManager {
                 currentConfig = fse.readJSONSync(this._configPath);
             }
 
-            prompt.get(this.getQuestions(currentConfig, this._dynamicImports.getOptionalConfigs()), (err, res) => {
+            prompt.get(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs), (err, res) => {
                 if (!res) {
                     process.exit(666);
                 }
