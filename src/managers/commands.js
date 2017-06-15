@@ -153,6 +153,7 @@ class CommandManager {
         msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
 
         msg.error = ((message, delay) => {
+            console.log('I GOTS STUFF = ' + message);
             if (message.message === 'Not Found') {
                 // Kinda sick of these :\
                 return;
@@ -165,7 +166,14 @@ class CommandManager {
                 .then(m => m.delete(delay || 2000));
         }).bind(msg);
 
-        return Promise.resolve(command.run(this.bot, msg, args)).catch(msg.error);
+        // return Promise.resolve(command.run(this.bot, msg, args));
+        try {
+            const returned = command.run(this.bot, msg, args);
+            return Promise.resolve(returned);
+        } catch (err) {
+            msg.error(err);
+            return Promise.resolve();
+        }
     }
 }
 
