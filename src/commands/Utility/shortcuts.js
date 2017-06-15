@@ -78,5 +78,12 @@ exports.run = (bot, msg, args) => {
 exports.info = {
     name: 'shortcuts',
     usage: 'shortcuts [add <name> <command>|delete <name>|info <name>]',
-    description: 'Controls or lists your shortcuts'
+    description: 'Controls or lists your shortcuts',
+    examples: [
+        'shortcuts add love embed -c #ff0000 <3',
+        'shortcuts add drpg say #!mine;; say #!forage;; say #!chop;; say #!fish',
+        'shortcuts delete invite',
+        'shortcuts info love',
+        'shortcuts'
+    ]
 };
