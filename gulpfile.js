@@ -88,11 +88,7 @@ gulp.task('watch', () => {
     ], ['main']);
 });
 
-const defaultTasks = ['main'];
-if (isDev) {
-    defaultTasks.push('watch');
-}
-gulp.task('default', defaultTasks);
+gulp.task('default', ['main', 'watch']);
 
 process.on('exit', () => {
     killBot();
