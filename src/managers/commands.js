@@ -1,8 +1,8 @@
 const path = require('path');
 const chalk = require('chalk');
+const didYouMean = require('didyoumean2');
 
 class CommandManager {
-
     constructor(bot) {
         this.bot = bot;
         this._commands = [];
@@ -91,23 +91,82 @@ class CommandManager {
         return this._commands.find(c => c.info[key] === value);
     }
 
+    handleCommand(msg, input) {
+        const prefix = this.bot.config.prefix;
+        if (!input.startsWith(prefix)) return;
+
+        let split = input.substr(prefix.length).trim().split(' ');
+        let base = split[0].toLowerCase();
+        let args = split.slice(1);
+
+        // Try to find a built in command first
+        let command = this.get(base);
+
+        if (command) {
+            return this.execute(msg, command, args);
+        } else {
+            return this._handleShortcuts(msg, base, args);
+        }
+
+        // Temporarily disabled
+    }
+
+    _handleShortcuts(msg, name, shortcutArgs) {
+        // If that fails, look for a shortcut
+        const shortcut = this.bot.storage('shortcuts').get(name);
+
+        if (!shortcut) {
+            // If no shortcuts could be found either, try finding the closest command
+            const maybe = didYouMean(name, this.all().map(c => c.info.name), {
+                threshold: 5,
+                thresholdType: 'edit-distance'
+            });
+
+            if (maybe) {
+                return msg.edit(`:question: Did you mean \`${this.bot.config.prefix}${maybe}\`?`).then(m => m.delete(5000));
+            } else {
+                return msg.edit(`:no_entry_sign: No commands were found that were similar to \`${this.bot.config.prefix}${name}\``)
+                    .then(m => m.delete(5000));
+            }
+        }
+
+        const commands = shortcut.command.split(';;');
+
+        return Promise.all(
+            commands.map(c => c.trim()).filter(c => c.length > 0).map(commandString => {
+                const base = commandString.split(' ')[0].toLowerCase();
+                const args = commandString.split(' ').splice(1).concat(shortcutArgs);
+
+                const command = this.get(base);
+
+                if (command) {
+                    return this.execute(msg, command, args);
+                } else {
+                    return msg.edit(`:no_entry_sign: The shortcut \`${shortcut.name}\` is improperly set up!`)
+                        .then(m => m.delete(2000));
+                }
+            })
+        );
+    }
+
     execute(msg, command, args) {
         msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
-        msg.error = ((message, delay) => {
-            if (message.message) message = message.message;
 
-            this.bot.logger.severe(message.toString());
-            msg.edit(`:x: ${message || 'Something failed!'}`)
+        msg.error = ((message, delay) => {
+            if (message.message === 'Not Found') {
+                // Kinda sick of these :\
+                return;
+            }
+
+            let displayMessage = message.message || message;
+
+            this.bot.logger.severe(message);
+            msg.edit(`:x: ${displayMessage || 'Something failed!'}`)
                 .then(m => m.delete(delay || 2000));
         }).bind(msg);
 
-        try {
-            command.run(this.bot, msg, args);
-        } catch (e) {
-            msg.error(e);
-        }
+        return Promise.resolve(command.run(this.bot, msg, args)).catch(msg.error);
     }
-
 }
 
 module.exports = CommandManager;

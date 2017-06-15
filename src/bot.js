@@ -6,7 +6,7 @@ const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
 // const readline = require('readline');
-const didYouMean = require('didyoumean2');
+// const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
 const Managers = require('./managers');
@@ -111,50 +111,7 @@ bot.on('message', msg => {
         console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
-    const prefix = bot.config.prefix;
-    if (!msg.content.startsWith(prefix)) return;
-
-    let split = msg.content.substr(prefix.length).trim().split(' ');
-    let base = split[0].toLowerCase();
-    let args = split.slice(1);
-
-    // Try to find a built in command first
-    let command = commands.get(base);
-
-    if (command) {
-        commands.execute(msg, command, args);
-        return;
-    }
-
-    // If that fails, look for a shortcut
-    const shortcut = bot.storage('shortcuts').get(base);
-
-    if (shortcut) {
-        base = shortcut.command.split(' ')[0].toLowerCase();
-        args = shortcut.command.split(' ').splice(1).concat(args);
-
-        command = commands.get(base);
-
-        if (command) {
-            commands.execute(msg, command, args);
-        } else {
-            return msg.edit(`:no_entry_sign: The shortcut \`${shortcut.name}\` is improperly set up!`).then(m => m.delete(2000));
-        }
-        return;
-    }
-
-    // If no shortcuts could be found either, try finding the closest command
-    const maybe = didYouMean(base, commands.all().map(c => c.info.name), {
-        threshold: 5,
-        thresholdType: 'edit-distance'
-    });
-
-    if (maybe) {
-        msg.edit(`:question: Did you mean \`${prefix}${maybe}\`?`).then(m => m.delete(5000));
-    } else {
-        msg.edit(`:no_entry_sign: No commands were found that were similar to \`${prefix}${base}\``)
-            .then(m => m.delete(5000));
-    }
+    return bot.commands.handleCommand(msg, msg.content);
 });
 
 process.on('exit', () => {
@@ -182,6 +139,9 @@ process.on('unhandledRejection', err => {
     if (err.message === 'Incorrect login details were provided.') {
         logger.severe(`${err.message} Please reconfigure with ${chalk.green('yarn run config')}`);
         process.exit(666);
+    } else if (err.message === 'Not Found') {
+        // message.delete() called on a non-existant message.
+        return;
     } else {
         logger.severe('Uncaught Promise error: \n' + err.stack);
     }
