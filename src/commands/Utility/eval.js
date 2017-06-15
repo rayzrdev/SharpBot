@@ -4,45 +4,44 @@ exports.run = (bot, msg, args) => {
     let lang = parsed.options.l || '';
 
     let code = parsed.leftover.join(' ');
+    let output;
 
-    try {
-        Promise.resolve(eval(code))
-            .then(evaled => {
-                if (typeof evaled !== 'string') {
-                    evaled = require('util').inspect(evaled);
-                    if (!lang) {
-                        lang = 'javascript';
-                    }
+    Promise.resolve(eval(code))
+        .then(evaled => {
+            if (typeof evaled !== 'string') {
+                evaled = require('util').inspect(evaled);
+                if (!lang) {
+                    lang = 'javascript';
                 }
-                msg.delete();
-                let output = clean(evaled).replace(bot.token, 'BOT_TOKEN' + String.fromCharCode(8203));
+            }
+            msg.delete();
+            output = clean(evaled).replace(bot.token, 'BOT_TOKEN' + String.fromCharCode(8203));
 
-                bot.utils.hastebinUpload(output).then(({url}) => {
-                    if (!url) {
-                        return 'Failed to upload, no key was returned!';
-                    }
-                    msg.channel.send({
-                        embed: bot.utils.embed('', stripIndents`
-                        **Input:**\n\`\`\`js\n${code}\n\`\`\`
-                        **Output:**${output.length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\n${url}\n`}
-                    `)});
+            return bot.utils.hastebinUpload(output);
+        }).then(({url}) => {
+            if (!url) {
+                return 'Failed to upload, no key was returned!';
+            }
+            msg.channel.send({
+                embed: bot.utils.embed('', stripIndents`
+                **Input:**\n\`\`\`js\n${code}\n\`\`\`
+                **Output:**${output.length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\n${url}\n`}
+            `)});
 
-                    if (output.length > 1500 && parsed.options.i) {
-                        bot.utils.sendLarge(msg.channel, output, {
-                            prefix: '```' + lang + '\n',
-                            suffix: '```',
-                            cutOn: ',',
-                            cutAfter: true
-                        });
-                    }
+            if (output.length > 1500 && parsed.options.i) {
+                bot.utils.sendLarge(msg.channel, output, {
+                    prefix: '```' + lang + '\n',
+                    suffix: '```',
+                    cutOn: ',',
+                    cutAfter: true
                 });
-            })
-            .catch(err => {
-                errorHandler(msg, bot, code, err);
-            });
-    } catch (err) {
-        errorHandler(msg, bot, code, err);
-    }
+            }
+        }).catch(err => {
+            if (err.response && err.response.body.message) {
+                err = err.response.body.message;
+            }
+            errorHandler(msg, bot, code, err);
+        });
 };
 
 function errorHandler(msg, bot, code, err) {
