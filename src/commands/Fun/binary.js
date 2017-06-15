@@ -18,10 +18,22 @@ exports.run = (bot, msg, args) => {
 
     let input = args.slice(1).join(' ');
 
-    if (args[0].match(/^e(nc(ode)?)?$/i)) {
+    if (args[0].match(/^enc(ode(Text)?)?$/i)) {
         msg.edit(this.methods.encode(input).join(' '));
-    } else if (args[0].match(/^d(ec(ode)?)?$/)) {
+    } else if (args[0].match(/^dec(ode(Text)?)?$/i)) {
         msg.edit(this.methods.decode(input));
+    } else if (args[0].match(/^decToBin$/i)) {
+        if (isNaN(input)) {
+            throw 'Input must be a number!';
+        }
+
+        msg.edit(parseInt(input).toString(2));
+    } else if (args[0].match(/^binToDec$/i)) {
+        if (isNaN(input)) {
+            throw 'Input must be a number!';
+        }
+
+        msg.edit(parseInt(input, 2));
     } else {
         throw `Unknown sub command: \`${args[0]}\``;
     }
@@ -29,6 +41,6 @@ exports.run = (bot, msg, args) => {
 
 exports.info = {
     name: 'binary',
-    usage: 'binary <encode|decode> <input>',
-    description: 'Encodes/decodes your input to/from binary'
+    usage: 'binary <encodeText|decodeText|decToBin|binToDec> <input>',
+    description: 'Convert your input to/from binary'
 };
