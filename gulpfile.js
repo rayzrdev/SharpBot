@@ -4,6 +4,8 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const spawn = require('child_process').spawn;
 
+const isDev = process.argv[2] === '--dev';
+
 let bot;
 
 const paths = {
@@ -30,7 +32,12 @@ gulp.task('lint', () =>
         .pipe(eslint.failAfterError())
 );
 
-gulp.task('main', ['kill', 'lint'], () => {
+const mainTasks = ['kill'];
+if (isDev) {
+    mainTasks.push('lint');
+}
+
+gulp.task('main', mainTasks, () => {
     bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] });
 
     bot.stderr.on('data', data => {
@@ -81,7 +88,11 @@ gulp.task('watch', () => {
     ], ['main']);
 });
 
-gulp.task('default', ['main', 'watch']);
+const defaultTasks = ['main'];
+if (isDev) {
+    defaultTasks.push('watch');
+}
+gulp.task('default', defaultTasks);
 
 process.on('exit', () => {
     killBot();
