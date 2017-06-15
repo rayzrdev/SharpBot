@@ -62,7 +62,9 @@ module.exports = {
     name: AssistantBot.PLUGIN_NAME,
     configs: [{
         name: AssistantBot.CONFIG_NAME,
-        getQuestion(currentConfig, configName) {
+        getQuestion(/*currentConfig, configName*/) {
+            // Until it's actually implemented...
+            /*
             return {
                 pattern: /^"?[a-zA-Z0-9_\.\-]+"?$/,
                 type: 'string',
@@ -75,6 +77,7 @@ module.exports = {
                 replace: '*',
                 before: value => value.replace(/"/g, '')
             };
+            */
         }
     }],
     run: bot => new AssistantBot(bot),

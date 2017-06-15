@@ -14,9 +14,10 @@ class PluginsManager {
             const pluginDefinition = plugins[plugin];
 
             if (pluginDefinition.configs && !pluginDefinition.configs.every(config => !!this._bot.config[config.name])) {
-                console.log(`Config for plugin ${pluginDefinition.name} not satisfied, skipping.`);
+                // console.log(`Config for plugin ${pluginDefinition.name} not satisfied, skipping.`);
                 return;
             }
+
             this._plugins[pluginDefinition.name] = {
                 plugin: pluginDefinition.run(this._bot),
                 pluginDefinition: pluginDefinition
