@@ -153,7 +153,6 @@ class CommandManager {
         msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
 
         msg.error = ((message, delay) => {
-            console.log('I GOTS STUFF = ' + message);
             if (message.message === 'Not Found') {
                 // Kinda sick of these :\
                 return;

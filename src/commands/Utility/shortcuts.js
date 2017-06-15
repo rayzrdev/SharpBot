@@ -2,6 +2,11 @@ exports.init = bot => {
     this.storage = bot.storage('shortcuts');
 };
 
+const ADD = /^a(dd)?|c(reate)?$/i;
+const EDIT = /^e(dit)?$/i;
+const DELETE = /^d(el(ete)?)?|r(em(ove)?)?$/i;
+const INFO = /^i(nfo)?$/i;
+
 exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         const shortcuts = this.storage.values;
@@ -16,9 +21,9 @@ exports.run = (bot, msg, args) => {
         return bot.utils.sendLarge(msg.channel, `**Shortcuts:**\n${list}`, { cutOn: '\n' });
     }
 
-    if (/^a(dd)?|c(reate)?$/i.test(args[0])) {
+    if (ADD.test(args[0]) || EDIT.test(args[0])) {
         if (args.length < 3) {
-            throw `Usage: \`${bot.config.prefix}shortcut add <id> <command>\``;
+            throw `Usage: \`${bot.config.prefix}shortcut add|edit <id> <command>\``;
         }
 
         let id = args[1].toLowerCase();
@@ -30,7 +35,7 @@ exports.run = (bot, msg, args) => {
         }
 
         const shortcut = this.storage.get(id);
-        if (shortcut) {
+        if (shortcut && !EDIT.test(args[0])) {
             throw `The shortcut \`${id}\` already exists!`;
         }
 
@@ -39,9 +44,9 @@ exports.run = (bot, msg, args) => {
 
         msg.edit(`:white_check_mark: Created shortcut \`${id}\`.`)
             .then(m => m.delete(5000));
-    } else if (/^d(el(ete)?)?|r(em(ove)?)?$/i.test(args[0])) {
+    } else if (DELETE.test(args[0])) {
         if (args.length < 2) {
-            throw `Usage: \`${bot.config.prefix}shortcut remove <id>\``;
+            throw `Usage: \`${bot.config.prefix}shortcut delete <id>\``;
         }
 
         let id = args[1];
@@ -56,7 +61,7 @@ exports.run = (bot, msg, args) => {
 
         msg.edit(`:white_check_mark: Removed the shortcut \`${id}\`.`)
             .then(m => m.delete(5000));
-    } else if (/^i(nfo)?$/i.test(args[0])) {
+    } else if (INFO.test(args[0])) {
         if (args.length < 2) {
             throw `Usage: \`${bot.config.prefix}shortcut info <name>\``;
         }
@@ -77,11 +82,11 @@ exports.run = (bot, msg, args) => {
 
 exports.info = {
     name: 'shortcuts',
-    usage: 'shortcuts [add <name> <command>|delete <name>|info <name>]',
+    usage: 'shortcuts [add <name> <command>|edit <name> <command>|delete <name>|info <name>]',
     description: 'Controls or lists your shortcuts',
     examples: [
         'shortcuts add love embed -c #ff0000 <3',
-        'shortcuts add drpg say #!mine;; say #!forage;; say #!chop;; say #!fish',
+        'shortcuts edit drpg say #!mine;; say #!forage;; say #!chop;; say #!fish',
         'shortcuts delete invite',
         'shortcuts info love',
         'shortcuts'
