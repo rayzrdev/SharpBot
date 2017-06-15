@@ -16,7 +16,7 @@ exports.run = (bot, msg, args) => {
         }
 
         msg.delete();
-        output = clean(evaled).replace(new RegExp(quoteRegex(bot.token), 'g'), 'BOT_TOKEN');
+        output = clean(evaled).replace(new RegExp(RegExp.quote(bot.token), 'g'), 'BOT_TOKEN');
 
         return bot.utils.hastebinUpload(output);
     }).then(({ url }) => {
@@ -59,13 +59,6 @@ function errorHandler(msg, bot, code, err) {
 // Prevent @mentions, #channels or code blocks inside code blocks.
 function clean(text) {
     return text.replace(/([`@#])/g, '$1\u200b');
-}
-
-// Not a perfect function, but it works for what I need.
-function quoteRegex(regex) {
-    return regex.replace(/\\/g, '\\\\')
-        // . + * - [ ] ( ) ? ! $ ^
-        .replace(/([\.\+\*\-\[\]\(\)\?\!\$\^])/g, '\\$1');
 }
 
 exports.info = {

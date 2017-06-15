@@ -1,5 +1,7 @@
 'use strict';
 
+require('./polyfills');
+
 const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
