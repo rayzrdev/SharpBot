@@ -29,7 +29,7 @@ exports.run = function (bot, msg, args) {
     } else {
         let raw = members.map(m => `${m.user.username}${m.user.bot ? ' [BOT]' : ''}`).join('\n');
 
-        bot.utils.hastebinUpload(raw).then(res => {
+        bot.utils.gistUpload(raw, 'txt').then(res => {
             let trimmed = body.substr(0, 1500);
             trimmed = trimmed.slice(0, trimmed.lastIndexOf('\n'));
 

@@ -1,6 +1,6 @@
 const path = require('path');
 const ConfigManager = require('../managers/config');
-const {hastebinUpload} = require('../utils');
+const {gistUpload} = require('../utils');
 const packageJson = require('../../package.json');
 
 const manager = new ConfigManager(null, path.join(__dirname, '..'));
@@ -28,7 +28,7 @@ const handleError = error => {
     process.exit();
 };
 
-hastebinUpload(debugMessage)
+gistUpload(debugMessage, 'txt')
     .then(({url}) => {
         if (url) {
             console.log('Here is the link to your debug output: ' + url);
