@@ -18,10 +18,10 @@ exports.run = (bot, msg, args) => {
         msg.delete();
         output = clean(evaled).replace(new RegExp(RegExp.quote(bot.token), 'g'), 'BOT_TOKEN');
 
-        return bot.utils.hastebinUpload(output);
+        return bot.utils.gistUpload(output);
     }).then(({ url }) => {
         if (!url) {
-            return 'Failed to upload, no key was returned!';
+            return 'Failed to upload!';
         }
 
         msg.channel.send({

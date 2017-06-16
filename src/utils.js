@@ -206,3 +206,30 @@ exports.hastebinUpload = text => {
             }
         });
 };
+
+exports.gistUpload = (text, lang = 'js') => {
+    const filename = 'sharpbot_upload.' + lang;
+    return got.post('https://api.github.com/gists', {
+        body: JSON.stringify({
+            files: {
+                [filename]: {
+                    content: text
+                }
+            }
+        }),
+        json: true
+    })
+        .then(res => {
+            if (res && res.body && res.body.html_url) {
+                return {
+                    success: true,
+                    url: res.body.html_url,
+                    rawUrl: res.body.files[filename].raw_url
+                };
+            } else {
+                return {
+                    success: false
+                };
+            }
+        });
+};
