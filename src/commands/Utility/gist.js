@@ -6,7 +6,7 @@ exports.run = (bot, msg, args) => {
     let parsed = bot.utils.parseArgs(args, 'r');
 
     msg.edit(':arrows_counterclockwise: Uploading...').then(() => {
-        bot.utils.gistUpload(parsed.leftover.join(' ')).then(({url, rawUrl}) => {
+        bot.utils.gistUpload(parsed.leftover.join(' ')).then(({ url, rawUrl }) => {
             if (!url) {
                 msg.error('Failed to upload, no key was returned!');
                 return;
@@ -25,5 +25,5 @@ exports.run = (bot, msg, args) => {
 exports.info = {
     name: 'gist',
     usage: 'gist [-r|--raw] <text>',
-    description: 'Uploads some text to Hastebin'
+    description: 'Uploads some text to a GitHub Gist'
 };

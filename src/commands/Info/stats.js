@@ -29,7 +29,7 @@ exports.run = (bot, msg) => {
             },
             {
                 name: ':baby: Users',
-                value: `${bot.users.size.toLocaleString()}`,
+                value: `${bot.guilds.reduce((mem, g) => mem += g.memberCount, 0)}`,
             },
             {
                 name: ':desktop: Servers',

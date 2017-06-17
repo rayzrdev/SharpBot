@@ -4,35 +4,39 @@ const stripIndents = require('common-tags').stripIndents;
 dateFormat('dddd, mmmm dS, yyyy, h:MM:ss TT');
 
 exports.run = function (bot, msg) {
-
-//Makes sure user mentions a user to get info for
-    if (msg.mentions.users.size < 1) {
-        throw '@mention someone to find the info';
-    }
-//Makes sure command is sent in a guild
+    //Makes sure command is sent in a guild
     if (!msg.guild) {
         throw 'This can only be used in a guild!';
     }
 
-    let member = msg.guild.member(msg.mentions.users.first());
+    //Makes sure user mentions a user to get info for
+    if (msg.mentions.users.size < 1) {
+        throw '@mention someone to find the info';
+    }
+
     let user = msg.mentions.users.first();
+    let member = msg.guild.member(user);
 
-//How long ago the account was created
+    if (!member) {
+        throw 'That member could not be found!';
+    }
+
+    //How long ago the account was created
     const millisCreated = new Date().getTime() - user.createdAt.getTime();
-    const daysCreated = millisCreated/1000/60/60/24;
+    const daysCreated = millisCreated / 1000 / 60 / 60 / 24;
 
-//How long about the user joined the server
+    //How long about the user joined the server
     const millisJoined = new Date().getTime() - member.joinedAt.getTime();
-    const daysJoined = millisJoined/1000/60/60/24;
+    const daysJoined = millisJoined / 1000 / 60 / 60 / 24;
 
-// Slice off the first item (the @everyone)
+    // Slice off the first item (the @everyone)
     let roles = member.roles.array().slice(1).sort((a, b) => a.comparePositionTo(b)).reverse().map(role => role.name);
     if (roles.length < 1) roles = ['None'];
-    
+
     let embed = bot.utils.embed(
         `${user.username}#${msg.mentions.users.first().discriminator}`,
         stripIndents`
-        ***This message will dissappear in 30 seconds.***`,
+        ***This message will dissappear in 60 seconds.***`,
         [
             {
                 name: 'Status',
@@ -71,7 +75,7 @@ exports.run = function (bot, msg) {
 
     embed.setThumbnail(`${user.displayAvatarURL}`);
 
-    msg.editEmbed(embed).then(m => m.delete(30000));
+    msg.editEmbed(embed).then(m => m.delete(60000));
 
 };
 
