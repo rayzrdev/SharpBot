@@ -1,16 +1,19 @@
 const normalizeUrl = require('normalize-url');
 
 exports.run = (bot, msg, args) => {
-    msg.delete();
-    if (args.length < 1) {
+    let { leftover, options } = bot.utils.parseArgs(args, ['s:']);
+
+    if (leftover.length < 1) {
+        if (options.s) {
+            throw 'You must provide a game as well as a stream URL.';
+        }
+
         bot.user.setGame(null, null);
-        return msg.channel.sendMessage('Cleared your game! :ok_hand:').then(m => m.delete(3000));
+        return msg.edit('Cleared your game! :ok_hand:').then(m => m.delete(3000));
     }
 
-    let parsed = bot.utils.parseArgs(args, ['s:']);
-
-    let game = parsed.leftover.join(' ');
-    let stream = parsed.options.s;
+    let game = leftover.join(' ');
+    let stream = options.s;
 
     let fields = [{ name: ':video_game: Game', value: game }];
 
@@ -22,10 +25,10 @@ exports.run = (bot, msg, args) => {
 
     bot.user.setGame(game, stream);
 
-
-    msg.channel.sendEmbed(
-        bot.utils.embed(':ok_hand: Game changed!', '', fields)
-    ).then(m => m.delete(5000));
+    msg.delete();
+    msg.channel.send({
+        embed: bot.utils.embed(':ok_hand: Game changed!', '', fields)
+    }).then(m => m.delete(5000));
 };
 
 exports.info = {
