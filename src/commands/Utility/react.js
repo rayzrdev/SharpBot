@@ -55,7 +55,11 @@ function clone(object) {
     const newObject = {};
 
     Object.keys(object).forEach(key => {
-        newObject[key] = object[key];
+        if (object[key] instanceof Array) {
+            newObject[key] = new Array(...object[key]);
+        } else {
+            newObject[key] = object[key];
+        }
     });
 
     return newObject;
