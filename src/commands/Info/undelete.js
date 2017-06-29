@@ -11,7 +11,7 @@ exports.run = function (bot, msg) {
 
     bot.deleted.delete(user.id);
 
-    msg.edit(`Undeleted message of ${user.name} in ${delmsg.guild.name} | ${delmsg.channel.name}\n\`\`\`${delmsg.content}\`\`\``);
+    msg.edit(`Undeleted message of ${user.username} in ${delmsg.guild.name} | ${delmsg.channel.name}\n\`\`\`${delmsg.content}\`\`\``);
 };
 
 exports.info = {
