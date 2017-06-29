@@ -2,7 +2,7 @@ var musix = require('musicmatch')();
 exports.run = (bot, msg, args) => {
 
     if (args.length < 1) {
-        throw "Song name required!"
+        msg.error("Song name required!")
     }
 
     musix.trackSearch({
@@ -26,11 +26,11 @@ exports.run = (bot, msg, args) => {
                     msg.delete();
                     msg.channel.send(embed);
                 }).catch(function(err) {
-                    throw err;
+                    bot.logger.severe(err)
                     msg.error("Lyrics was not found");
                 })
         }).catch(function(err) {
-            throw err
+            bot.logger.severe(err)
             msg.error("Song was not found")
         })
 
