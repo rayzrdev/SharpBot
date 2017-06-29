@@ -36,11 +36,9 @@ const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.managers.stats = new Managers.Stats(bot);
 
 bot.deleted = new Discord.Collection();
-bot.edited = new Discord.Collection();
 
 bot.setInterval(() => {
-    bot.deleted.deleteAll();
-    bot.edited.deleteAll();
+    bot.deleted.clear();
 }, 7200000);
 
 const settings = global.settings = {
