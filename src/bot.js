@@ -52,6 +52,7 @@ Managers.Migrator.migrate(bot, __dirname);
 let loaded = false;
 
 bot.on('ready', () => {
+    bot.user.setStatus('invisible');
     // Fix mobile notifications
     bot.user.setAFK(true);
 
