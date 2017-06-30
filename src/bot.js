@@ -5,8 +5,6 @@ require('./polyfills');
 const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
-// const readline = require('readline');
-// const didYouMean = require('didyoumean2');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
 const Managers = require('./managers');
@@ -73,24 +71,8 @@ bot.on('ready', () => {
 
     delete bot.user.email;
     delete bot.user.verified;
-    bot.user.setStatus('invisible');
 
     logger.info('Bot loaded');
-
-    // TODO: This seems to be breaking crap.
-    // readline.createInterface({
-    //     input: process.stdin,
-    //     output: process.stdout,
-    //     prompt: ''
-    // }).on('line', line => {
-    //     try {
-    //         console.log(eval(line) || 'undefined');
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // }).on('SIGINT', () => {
-    //     process.exit();
-    // });
 
     loaded = true;
 });
