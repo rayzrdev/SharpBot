@@ -32,14 +32,14 @@ exports.run = function (bot, msg, args) {
             }
 
             msg.delete();
-            msg.channel.sendMessage(':white_check_mark: Top 3 results:');
+            msg.channel.send(':white_check_mark: Top 3 results:');
 
             for (let i = 0; i < 3; i++) {
                 if (!json.items[i]) {
                     break;
                 }
                 let item = json.items[i];
-                msg.channel.sendMessage('', { embed: bot.utils.embed('', getInfo(item)) });
+                msg.channel.send('', { embed: bot.utils.embed('', getInfo(item)) });
             }
         });
 

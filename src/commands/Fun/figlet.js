@@ -35,7 +35,7 @@ exports.run = (bot, msg, args) => {
             return msg.error(err);
         }
 
-        msg.channel.sendMessage(`\`\`\`\n${res}\n\`\`\``);
+        msg.channel.send(`\`\`\`\n${res}\n\`\`\``);
     });
 
 };

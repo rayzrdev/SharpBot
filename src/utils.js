@@ -112,7 +112,7 @@ exports.multiSend = (channel, messages, delay) => {
     delay = delay || 100;
     messages.forEach((m, i) => {
         setTimeout(() => {
-            channel.sendMessage(m);
+            channel.send(m);
         }, delay * i);
     });
 };

@@ -47,7 +47,7 @@ exports.run = (bot, msg, args) => {
     mappings.forEach(replacer => output = output.replace(replacer.regex, replacer.replacement));
 
     msg.delete();
-    msg.channel.sendMessage(output);
+    msg.channel.send(output);
 };
 
 exports.info = {

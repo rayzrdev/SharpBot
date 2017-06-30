@@ -7,7 +7,7 @@ exports.run = (bot, msg, args) => {
             Promise.all(messages.map(m => m.delete()))
                 .catch(msg.error)
                 .then(() => {
-                    msg.channel.sendMessage(`:white_check_mark: Purged \`${count}\` messages.`)
+                    msg.channel.send(`:white_check_mark: Purged \`${count}\` messages.`)
                         .then(m => m.delete(2000));
                 });
         }).catch(msg.error);

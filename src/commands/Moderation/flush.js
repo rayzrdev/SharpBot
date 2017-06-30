@@ -7,7 +7,7 @@ exports.run = function (bot, msg, args) {
             Promise.all(messages.filter(m => m.author.bot === true)
                 .map(m => m.delete()))
                 .then(() => {
-                    msg.channel.sendMessage(`:white_check_mark: Flushed \`${count}\` messages.`).then(m => m.delete(2000));
+                    msg.channel.send(`:white_check_mark: Flushed \`${count}\` messages.`).then(m => m.delete(2000));
                 });
         }).catch(msg.error);
 };

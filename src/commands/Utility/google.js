@@ -15,7 +15,7 @@ exports.run = (bot, msg, args) => {
 
     msg.delete();
 
-    msg.channel.sendMessage(':arrows_counterclockwise: Searching...').then(m => {
+    msg.channel.send(':arrows_counterclockwise: Searching...').then(m => {
         request.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'), (err, res, body) => {
             if (err || res.statusCode !== 200) {
                 return m.edit(`:no_entry_sign: Error! (${res.statusCode}): ${res.statusMessage}`);

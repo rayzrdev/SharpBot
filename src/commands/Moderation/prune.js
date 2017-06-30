@@ -8,7 +8,7 @@ exports.run = (bot, msg, args) => {
         return Promise.all(
             prunable.map(m => m.delete())
         ).then(() => {
-            msg.channel.sendMessage(`:white_check_mark: Pruned \`${prunable.size}\` messages.`).then(m => m.delete(2000));
+            msg.channel.send(`:white_check_mark: Pruned \`${prunable.size}\` messages.`).then(m => m.delete(2000));
         });
     }).catch(msg.error);
 };
