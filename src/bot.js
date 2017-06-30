@@ -33,6 +33,11 @@ bot.managers.notifications = new Managers.Notifications(bot);
 const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.managers.stats = new Managers.Stats(bot);
 
+bot.deleted = new Discord.Collection();
+
+bot.setInterval(() => {
+    bot.deleted.clear();
+}, 7200000);
 
 const settings = global.settings = {
     dataFolder: path.resolve(__dirname, '..', 'data'),
@@ -94,6 +99,10 @@ bot.on('message', msg => {
     }
 
     return bot.commands.handleCommand(msg, msg.content);
+});
+
+bot.on('messageDelete', (msg) => {
+    bot.deleted.set(msg.author.id, msg);
 });
 
 process.on('exit', () => {
