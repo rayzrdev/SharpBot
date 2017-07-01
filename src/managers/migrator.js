@@ -8,41 +8,19 @@ exports.migrate = function (bot, base) {
 };
 
 function migrateConfig(bot, base) {
-    let oldPath = path.resolve(base, 'config.json');
-    let newPath = path.resolve(base, '../config.json');
-    let newNewPath = path.resolve(base, '../data/configs/config.json');
+    let firstPath = path.resolve(base, 'config.json');
+    let secondPath = path.resolve(base, '../config.json');
+    let thirdPath = path.resolve(base, '../data/configs/config.json');
 
-    if (fse.existsSync(oldPath)) {
-        try {
-            fse.moveSync(oldPath, newPath);
-        } catch (err) {
-            console.error('Failed to migrate config.json!', err);
-            process.exit(1);
-        }
-    }
-
-    if (fse.existsSync(newPath)) {
-        try {
-            fse.moveSync(newPath, newNewPath);
-        } catch (err) {
-            console.error('Failed to migrade config.json to configs!');
-            process.exit(1);
-        }
-    }
+    moveIfExists(firstPath, secondPath, 'Failed to migrate config.json!');
+    moveIfExists(secondPath, thirdPath, 'Failed to migrade config.json to configs!');
 }
 
 function migrateDBName(bot, base) {
     let oldDataPath = path.resolve(base, '../data/tags');
     let newDataPath = path.resolve(base, '../data/db');
-    if (fse.existsSync(oldDataPath)) {
-        try {
-            fse.renameSync(oldDataPath, newDataPath);
-        } catch (err) {
-            console.error('Failed to rename tags folder!');
-            process.exit(1);
-        }
 
-    }
+    moveIfExists(oldDataPath, newDataPath, 'Failed to rename tags folder!');
 }
 
 function migrateFromDB(bot, base) {
@@ -75,5 +53,18 @@ function migrateFromDB(bot, base) {
             console.error(error);
             process.exit(1);
         });
+    }
+}
+
+
+/*** UTILITIES ***/
+function moveIfExists(oldPath, newPath, failMessage) {
+    if (fse.existsSync(oldPath)) {
+        try {
+            fse.renameSync(oldPath, newPath);
+        } catch (err) {
+            console.error(failMessage);
+            process.exit(1);
+        }
     }
 }
