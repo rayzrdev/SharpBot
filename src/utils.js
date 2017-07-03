@@ -51,11 +51,11 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setTitle(title)
         .setColor(color)
         .setDescription(description)
-        .setImage(options.image || url)
+        .setImage(options.image)
         .setTimestamp(options.timestamp ? timestampToDate(options.timestamp) : null)
         .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined)
         .setAuthor(options.author === undefined ? '' : options.author)
-        .setThumbnail(options.thumbnail || url);
+        .setThumbnail(options.thumbnail);
 };
 
 function timestampToDate(timestamp) {

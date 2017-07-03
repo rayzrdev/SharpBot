@@ -1,15 +1,18 @@
 const xkcd = require('xkcd-imgs');
 
 exports.run = function (bot, msg) {
-    msg.edit(':arrows_counterclockwise:').then(() => {
-        xkcd.img((err, res) => {
-            if (err) {
-                return msg.error(err);
-            }
+    xkcd.img((err, res) => {
+        if (err) {
+            return msg.error(err);
+        }
 
-            msg.edit({
-                embed: bot.utils.embed('', '', [], { image: res.url, footer: res.title })
-            });
+        msg.delete();
+        msg.channel.send({
+            embed: bot.utils.embed('', '', [], {
+                image: res.url,
+                // Color of the XKCD website background. Seems right.
+                color: [150, 168, 199]
+            }).setFooter(res.title)
         });
     });
 };
