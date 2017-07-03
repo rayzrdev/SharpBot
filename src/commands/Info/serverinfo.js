@@ -5,14 +5,14 @@ const now = new Date();
 dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
 
 exports.run = function (bot, msg) {
-    
+
     if (!msg.guild) {
         throw 'This can only be used in a guild!';
     }
-    
+
     const millis = new Date().getTime() - msg.guild.createdAt.getTime();
-    const days = millis/1000/60/60/24;
-    
+    const days = millis / 1000 / 60 / 60 / 24;
+
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
 
 
@@ -71,11 +71,9 @@ exports.run = function (bot, msg) {
         embed.setThumbnail(`${msg.guild.iconURL}`);
     }
 
-    msg.editEmbed(embed).then(m => m.delete(30000)); 
-    
-
+    msg.edit({ embed }).then(m => m.delete(30000));
 };
-        
+
 exports.info = {
     name: 'serverinfo',
     usage: 'serverinfo',

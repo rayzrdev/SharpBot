@@ -21,12 +21,9 @@ const makeCommand = method => {
             }
 
             msg.delete();
-            msg.channel.sendEmbed(
-                bot.utils.embed(
-                    `:book: ${word}`,
-                    result
-                )
-            );
+            msg.channel.send({
+                embed: bot.utils.embed(`:book: ${word}`, result)
+            });
         });
     };
 };

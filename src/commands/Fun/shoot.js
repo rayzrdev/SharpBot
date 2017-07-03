@@ -6,9 +6,9 @@ exports.run = function (bot, msg) {
     let output = msg.mentions.users.map(m => `**${m}** :gun:`).join('\n');
 
     msg.delete();
-    msg.channel.sendEmbed(
-        bot.utils.embed(`${bot.user.username} is on a killing spree!`, output)
-    );
+    msg.channel.send({
+        embed: bot.utils.embed(`${bot.user.username} is on a killing spree!`, output)
+    });
 };
 
 exports.info = {

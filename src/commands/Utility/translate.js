@@ -16,15 +16,15 @@ exports.run = (bot, msg, args) => {
             if (parsed.options.e) msg.edit(res.text);
             else {
                 msg.delete();
-                msg.channel.sendEmbed(
-                    bot.utils.embed('', stripIndents`
+                msg.channel.send({
+                    embed: bot.utils.embed('', stripIndents`
                 **From:** __\`${parsed.options.f || '[auto]'}\`__
                 **To:** __\`${lang}\`__
 
                 **Input:**\n\`\`\`\n${input}\n\`\`\`
                 **Output:**\n\`\`\`\n${res.text}\n\`\`\`
                 `)
-                );
+                });
             }
         }).catch(msg.error);
     });

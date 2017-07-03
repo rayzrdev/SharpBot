@@ -150,8 +150,6 @@ class CommandManager {
     }
 
     execute(msg, command, args) {
-        msg.editEmbed = ((embed) => msg.edit('', { embed })).bind(msg);
-
         msg.error = ((message, delay) => {
             if (message.message === 'Not Found') {
                 // Kinda sick of these :\

@@ -26,7 +26,7 @@ exports.run = function (bot, msg, args) {
         .setDescription(`${[].concat.apply([], results.rolled).join(', ')}`)
         .addField('\u200b', footer);
 
-    msg.channel.sendEmbed(message);
+    msg.channel.send({ embed: message });
 };
 
 exports.info = {

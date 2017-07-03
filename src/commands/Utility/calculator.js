@@ -11,12 +11,12 @@ exports.run = (bot, msg, args) => {
 
     if (answer) {
         msg.delete();
-        msg.channel.sendEmbed(
-            bot.utils.embed('', stripIndents`
+        msg.channel.send({
+            embed: bot.utils.embed('', stripIndents`
                 **Equation:**\n\`\`\`\n${question}\n\`\`\`
                 **Answer:**\n\`\`\`\n${answer}\n\`\`\`
                 `)
-        ).catch(msg.error);
+        }).catch(msg.error);
     }
 };
 

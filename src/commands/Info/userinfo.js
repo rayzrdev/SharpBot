@@ -75,7 +75,7 @@ exports.run = function (bot, msg) {
 
     embed.setThumbnail(`${user.displayAvatarURL}`);
 
-    msg.editEmbed(embed).then(m => m.delete(60000));
+    msg.edit({ embed }).then(m => m.delete(60000));
 
 };
 

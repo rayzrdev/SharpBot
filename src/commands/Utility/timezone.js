@@ -33,7 +33,7 @@ exports.run = function (bot, msg, args) {
                 .setColor(bot.utils.randomColor())
                 .addField('Timezone:', `${prefix} \u2794 ${answer}`);
 
-            msg.channel.sendEmbed(message);
+            msg.channel.send({ embed: message });
         } else {
             msg.error(`No conversion found for ${input}`);
         }

@@ -50,9 +50,9 @@ exports.run = (bot, msg, args) => {
 
     if (/^(ls|list|s(earch)?)$/i.test(args[0])) {
         msg.delete();
-        return msg.channel.sendEmbed(
-            bot.utils.embed('Available Memes', '*This message will vanish in 30 seconds*\n\n' + templates.map(meme => `- \`${meme.name}\``).join('\n'))
-        ).then(m => m.delete(30000));
+        return msg.channel.send({
+            embed: bot.utils.embed('Available Memes', '*This message will vanish in 30 seconds*\n\n' + templates.map(meme => `- \`${meme.name}\``).join('\n'))
+        }).then(m => m.delete(30000));
     }
 
     if (/^(i(nf(o)?)?)$/i.test(args[0])) {
@@ -66,9 +66,9 @@ exports.run = (bot, msg, args) => {
         }
 
         msg.delete();
-        return msg.channel.sendEmbed(
-            bot.utils.embed(`\`${info.name}\``, `Styles: ${info.styles && info.styles.length > 1 ? info.styles.map(s => `\n- \`${s}\``).join('') : 'None'}`)
-        ).then(m => m.delete(15000));
+        return msg.channel.send({
+            embed: bot.utils.embed(`\`${info.name}\``, `Styles: ${info.styles && info.styles.length > 1 ? info.styles.map(s => `\n- \`${s}\``).join('') : 'None'}`)
+        }).then(m => m.delete(15000));
     }
 
     let input = args.join(' ');
@@ -94,8 +94,14 @@ exports.run = (bot, msg, args) => {
     if (parts[3]) url += `?alt=${parts[3]}`;
 
     msg.edit(':arrows_counterclockwise:').then(() => {
-        msg.channel.sendFile(url, parts[0] + '.jpg')
-            .then(() => msg.delete())
+        msg.channel.send({
+            files: [
+                {
+                    attachment: url,
+                    name: parts[0] + '.jpg'
+                }
+            ]
+        }).then(() => msg.delete())
             .catch(msg.error);
     });
 };

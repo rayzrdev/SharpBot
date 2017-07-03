@@ -24,8 +24,8 @@ exports.run = (bot, msg, args) => {
     }
 
     msg.delete();
-    msg.channel.sendEmbed(
-        bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
+    msg.channel.send({
+        embed: bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
             footer: parsed.options.f || parsed.options.ft,
             timestamp: parsed.options.d,
             color,
@@ -33,7 +33,7 @@ exports.run = (bot, msg, args) => {
             author: parsed.options.a,
             thumbnail: parsed.options.th
         })
-    );
+    });
 };
 
 exports.info = {

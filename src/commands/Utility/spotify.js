@@ -11,8 +11,8 @@ exports.run = function (bot, msg, args) {
     // 4SUBEjh0WcaPXNeBpuRC7a
 
     let input = args.join(' ')
-        .replace('https://open.spotify.com/track/','')
-        .replace('spotify:track:','');
+        .replace('https://open.spotify.com/track/', '')
+        .replace('spotify:track:', '');
     let url = `https://api.spotify.com/v1/tracks/${input}`;
     msg.edit(':arrows_counterclockwise:  Loading track info for ' + input);
 
@@ -28,9 +28,9 @@ exports.run = function (bot, msg, args) {
         }
 
         if (data['type'] === 'track') {
-            
+
             let artists = [];
-            data['artists'].forEach(function(artist) {
+            data['artists'].forEach(function (artist) {
                 artists.push(artist.name);
             }, this);
 
@@ -51,7 +51,7 @@ exports.run = function (bot, msg, args) {
                     },
                     {
                         name: 'Explict',
-                        value: `${(data.explict)?'yes':'no'}`,
+                        value: `${(data.explict) ? 'yes' : 'no'}`,
                     },
                     {
                         name: 'Popularity',
@@ -59,11 +59,11 @@ exports.run = function (bot, msg, args) {
                     },
                     {
                         name: 'Duration',
-                        value:  (duration_s == 60 ? (duration_m+1) + ':00' : duration_m + ':' + (duration_s < 10 ? '0' : '') + duration_s) + 'min',
+                        value: (duration_s == 60 ? (duration_m + 1) + ':00' : duration_m + ':' + (duration_s < 10 ? '0' : '') + duration_s) + 'min',
                     },
                     {
                         name: 'Markets',
-                        value:  `Song is available on ${data.available_markets.length} markets`,
+                        value: `Song is available on ${data.available_markets.length} markets`,
                     },
                 ],
                 {
@@ -71,11 +71,11 @@ exports.run = function (bot, msg, args) {
                     footer: 'Spotify Track Info',
                     color: [30, 215, 96]
                 });
-            
+
             embed.setThumbnail(`${data['album']['images'][2]['url']}`);
             embed.setURL(`${data['external_urls']['spotify']}`);
             msg.delete();
-            msg.channel.sendEmbed(embed);
+            msg.channel.send({ embed });
 
         } else {
             msg.error(`No info found for ${input}`);

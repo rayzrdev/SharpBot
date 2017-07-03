@@ -6,9 +6,10 @@ exports.run = function (bot, msg) {
             if (err) {
                 return msg.error(err);
             }
-            msg.editEmbed(
-                bot.utils.embed('', res.title, [], { url: res.url })
-            );
+
+            msg.edit({
+                embed: bot.utils.embed('', '', [], { image: res.url, footer: res.title })
+            });
         });
     });
 };
