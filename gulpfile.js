@@ -1,3 +1,5 @@
+// The bot will have other problems if they're using Node v6<, so the only version
+// we probably need to worry about is v6.
 if (process.version.startsWith('v6')) {
     console.error('[ERROR] SharpBot requires Node v7 or greater. Please download it at https://nodejs.org/en/download/current.');
     console.error('- Windows - https://nodejs.org/en/download/current');
