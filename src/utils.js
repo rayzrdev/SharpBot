@@ -45,12 +45,12 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
             fields.push({ name: '\u200b', value: '\u200b' });
         fields = fields.map(obj => { obj.inline = true; return obj; });
     }
-    if (url !== '') description += '\n';
 
     return new RichEmbed({ fields, video: options.video || url })
         .setTitle(title)
         .setColor(color)
         .setDescription(description)
+        .setURL(url)
         .setImage(options.image)
         .setTimestamp(options.timestamp ? timestampToDate(options.timestamp) : null)
         .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined)

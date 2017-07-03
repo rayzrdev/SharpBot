@@ -1,4 +1,4 @@
-const request = require('request');
+const got = require('got');
 const cheerio = require('cheerio');
 
 function getText(children) {
@@ -16,7 +16,7 @@ exports.run = (bot, msg, args) => {
     msg.delete();
 
     msg.channel.send(':arrows_counterclockwise: Searching...').then(m => {
-        request.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'), (err, res, body) => {
+        got('https://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'), (err, res, body) => {
             if (err || res.statusCode !== 200) {
                 return m.edit(`:no_entry_sign: Error! (${res.statusCode}): ${res.statusMessage}`);
             }

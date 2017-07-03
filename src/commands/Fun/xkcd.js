@@ -1,24 +1,52 @@
-const xkcd = require('xkcd-imgs');
+const got = require('got');
 
-exports.run = function (bot, msg) {
-    xkcd.img((err, res) => {
-        if (err) {
-            return msg.error(err);
+exports.run = async (bot, msg, args) => {
+    let id;
+
+    if (args[0] === 'latest') {
+        id = (await getLatest()).num;
+    } else {
+        id = parseInt(args[0]);
+        if (isNaN(id)) {
+            id = await getRandom();
         }
+    }
 
-        msg.delete();
-        msg.channel.send({
-            embed: bot.utils.embed('', '', [], {
-                image: res.url,
-                // Color of the XKCD website background. Seems right.
-                color: [150, 168, 199]
-            }).setFooter(res.title)
-        });
+    // Avoid the 404 page
+    while (id === 404) {
+        id = await getRandom();
+    }
+
+    const info = await getInfo(id);
+
+    msg.delete();
+    msg.channel.send({
+        embed: bot.utils.embed(`[${id}] ${info.title}`, '', [], {
+            image: info.img,
+            // Color of the XKCD website.
+            color: [150, 168, 199],
+            url: `http://xkcd.com/${id}`
+        }).setFooter(info.alt)
     });
 };
 
+async function getInfo(id) {
+    return (await got(`http://xkcd.com/${id}/info.0.json`, { json: true })).body;
+}
+
+async function getLatest() {
+    return (await got('http://xkcd.com/info.0.json', { json: true })).body;
+}
+
+async function getRandom() {
+    const latest = await getLatest();
+    const max = latest.num;
+
+    return Math.floor(Math.random() * max);
+}
+
 exports.info = {
     name: 'xkcd',
-    usage: 'xkcd',
-    description: 'Shows you random xkcd comics'
+    usage: 'xkcd [latest|<id>]',
+    description: 'Fetches random or specific XKCD comics'
 };

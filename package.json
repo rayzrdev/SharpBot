@@ -35,10 +35,8 @@
     "roll": "^1.2.0",
     "webdict": "^0.1.0"
   },
-  "peerDependencies": {
-    "xpdb": "^1.0.1"
-  },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "eslint": "^3.16.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1"
