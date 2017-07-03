@@ -12,9 +12,11 @@ exports.run = (bot, msg) => {
         };
     });
 
-    msg.edit('', {
-        embed: bot.utils.embed(`${bot.user.username}'s Servers`, '\u200b', servers, { inline: true })
-    });
+    for (let i = 0; i < servers.length / 20; i += 20) {
+        msg.edit('', {
+            embed: bot.utils.embed(`${bot.user.username}'s Servers`, '\u200b', servers.slice(i, i + 20), { inline: true })
+        });
+    }
 };
 
 exports.info = {
