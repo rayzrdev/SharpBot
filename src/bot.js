@@ -131,9 +131,6 @@ process.on('unhandledRejection', err => {
     if (err.message === 'Incorrect login details were provided.') {
         logger.severe(`${err.message} Please reconfigure with ${chalk.green('yarn run config')}`);
         process.exit(666);
-    } else if (err.message === 'Not Found') {
-        // message.delete() called on a non-existant message.
-        return;
     } else {
         logger.severe('Uncaught Promise error: \n' + err.stack);
     }
