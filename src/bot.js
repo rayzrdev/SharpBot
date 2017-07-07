@@ -52,7 +52,12 @@ Managers.Migrator.migrate(bot, __dirname);
 let loaded = false;
 
 bot.on('ready', () => {
-    bot.user.setStatus('invisible');
+    // =======================================================
+    // === Until we know how to fix this, just make people ===
+    // === use the //status command to make the bot invis. ===
+    // =======================================================
+    // bot.user.setStatus('invisible');
+
     // Fix mobile notifications
     bot.user.setAFK(true);
 
@@ -131,9 +136,6 @@ process.on('unhandledRejection', err => {
     if (err.message === 'Incorrect login details were provided.') {
         logger.severe(`${err.message} Please reconfigure with ${chalk.green('yarn run config')}`);
         process.exit(666);
-    } else if (err.message === 'Not Found') {
-        // message.delete() called on a non-existant message.
-        return;
     } else {
         logger.severe('Uncaught Promise error: \n' + err.stack);
     }
