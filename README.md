@@ -24,7 +24,7 @@
 ## Usage
 ### Requirements
 - `git` ([Windows](https://git-scm.com/download/win) | [Linux](https://git-scm.com/download/linux) | [macOS](https://git-scm.com/download/mac))
-- `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/))
+- `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/)) (make sure to get v8)
 - `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows-tab) | [Linux](https://yarnpkg.com/en/docs/install#linux-tab) | [macOS](https://yarnpkg.com/en/docs/install#mac-tab))
 
 > If you want a simple reason to use `yarn` instead of `npm`, see [here](https://github.com/RayzrDev/SharpBot/wiki/Why-Yarn%3F).
@@ -36,7 +36,10 @@ For those of you running Linux/Unix, this nifty little command should do everyth
     curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh | bash -
 
 #### Normal installation
-```
+```bash
+# ============================================================
+# === DO NOT DOWNLOAD THE BOT AS A ZIP FILE, USE GIT CLONE ===
+# ============================================================
 # Download the bot
 git clone https://github.com/RayzrDev/SharpBot.git
 # Enter the bot folder
@@ -62,7 +65,7 @@ yarn install
 ```
 
 ### Running
-```
+```bash
 # Go to the SharpBot folder
 cd path/to/SharpBot
 # Start the bot up
