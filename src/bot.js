@@ -52,7 +52,12 @@ Managers.Migrator.migrate(bot, __dirname);
 let loaded = false;
 
 bot.on('ready', () => {
-    bot.user.setStatus('invisible');
+    // =======================================================
+    // === Until we know how to fix this, just make people ===
+    // === use the //status command to make the bot invis. ===
+    // =======================================================
+    // bot.user.setStatus('invisible');
+
     // Fix mobile notifications
     bot.user.setAFK(true);
 
