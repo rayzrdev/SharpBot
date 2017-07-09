@@ -2,13 +2,13 @@ exports.run = function (bot, msg, args) {
     let nick = args[0];
 
     if (!msg.guild.me.permissions.has('MANAGE_NICKNAMES')) {
-        throw 'You don\'t have permission to change users nickname on this server';
+        throw 'You don\'t have permission to change users nickname on this server.';
     }
     if (args.length < 1) {
         throw 'You must specify a nickname.';
     }
     if (nick.length > 32) {
-        throw 'Nickname must be shorter than 32 characters';
+        throw 'Nickname must be shorter than 32 characters.';
     }
     msg.delete();
     
