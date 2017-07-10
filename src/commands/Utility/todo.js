@@ -149,12 +149,14 @@ TodoLists.currentListStorageKey = 'currentListName';
 TodoLists.mainListName = 'Main';
 
 module.exports.run = (bot, msg, args) => {
-    const send = (message, prefix = ':white_check_mark: ') => msg.channel.send({
-        embed: bot.utils.embed('Todo List Utility', `${prefix}${message}`)
-    });
+    const send = (message, deleteInSeconds = 5, prefix = ':white_check_mark: ') => msg.edit({
+        embed: bot.utils.embed(`Todo List Utility (message will self-destruct in ${deleteInSeconds} seconds)`, `${prefix}${message}`)
+    })
+        .then(m => m.delete(deleteInSeconds * 1000));
+
 
     if (args.length < 1) {
-        return send(Lists.getCurrentList(), '');
+        return send(Lists.getCurrentList(), 45, '');
     }
 
     const {options, leftover} = bot.utils.parseArgs(args, ['d', 'c', 'i', 'l', 'n', 'r', 's']);
@@ -179,7 +181,7 @@ module.exports.run = (bot, msg, args) => {
         Lists.getCurrentList().remove(indexOption);
         send(`Item ${indexOption} deleted!`);
     } else if (options.l) {
-        send(`Available lists: ${Lists.getListNames().join(', ')}`);
+        send(`Available lists: ${Lists.getListNames().join(', ')}`, 30);
     } else if (options.n) {
         ensureProperNumberOfArgs(1, 'Expected name of new list to be a single word');
         Lists.createList(leftover[0]);
@@ -194,7 +196,7 @@ module.exports.run = (bot, msg, args) => {
         send(`Switched to list '${leftover[0]}'`);
     } else {
         Lists.getCurrentList().add(leftover.join(' '));
-        send('Item added!');
+        send(`Item '${leftover.join(' ')}' added!`);
     }
 
     Lists.save();
