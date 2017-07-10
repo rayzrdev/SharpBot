@@ -210,8 +210,8 @@ module.exports.init = bot => {
 
 module.exports.info = {
     name: 'todo',
-    usage: 'todo | todo [options...] <index> | todo <text of item to add>', // TODO
-    description: 'Manage a todo list. The command by itself will show the list.',
+    usage: 'todo | todo [options...] <index> | todo <text of item to add>',
+    description: 'Manage a todo list. The command by itself will show the items in the current list.',
     options: [
         {
             name: '-c',
