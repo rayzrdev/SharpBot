@@ -89,7 +89,7 @@ class ConfigManager {
                 try {
                     fse.writeJSONSync(this._configPath, res);
                 } catch (e) {
-                    console.error('Couldnt write config to ' + this._configPath + '\n' + e.stack);
+                    console.error("Couldn't write config to " + this._configPath + '\n' + e.stack);
                     if (!reconfiguring) {
                         process.exit(666);
                     }
