@@ -1,5 +1,4 @@
 const dateFormat = require('dateformat');
-const stripIndents = require('common-tags').stripIndents;
 
 dateFormat('dddd, mmmm dS, yyyy, h:MM:ss TT');
 
