@@ -1,6 +1,6 @@
 const stripIndents = require('common-tags').stripIndents;
 
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
 
     let commands = [];
     let title = 'Categories';
@@ -10,6 +10,7 @@ exports.run = (bot, msg, args) => {
             if (args.length < 2) {
                 throw 'You must specify a category!';
             }
+
             commands = bot.commands.all(args[1]);
             title = `${args[1]} Commands`;
         } else if (/^all|full|every$/i.test(args[0])) {
@@ -27,7 +28,9 @@ exports.run = (bot, msg, args) => {
     }
 
     if (commands.length > 0) {
-        let fields = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name)).map(c => getHelp(bot, c, commands.length === 1));
+        let fields = commands.filter(c => !c.info.hidden)
+            .sort((a, b) => a.info.name.localeCompare(b.info.name))
+            .map(c => getHelp(bot, c, commands.length === 1));
 
         // Temporary workaround for the 2k char limit
         let maxLength = 1900;
@@ -52,14 +55,14 @@ exports.run = (bot, msg, args) => {
         }
 
         msg.delete().catch(() => { });
-        messages.map(m => m.fields).forEach(fields => {
-            msg.channel.send({
+        messages.map(m => m.fields).forEach(async fields => {
+            (await msg.channel.send({
                 embed: bot.utils.embed(title, '_This message will self-destruct in 90 seconds._ :boom:', fields)
-            }).then(m => m.delete(90000).catch(() => { }));
+            })).delete(90000);
         });
     } else {
         let categories = bot.commands.categories().sort();
-        msg.edit({
+        (await msg.edit({
             embed: bot.utils.embed(title, stripIndents`
             **Available categories:**
             ${categories.map(c => `- __${c}__`).join('\n')}
@@ -68,7 +71,7 @@ exports.run = (bot, msg, args) => {
             Do \`${bot.config.prefix}help category <name>\` for a list of commands in a specific category.
             Do \`${bot.config.prefix}help all\` for a list of every command available in this bot.
             Do \`${bot.config.prefix}help <command>\` for extended command help.`)
-        }).then(m => m.delete(15000));
+        })).delete(15000);
     }
 };
 
