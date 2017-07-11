@@ -11,11 +11,11 @@ exports.run = async (bot, msg, args) => {
         output = await eval(code);
     } catch (err) {
         let message = err;
-        if (err.response && err.response.body && err.response.body.message) {
+        if (err && err.response && err.response.body && err.response.body.message) {
             message = err.response.body.message;
         }
 
-        return errorHandler(message, bot, code, err);
+        return errorHandler(msg, bot, code, `${message}`);
     }
 
     if (typeof output !== 'string') {
