@@ -1,7 +1,5 @@
 'use strict';
 
-require('./polyfills');
-
 const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
@@ -51,6 +49,8 @@ Managers.Migrator.migrate(bot, __dirname);
 
 let loaded = false;
 
+bot.utils = global.utils = require('./utils');
+
 bot.on('ready', () => {
     // =======================================================
     // === Until we know how to fix this, just make people ===
@@ -60,8 +60,6 @@ bot.on('ready', () => {
 
     // Fix mobile notifications
     bot.user.setAFK(true);
-
-    bot.utils = require('./utils');
 
     commands.loadCommands();
 

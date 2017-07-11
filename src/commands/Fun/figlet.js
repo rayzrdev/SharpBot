@@ -30,14 +30,8 @@ exports.run = (bot, msg, args) => {
 
     msg.delete();
 
-    figlet.text(parsed.leftover.join(' '), options, (err, res) => {
-        if (err) {
-            return msg.error(err);
-        }
-
-        msg.channel.send(`\`\`\`\n${res}\n\`\`\``);
-    });
-
+    const input = parsed.leftover.join(' ');
+    msg.channel.send(`\`\`\`\n${figlet.textSync(input, options)}\n\`\`\``);
 };
 
 exports.info = {

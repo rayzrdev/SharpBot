@@ -233,3 +233,5 @@ exports.gistUpload = (text, lang = 'js') => {
             }
         });
 };
+
+exports.quoteRegex = (input) => `${input}`.replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');

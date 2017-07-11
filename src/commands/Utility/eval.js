@@ -27,7 +27,7 @@ exports.run = async (bot, msg, args) => {
     }
 
     msg.delete();
-    output = clean(output).replace(new RegExp(RegExp.quote(bot.token), 'g'), 'BOT_TOKEN');
+    output = clean(output).replace(new RegExp(bot.utils.quoteRegex(bot.token), 'g'), 'BOT_TOKEN');
 
     const { url } = await bot.utils.gistUpload(output);
     if (!url) {
