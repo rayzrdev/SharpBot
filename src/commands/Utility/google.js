@@ -15,12 +15,6 @@ function getText(children) {
     }).join('');
 }
 
-function decodeURL(input) {
-    return input.replace(/%([0-9A-F]{2})/g, (match, code) => {
-        return String.fromCharCode(parseInt(code, 16));
-    });
-}
-
 exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must enter something to search for!';
@@ -28,7 +22,7 @@ exports.run = async (bot, msg, args) => {
 
     await msg.edit(':arrows_counterclockwise: Searching...');
 
-    const res = await got(`https://google.com/search?${QUERY_STRING_SETTINGS}&q=${args.join('+')}`);
+    const res = await got(`https://google.com/search?${QUERY_STRING_SETTINGS}&q=${encodeURIComponent(args.join(' '))}`);
     if (res.statusCode !== 200) {
         return msg.edit(`:no_entry_sign: Error! (${res.statusCode}): ${res.statusMessage}`);
     }
@@ -42,7 +36,7 @@ exports.run = async (bot, msg, args) => {
 
     $('.g>.r>a').each((i, e) => {
         let raw = e.attribs['href'];
-        results[i]['link'] = decodeURL(raw.substr(7, raw.indexOf('&sa=U') - 7));
+        results[i]['link'] = decodeURIComponent(raw.substr(7, raw.indexOf('&sa=U') - 7));
     });
 
     $('.g>.s>.st').each((i, e) => {
