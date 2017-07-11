@@ -29,13 +29,25 @@ exports.run = (bot, msg, args) => {
 };
 
 const clean = function (data) {
-    return data.toString()
+    return `${data}`
+        .replace(/`/g, '\\$&')
         .replace(new RegExp(username, 'g'), '<Hidden>')
         .replace(/\[[0-9]*m/g, '');
 };
 
 exports.info = {
     name: 'exec',
-    usage: 'exec [-l <lang>] <command>',
-    description: 'Executes a command in the console'
+    usage: 'exec <command>',
+    description: 'Executes a command in the console',
+    options: [
+        {
+            name: '-s',
+            description: 'Runs in silent mode, not showing any console output'
+        },
+        {
+            name: '-l',
+            usage: '-l <lang>',
+            description: 'Sets the language of the outputted code block'
+        }
+    ]
 };
