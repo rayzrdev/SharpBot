@@ -20,13 +20,18 @@ exports.run = function (bot, msg, args) {
 
     msg.delete();
 
-    let message = new RichEmbed()
-        .setColor(bot.utils.randomColor())
-        .setTitle(`Total: ${results.result}`)
-        .setDescription(`${[].concat.apply([], results.rolled).join(', ')}`)
-        .addField('\u200b', footer);
+    let embed = bot.utils.embed(
+        `Total: ${results.result}`,
+        `${[].concat.apply([], results.rolled).join(', ').substr(0, 1800)}`,
+        [
+            {
+                name: '\u200b',
+                value: footer
+            }
+        ]
+    );
 
-    msg.channel.send({ embed: message });
+    msg.channel.send({ embed });
 };
 
 exports.info = {
