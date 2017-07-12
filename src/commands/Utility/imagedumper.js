@@ -1,10 +1,9 @@
-const https = require('https');
+const got = require('got');
 const fs = require('fs');
 const path = require('path');
 exports.run = (bot, msg, args) => {
     let count = parseInt(args[0]) || 100;
     let attachments = [];
-    msg.delete();
 
     msg.channel.fetchMessages({ limit: Math.min(count, 100), before: msg.id }).then(messages => {
         messages.map(m => {
@@ -21,8 +20,8 @@ exports.run = (bot, msg, args) => {
         for (let i = 0; i < attachments.length; i++) download(attachments[i]);
 
         if (attachments.length === 0) throw 'Couldn\'t find any images.';
-        msg.channel.send(`:white_check_mark: ${attachments.length} images scraped and saved to a folder called "out" in the SharpBot folder.`).then(m => { m.delete(10000); });
-
+        msg.channel.send(`:white_check_mark: ${attachments.length} images scraped and saved to the "out" folder in the SharpBot folder.`).then(m => { m.delete(10000); });
+        msg.delete();
     }).catch(msg.error);
 };
 
@@ -34,8 +33,6 @@ exports.info = {
 };
 
 function download(url) {
-    let file = fs.createWriteStream(`${__dirname}/../../../out/attachments${path.basename(url)}`);
-    https.get(url, (res) => {
-        res.pipe(file);
-    });
+    let file = fs.createWriteStream(`${__dirname}/../../../out/attachment_${path.basename(url)}`);
+    got.stream(url).pipe(file);
 }
