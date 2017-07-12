@@ -1,47 +1,49 @@
-const RichEmbed = require('discord.js').RichEmbed;
 const got = require('got');
 
-exports.run = function (bot, msg, args) {
+exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must specify a time to convert';
     }
 
     let input = args.join(' ');
     let url = `https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json`;
-    msg.edit(':arrows_counterclockwise:  Loading conversion...');
 
-    got(url).then(res => {
+    await msg.edit(':arrows_counterclockwise:  Loading conversion...');
 
-        let data = JSON.parse(res.body);
+    const res = await got(url, { json: true });
 
-        let answer = data['Answer'];
-        let message;
+    if (!res || !res.body) {
+        throw 'Could not load data from DDG.';
+    }
 
-        if (data['AnswerType'] === 'timezone_converter') {
-            msg.delete();
+    let data = res.body;
 
-            let matches = input.match(/(.*?)\s*(to|in)\s*(.*)/);
-            let prefix;
+    let answer = data['Answer'];
+    let message;
 
-            if (matches) {
-                prefix = matches[1];
-            } else {
-                prefix = input;
-            }
+    if (data['AnswerType'] === 'timezone_converter') {
+        msg.delete();
 
-            message = new RichEmbed()
-                .setColor(bot.utils.randomColor())
-                .addField('Timezone:', `${prefix} \u2794 ${answer}`);
+        let matches = input.match(/(.*?)\s*(to|in)\s*(.*)/);
+        let prefix;
 
-            msg.channel.send({ embed: message });
+        if (matches) {
+            prefix = matches[1];
         } else {
-            msg.error(`No conversion found for ${input}`);
+            prefix = input;
         }
 
-    }).catch(err => {
-        msg.error('DuckDuckGo returned an error. See console.');
-        bot.logger.severe(err);
-    });
+        message = bot.utils.embed('', '', [
+            {
+                name: 'Timezone:',
+                value: `${prefix} \u2794 ${answer}`
+            }
+        ]);
+
+        msg.channel.send({ embed: message });
+    } else {
+        throw `No conversion found for ${input}`;
+    }
 };
 
 exports.info = {

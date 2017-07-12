@@ -1,6 +1,6 @@
 const IMAGE_NAME = /\.(jpe?g|png|gif|webp)$/i;
 
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'Please provide an image URL to send.';
     }
@@ -12,16 +12,19 @@ exports.run = (bot, msg, args) => {
         name = 'image.png';
     }
 
-    msg.channel.send({
-        file: {
-            name,
-            attachment: url
-        }
-    }).then(() => {
-        msg.delete();
-    }).catch(() => {
-        msg.error('Failed to send image.');
-    });
+    try {
+        await msg.channel.send({
+            file: {
+                name,
+                attachment: url
+            }
+        });
+    } catch (ignore) {
+        // Using throw inside of a catch doesn't work quite right
+        return msg.error('Failed to send image.');
+    }
+
+    msg.delete();
 };
 
 exports.info = {

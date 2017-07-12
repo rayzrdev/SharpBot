@@ -21,7 +21,7 @@ exports.run = (bot, msg, args) => {
                 **Equation:**\n\`\`\`\n${question}\n\`\`\`
                 **Answer:**\n\`\`\`\n${answer}\n\`\`\`
                 `)
-    })
+    });
 };
 
 exports.info = {

@@ -41,9 +41,12 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
     let color = options.color || this.randomColor();
 
     if (options.inline) {
-        if (fields.length % 3 === 2)
+        if (fields.length % 3 === 2) {
             fields.push({ name: '\u200b', value: '\u200b' });
-        fields = fields.map(obj => { obj.inline = true; return obj; });
+        }
+        fields.forEach(obj => {
+            obj.inline = true;
+        });
     }
 
     return new RichEmbed({ fields, video: options.video || url })
