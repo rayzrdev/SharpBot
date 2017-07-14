@@ -12,7 +12,8 @@ exports.run = async (bot, msg, args) => {
 
         msg.edit(`:arrows_counterclockwise: Loading info for '${repo}'...`);
 
-        const json = await got(`https://api.github.com/repos/${repo}`, { json: true });
+        const res = await got(`https://api.github.com/repos/${repo}`, { json: true });
+        const json = res.body;
         if (json.message === 'Not Found') {
             msg.error('That repository could not be found!');
         }
@@ -23,7 +24,8 @@ exports.run = async (bot, msg, args) => {
     } else {
         msg.edit(`:arrows_counterclockwise: Searching for '${input}'...`);
 
-        const json = await got(`https://api.github.com/search/repositories?q=${args.join('+')}`, { json: true });
+        const res = await got(`https://api.github.com/search/repositories?q=${args.join('+')}`, { json: true });
+        const json = res.body;
         if (json.total_count < 1) {
             throw `No results found for '${args.join(' ')}'`;
         }
