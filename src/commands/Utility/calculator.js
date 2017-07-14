@@ -13,8 +13,11 @@ exports.run = (bot, msg, args) => {
         msg.delete();
         msg.channel.send({
             embed: bot.utils.embed('', stripIndents`
-                **Equation:**\n\`\`\`\n${question}\n\`\`\`
-                **Answer:**\n\`\`\`\n${answer}\n\`\`\`
+               \n\`\`\`\n${question} = ${answer}\n\`\`\` 
+                :seven: :eight: :nine: :heavy_division_sign: 
+                :four: :five: :six: :heavy_multiplication_x: 
+                :one: :two: :three: :heavy_minus_sign: 
+                :black_large_square: :zero: :black_large_square: :heavy_plus_sign:
                 `)
         }).catch(msg.error);
     }
