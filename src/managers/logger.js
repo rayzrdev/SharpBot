@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const {inspect} = require('util');
+const { inspect } = require('util');
 
 /**
  * The SharpBot logger

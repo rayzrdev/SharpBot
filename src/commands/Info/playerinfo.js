@@ -1,49 +1,47 @@
 const got = require('got');
 const cheerio = require('cheerio');
 
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
-        throw 'Please provide a username';
+        throw 'Please provide the username of a player.';
     }
 
     const username = args[0];
 
-    getUUID(username).then(uuid => {
-        if (!uuid) {
-            return msg.error('That player could not be found.');
-        }
+    const uuid = await getUUID(username);
+    if (!uuid) {
+        throw 'That player could not be found.';
+    }
 
-        msg.delete();
-        return msg.channel.send({
-            embed: bot.utils.embed('', '', [
-                {
-                    name: 'Username',
-                    value: username
-                },
-                {
-                    name: 'UUID',
-                    value: `\`${uuid}\``
-                },
-                {
-                    name: 'Skin',
-                    value: `[Download](https://crafatar.com/skins/${uuid}.png)`
-                }
-            ], { thumbnail: `https://crafatar.com/avatars/${uuid}.png?size=250&overlay=true` })
-        });
-    }).catch(msg.error);
+    msg.delete();
+    return msg.channel.send({
+        embed: bot.utils.embed('', '', [
+            {
+                name: 'Username',
+                value: username
+            },
+            {
+                name: 'UUID',
+                value: `\`${uuid}\``
+            },
+            {
+                name: 'Skin',
+                value: `[Download](https://crafatar.com/skins/${uuid}.png)`
+            }
+        ], { thumbnail: `https://crafatar.com/avatars/${uuid}.png?size=250&overlay=true` })
+    });
 };
 
-function getUUID(username) {
-    return got(`https://mcuuid.net/?q=${username}`).then(res => {
-        const $ = cheerio.load(res.body);
-        const input = $('input')[1];
+async function getUUID(username) {
+    const res = await got(`https://mcuuid.net/?q=${username}`);
+    const $ = cheerio.load(res.body);
+    const input = $('input')[1];
 
-        if (!input) {
-            return;
-        }
+    if (!input) {
+        return;
+    }
 
-        return input.attribs['value'];
-    });
+    return input.attribs['value'];
 }
 
 exports.info = {

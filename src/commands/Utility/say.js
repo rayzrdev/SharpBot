@@ -1,8 +1,7 @@
 exports.run = (bot, msg, args) => {
     const parsed = bot.utils.parseArgs(args, ['c:']);
-    const { leftover } = parsed;
 
-    if (leftover.length < 1) {
+    if (parsed.leftover.length < 1) {
         throw 'You must put something to say!';
     }
 
@@ -21,7 +20,7 @@ exports.run = (bot, msg, args) => {
     }
 
     msg.delete();
-    channel.send(leftover.join(' '));
+    channel.send(parsed.leftover.join(' '));
 };
 
 exports.info = {

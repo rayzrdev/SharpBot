@@ -1,29 +1,26 @@
-const giphy = require('giphy-api')();
+const got = require('got');
 
-exports.run = (bot, msg, args) => {
+// Public API key provided by Giphy for anyone to use.
+const API_KEY = 'dc6zaTOxFJmzC';
+
+exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must provide something to search for!';
     }
 
-    msg.edit(':arrows_counterclockwise:').then(() => {
-        giphy.random(`${args.join(' ')}`, function (err, res) {
-            if (err) {
-                return msg.error(err);
-            }
+    const res = await got(`http://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=${encodeURIComponent(args.join(' '))}`, { json: true });
 
-            if (!res.data.url) {
-                return msg.error('No results found!');
-            }
+    if (!res || !res.body || !res.body.data) {
+        throw 'Failed to find a GIF that matched your query!';
+    }
 
-            let key = res.data.url.substr(res.data.url.lastIndexOf('-') + 1);
-            let url = `https://media.giphy.com/media/${key}/giphy.gif`;
-
-            msg.channel.send({
-                embed: bot.utils.embed('', '', [], { image: url })
-            }).then(() => msg.delete()).catch(msg.error);
-        });
+    msg.delete();
+    msg.channel.send({
+        embed: bot.utils.embed('', '', [], { image: res.body.data.image_url })
     });
 };
+
+// async function findRandom(query) {}
 
 exports.info = {
     name: 'gif',

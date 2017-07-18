@@ -76,10 +76,15 @@ class DynamicImportsManager {
 
         try {
             read.fileSync(folder).forEach(file => {
-                let basename = path.basename(file);
+                const basename = path.basename(file);
                 if (basename.startsWith('_') || !basename.endsWith('.js')) return;
 
-                let imported = require(file);
+                let imported;
+                try {
+                    imported = require(file);
+                } catch (e) {
+                    return console.error(`Unable to load modules from ${folderName} (${path.relative(folder, file)})\n${e}`);
+                }
 
                 if (imported.configs) {
                     imported.configs.forEach(config => {
@@ -94,7 +99,7 @@ class DynamicImportsManager {
                 this._imports[folderName][file] = imported;
             });
         } catch (e) {
-            console.error(`Unable to load modules from ${folderName}`);
+            console.error(`Unable to load modules from ${folderName}\n${e}`);
         }
     }
 

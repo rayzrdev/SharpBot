@@ -1,4 +1,4 @@
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'Please provide an emoji to gather info on!';
     }
@@ -6,16 +6,14 @@ exports.run = (bot, msg, args) => {
     if (args[0].charCodeAt(0) >= 55296) {
         msg.delete();
 
-        msg.channel.send({
+        return (await msg.channel.send({
             embed: bot.utils.embed(args[0], 'Built-in **Discord** emoji.')
-        }).then(m => m.delete(15000));
-
-        return;
+        })).delete(15000);
     }
 
     const match = args[0].match(/<:[a-zA-Z0-9_-]+:(\d{18})>/);
 
-    if (!match[1]) {
+    if (!match || !match[1]) {
         throw 'Please provide a valid emoji!';
     }
 
@@ -26,7 +24,7 @@ exports.run = (bot, msg, args) => {
     }
 
     msg.delete();
-    msg.channel.send({
+    (await msg.channel.send({
         embed: bot.utils.embed('', '', [
             {
                 name: 'Name',
@@ -45,7 +43,7 @@ exports.run = (bot, msg, args) => {
                 value: emoji.url
             }
         ], { thumbnail: emoji.url })
-    }).then(m => m.delete(15000));
+    })).delete(15000);
 };
 
 exports.info = {

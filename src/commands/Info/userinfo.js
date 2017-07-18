@@ -1,9 +1,8 @@
 const dateFormat = require('dateformat');
-const stripIndents = require('common-tags').stripIndents;
 
 dateFormat('dddd, mmmm dS, yyyy, h:MM:ss TT');
 
-exports.run = function (bot, msg) {
+exports.run = async (bot, msg) => {
     //Makes sure command is sent in a guild
     if (!msg.guild) {
         throw 'This can only be used in a guild!';
@@ -35,8 +34,7 @@ exports.run = function (bot, msg) {
 
     let embed = bot.utils.embed(
         `${user.username}#${msg.mentions.users.first().discriminator}`,
-        stripIndents`
-        ***This message will dissappear in 60 seconds.***`,
+        'This message will dissappear in 60 seconds.***',
         [
             {
                 name: 'Status',
@@ -70,13 +68,12 @@ exports.run = function (bot, msg) {
         ],
         {
             inline: true,
-            footer: `User ID: ${user.id}`
-        });
+            footer: `User ID: ${user.id}`,
+            thumbnail: user.displayAvatarURL
+        }
+    );
 
-    embed.setThumbnail(`${user.displayAvatarURL}`);
-
-    msg.edit({ embed }).then(m => m.delete(60000));
-
+    (await msg.edit({ embed })).delete(60000);
 };
 
 exports.info = {

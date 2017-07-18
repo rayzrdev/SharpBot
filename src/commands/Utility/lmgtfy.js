@@ -1,11 +1,16 @@
 exports.run = (bot, msg, args) => {
-    if (args.length < 1) {
+    let parsed = bot.utils.parseArgs(args, ['i']);
+
+    if (parsed.leftover.length < 1) {
         throw 'You must provide something to search for!';
     }
 
-    let parsed = bot.utils.parseArgs(args, ['i']);
+    const query = encodeURIComponent(parsed.leftover.join(' '));
+    // Are there better ways to do this? Sure. But why not abuse
+    // JavaScript's craziness, and use a truthy/falsy -> 1/0 converter?
+    const internetExplainer = !!parsed.options.i / 1;
 
-    msg.edit(`**Wow!** :arrow_right: http://www.lmgtfy.com/?iie=${parsed.options.i ? 1 : 0}&q=${parsed.leftover.join('+')}`);
+    msg.edit(`**Wow!** :arrow_right: http://www.lmgtfy.com/?iie=${internetExplainer}&q=${query}`);
 };
 
 exports.info = {
@@ -15,7 +20,6 @@ exports.info = {
     options: [
         {
             name: '-i',
-            usage: '-i',
             description: 'Enables Internet Explainer'
         }
     ]

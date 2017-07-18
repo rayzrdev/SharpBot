@@ -2,7 +2,7 @@ function hasRole(member, roleName) {
     return member.roles.map(role => role.name.toLowerCase()).indexOf(roleName.toLowerCase()) > -1;
 }
 
-exports.run = function (bot, msg, args) {
+exports.run = async (bot, msg, args) => {
     if (!msg.guild || !msg.guild.members) {
         throw 'You must run this command from within a server.';
     }
@@ -23,20 +23,20 @@ exports.run = function (bot, msg, args) {
     const body = users.join('\n');
 
     if (body.length < 2000) {
-        msg.channel.send({
+        (await msg.channel.send({
             embed: bot.utils.embed('', body)
-        }).then(m => m.delete(60000));
+        })).delete(60000);
     } else {
         let raw = members.map(m => `${m.user.username}${m.user.bot ? ' [BOT]' : ''}`).join('\n');
 
-        bot.utils.gistUpload(raw, 'txt').then(res => {
-            let trimmed = body.substr(0, 1500);
-            trimmed = trimmed.slice(0, trimmed.lastIndexOf('\n'));
+        const { url } = await bot.utils.gistUpload(raw, 'txt');
 
-            msg.channel.send({
-                embed: bot.utils.embed('', trimmed, [{ name: 'Full list', value: res.url }])
-            });
-        }).catch(msg.error);
+        let trimmed = body.substr(0, 1500);
+        trimmed = trimmed.slice(0, trimmed.lastIndexOf('\n'));
+
+        msg.channel.send({
+            embed: bot.utils.embed('', trimmed, [{ name: 'Full list', value: url }])
+        });
     }
 };
 

@@ -1,4 +1,14 @@
-const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/g;
+// The bot will have other problems if they're using Node v6<, so the only version
+// we probably need to worry about is v6.
+if (parseInt(process.versions.node.split('.')[0]) <= 6) {
+    console.error('[ERROR] SharpBot requires Node v7 or greater. Please download it at https://nodejs.org/en/download/current.');
+    console.error('| Windows | https://nodejs.org/en/download/current');
+    console.error('|  macOS  | https://nodejs.org/en/download/current');
+    console.error('|  Linux  | https://nodejs.org/en/download/package-manager');
+    process.exit(1);
+}
+
+const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/;
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');

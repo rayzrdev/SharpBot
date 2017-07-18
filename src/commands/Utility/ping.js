@@ -1,4 +1,4 @@
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
     let parsed = bot.utils.parseArgs(args, ['o']);
 
     if (parsed.options.o) {
@@ -14,10 +14,11 @@ exports.run = (bot, msg, args) => {
         });
     }
 
-    msg.edit(':thinking: Ping').then(() => {
-        msg.edit(`:stopwatch: Pong! \`${msg.editedTimestamp - msg.createdTimestamp}ms\``)
-            .then(m => m.delete(5000));
-    });
+    await msg.edit(':thinking: Ping');
+
+    const delay = msg.editedTimestamp - msg.createdTimestamp;
+
+    (await msg.edit(`:stopwatch: Pong! \`${delay}ms\``)).delete(5000);
 };
 
 exports.info = {
