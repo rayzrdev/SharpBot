@@ -9,10 +9,10 @@ const formatTime = (time) => {
     return `${hours.toFixed(0)}h ${minutes.toFixed(0)}m ${seconds.toFixed(0)}s`;
 };
 
-exports.run = (bot, msg) => {
+exports.run = async (bot, msg) => {
     const game = bot.user.presence.game || {};
 
-    msg.edit({
+    (await msg.edit({
         embed: bot.utils.embed('SharpBot Stats', '***This message will dissappear in 30 seconds.***', [
             {
                 name: ':outbox_tray: Messages sent',
@@ -51,7 +51,7 @@ exports.run = (bot, msg) => {
                 value: `${game.name || 'None'} ${game.streaming ? `[(Streaming)](${game.url})` : ''}`
             }
         ], { inline: true })
-    }).catch(msg.error).then(m => m.delete(30000));
+    })).delete(30000);
 };
 
 exports.info = {

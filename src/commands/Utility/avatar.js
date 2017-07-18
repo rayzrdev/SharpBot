@@ -1,4 +1,4 @@
-exports.run = (bot, msg) => {
+exports.run = async (bot, msg) => {
     const user = msg.mentions.users.first();
     if (!user) {
         throw 'Please mention the user who you want the avatar from.';
@@ -9,9 +9,9 @@ exports.run = (bot, msg) => {
     }
 
     msg.delete();
-    msg.channel.send({
+    (await msg.channel.send({
         embed: bot.utils.embed(`${user.username}'s Avatar`, `[Download](${user.avatarURL})`, [], { image: user.avatarURL })
-    }).then(m => m.delete(30000));
+    })).delete(30000);
 };
 
 exports.info = {

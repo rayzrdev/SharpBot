@@ -20,14 +20,10 @@
     "didyoumean2": "^1.2.0",
     "discord-emoji": "^1.1.1",
     "discord.js": "^11.0.0",
-    "escape-string-regexp": "^1.0.5",
     "figlet": "^1.2.0",
     "fs-extra": "^2.1.2",
-    "giphy": "^0.0.4",
-    "giphy-api": "^1.2.5",
     "google-translate-api": "abyssvi/google-translate-api",
     "got": "^6.7.1",
-    "leven": "^2.0.0",
     "math-expression-evaluator": "^1.2.16",
     "node-notifier": "^5.1.2",
     "normalize-url": "^1.9.1",
@@ -36,11 +32,7 @@
     "prompt": "^1.0.0",
     "readdir-recursive": "^0.0.4",
     "roll": "^1.2.0",
-    "webdict": "^0.1.0",
-    "xkcd-imgs": "^1.0.1"
-  },
-  "peerDependencies": {
-    "xpdb": "^1.0.1"
+    "webdict": "^0.1.0"
   },
   "devDependencies": {
     "eslint": "^3.16.1",

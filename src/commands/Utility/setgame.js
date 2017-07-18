@@ -1,6 +1,6 @@
 const normalizeUrl = require('normalize-url');
 
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
     let { leftover, options } = bot.utils.parseArgs(args, ['s:']);
 
     if (leftover.length < 1) {
@@ -26,9 +26,10 @@ exports.run = (bot, msg, args) => {
     bot.user.setGame(game, stream);
 
     msg.delete();
-    msg.channel.send({
+
+    (await msg.channel.send({
         embed: bot.utils.embed(':ok_hand: Game changed!', '', fields)
-    }).then(m => m.delete(5000));
+    })).delete(5000);
 };
 
 exports.info = {

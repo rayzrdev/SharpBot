@@ -7,22 +7,27 @@ exports.run = (bot, msg, args) => {
     }
 
     const question = args.join(' ');
-    const answer = math.eval(question);
 
-    if (answer) {
-        msg.delete();
-        msg.channel.send({
-            embed: bot.utils.embed('', stripIndents`
+    let answer;
+    try {
+        answer = math.eval(question);
+    } catch (err) {
+        throw `Invalid math equation: ${err}`;
+    }
+
+    msg.delete();
+    msg.channel.send({
+        embed: bot.utils.embed('', stripIndents`
                 **Equation:**\n\`\`\`\n${question}\n\`\`\`
                 **Answer:**\n\`\`\`\n${answer}\n\`\`\`
                 `)
-        }).catch(msg.error);
-    }
+    });
 };
 
 exports.info = {
-    name: 'calc',
-    usage: 'calc <equation>',
+    name: 'calculate',
+    usage: 'calculate <equation>',
+    aliases: ['calc', 'math'],
     description: 'Calculates any math equation',
     credits: 'Carbowix',
 };

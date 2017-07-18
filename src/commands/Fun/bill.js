@@ -1,16 +1,17 @@
 const got = require('got');
 
-exports.run = (bot, msg) => {
-    msg.edit(':arrows_counterclockwise:').then(() => {
-        got('http://belikebill.azurewebsites.net/billgen-API.php?default=1', { encoding: null }).then(res => {
-            msg.channel.send({
-                file: {
-                    attachment: res.body,
-                    name: 'bill.jpg'
-                }
-            }).then(() => msg.delete());
-        }).catch(msg.error);
+exports.run = async (bot, msg) => {
+    await msg.edit(':arrows_counterclockwise:');
+    const { body } = await got('http://belikebill.azurewebsites.net/billgen-API.php?default=1', { encoding: null });
+
+    await msg.channel.send({
+        file: {
+            attachment: body,
+            name: 'bill.jpg'
+        }
     });
+
+    msg.delete();
 };
 
 exports.info = {

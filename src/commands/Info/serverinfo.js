@@ -1,11 +1,9 @@
 const dateFormat = require('dateformat');
-const stripIndents = require('common-tags').stripIndents;
 
 const now = new Date();
 dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
 
-exports.run = function (bot, msg) {
-
+exports.run = async (bot, msg) => {
     if (!msg.guild) {
         throw 'This can only be used in a guild!';
     }
@@ -15,11 +13,9 @@ exports.run = function (bot, msg) {
 
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
 
-
     let embed = bot.utils.embed(
         `${msg.guild.name}`,
-        stripIndents`
-        ***This message will dissappear in 30 seconds.***`,
+        '***This message will dissappear in 60 seconds.***',
         [
             {
                 name: 'Created On',
@@ -65,13 +61,14 @@ exports.run = function (bot, msg) {
         {
             inline: true,
             footer: `Guild ID: ${msg.guild.id}`
-        });
+        }
+    );
 
     if (msg.guild.iconURL != null) {
         embed.setThumbnail(`${msg.guild.iconURL}`);
     }
 
-    msg.edit({ embed }).then(m => m.delete(30000));
+    (await msg.edit({ embed })).delete(60000);
 };
 
 exports.info = {
@@ -79,4 +76,3 @@ exports.info = {
     usage: 'serverinfo',
     description: 'Shows info of the server you are in'
 };
-

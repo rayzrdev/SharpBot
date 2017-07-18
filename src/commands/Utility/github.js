@@ -1,56 +1,51 @@
 const got = require('got');
 
-exports.run = function (bot, msg, args) {
+exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must specify a repository or search term!';
     }
 
-    if (args[0].indexOf('/') !== -1) {
+    const input = args.join(' ');
 
-        let repo = safeRepo(args[0]);
+    if (input.indexOf('/') !== -1) {
+        let repo = safeRepo(input);
 
-        msg.edit(`:arrows_counterclockwise:  Loading info for '${repo}'...`);
+        msg.edit(`:arrows_counterclockwise: Loading info for '${repo}'...`);
 
-        got(`https://api.github.com/repos/${repo}`).then(res => {
-            let json = JSON.parse(res.body);
-            if (json.message === 'Not Found') {
-                msg.error('That repository could not be found!');
-            }
+        const res = await got(`https://api.github.com/repos/${repo}`, { json: true });
+        const json = res.body;
+        if (json.message === 'Not Found') {
+            msg.error('That repository could not be found!');
+        }
 
-            msg.edit('', { embed: bot.utils.embed('', getInfo(json)) });
+        msg.edit({
+            embed: bot.utils.embed('', getInfo(json))
         });
-
     } else {
+        msg.edit(`:arrows_counterclockwise: Searching for '${input}'...`);
 
-        msg.edit(`:arrows_counterclockwise:  Searching for '${args.join(' ')}'...`);
+        const res = await got(`https://api.github.com/search/repositories?q=${args.join('+')}`, { json: true });
+        const json = res.body;
+        if (json.total_count < 1) {
+            throw `No results found for '${args.join(' ')}'`;
+        }
 
-        got(`https://api.github.com/search/repositories?q=${args.join('+')}`).then(res => {
-            let json = JSON.parse(res.body);
-            if (json.total_count < 1) {
-                msg.edit(`:sob: No results found for '${args.join(' ')}'`).then(m => m.delete(2000));
-                return;
-            }
+        msg.delete();
+        msg.channel.send(':white_check_mark: Top 3 results:');
 
-            msg.delete();
-            msg.channel.send(':white_check_mark: Top 3 results:');
-
-            for (let i = 0; i < 3; i++) {
-                if (!json.items[i]) {
-                    break;
-                }
-                let item = json.items[i];
-                msg.channel.send('', { embed: bot.utils.embed('', getInfo(item)) });
-            }
+        json.items.slice(0, 3).forEach(item => {
+            msg.channel.send({
+                embed: bot.utils.embed('', getInfo(item))
+            });
         });
-
     }
-
 };
 
 function safeRepo(input) {
     if (input.indexOf('/') === -1) {
         return;
     }
+
     let user = input.substr(0, input.indexOf('/'));
     input = input.substr(input.indexOf('/') + 1);
     let repo = input.indexOf('/') === -1 ? input : input.substr(0, input.indexOf('/'));
@@ -75,6 +70,6 @@ function getInfo(json) {
 
 exports.info = {
     name: 'github',
-    usage: 'github user/repo',
+    usage: 'github <user/repo>',
     description: 'Links to a GitHub repository'
 };
