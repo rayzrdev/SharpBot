@@ -1,7 +1,7 @@
 const stripIndents = require('common-tags').stripIndents;
 
 exports.run = async (bot, msg, args) => {
-    let parsed = bot.utils.parseArgs(args, ['l:', 'i']);
+    let parsed = bot.utils.parseArgs(args, ['l:', 'i', 'q']);
     let lang = parsed.options.l || '';
 
     let code = parsed.leftover.join(' ');
@@ -18,6 +18,12 @@ exports.run = async (bot, msg, args) => {
         return errorHandler(msg, bot, code, `${message}`);
     }
 
+    msg.delete();
+
+    if (parsed.options.q) {
+        return;
+    }
+
     if (typeof output !== 'string') {
         output = require('util').inspect(output);
     }
@@ -26,7 +32,6 @@ exports.run = async (bot, msg, args) => {
         lang = 'javascript';
     }
 
-    msg.delete();
     output = clean(output).replace(new RegExp(bot.utils.quoteRegex(bot.token), 'g'), 'BOT_TOKEN');
 
     const { url } = await bot.utils.gistUpload(output);
@@ -79,6 +84,11 @@ exports.info = {
             name: '-i',
             usage: '-i',
             description: 'Inline extra-long output in addition to uploading to hastebin'
+        },
+        {
+            name: '-q',
+            usage: '-q',
+            description: 'Does not print any output'
         }
     ]
 };
