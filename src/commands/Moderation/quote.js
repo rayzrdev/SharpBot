@@ -13,7 +13,9 @@ exports.run = async (bot, msg, args) => {
         channel = bot.channels.get(args[1].replace(/[<#>]/g, ''));
     }
 
-
+    if (!channel) {
+        throw 'That channel could not be found!';
+    }
 
     const messages = await channel.fetchMessages({ around: args[0], limit: 1 });
 
@@ -27,6 +29,7 @@ exports.run = async (bot, msg, args) => {
         timestamp: message.editedTimestamp || message.createdTimestamp,
         footer: false
     };
+
     let attachment = message.attachments.first();
 
     if (attachment && (attachment.width || attachment.height)) {
@@ -35,8 +38,8 @@ exports.run = async (bot, msg, args) => {
 
     let field = '';
 
-    if (msg.guild.id !== channel.guild.id) {
-        field = `**in ${channel.guild.name} <#${channel.id}>:**`;
+    if ((msg.guild || {}).id !== (channel.guild || {}).id) {
+        field = `**in ${(channel.guild || { name: 'DMs' }).name} <#${channel.id}>:**`;
     } else if (channel.id !== msg.channel.id) {
         field = `**in <#${channel.id}>:**`;
     }
