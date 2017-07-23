@@ -12,6 +12,8 @@
 
 > If you're worried about getting banned or otherwised punished by Discord for using a selfbot, or you just haven't read the rules yet, see [here](https://github.com/RayzrDev/SharpBot/wiki/SelfBot-Rules).
 
+> RayzrDev does not support nor do we recommend the YouTube video produced by IkBrian. They have made several mistakes and errors in the video, all of which have been made clear to them, yet they refuse to acknowledge or fix them. If help with installation is required, please join the Discord server linked at the bottom of the page.
+
 #### Table of contents
 - [Requirements](#requirements)
 - [Installing](#installing)
