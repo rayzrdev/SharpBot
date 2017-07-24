@@ -80,13 +80,14 @@ New modules have been installed. The bot will now restart.
             // Restart
             console.error('Restart code detected.');
             gulp.start('main');
-        } else if (code === 666) {
+        } else if (code === 666 || code === 154) {
+            // TODO: 154 = 666 & 255, so why does it sometimes exit with 154 and sometimes with 666?
             // Full process stop
             console.log('Process exit code detected.');
             process.exit(1);
         } else {
             // Wait for changes
-            console.log('Bot has exited. Waiting for changes...');
+            console.log(`Bot has exited with code ${code}. Waiting for changes...`);
         }
     });
 });

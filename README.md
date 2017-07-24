@@ -73,9 +73,10 @@ yarn start
 ```
 
 ### Getting your user-token
+0. Open the Discord application
 1. Hit `CTRL+SHIFT+I` (`CMD+ALT+I` on macOS) to bring up the Developers Console
 > If you already see the `Application` tab, you can skip step 2
-2. At the top, click on the arrow pointing to the right
+2. At the top, click on the arrow pointing to the righ
 3. Click `Application`
 4. Go to `Local Storage` under the `Storage` section
 5. Click on `https://discordapp.com`
