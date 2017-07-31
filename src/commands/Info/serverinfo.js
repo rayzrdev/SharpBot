@@ -11,6 +11,8 @@ exports.run = async (bot, msg) => {
     const millis = new Date().getTime() - msg.guild.createdAt.getTime();
     const days = millis / 1000 / 60 / 60 / 24;
 
+    const owner = msg.guild.owner.user || {};
+
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
 
     let embed = bot.utils.embed(
@@ -39,7 +41,7 @@ exports.run = async (bot, msg) => {
             },
             {
                 name: 'Owner',
-                value: `${msg.guild.owner.user.username}`,
+                value: `${owner.username || 'None'}`,
             },
             {
                 name: 'Text Channels',
