@@ -11,5 +11,5 @@ exports.run = (bot, msg, args) => {
 exports.info = {
     name: 'clap',
     usage: 'clap <text>',
-    description: 'Calpifies your text'
+    description: 'Clapifies your text'
 };
