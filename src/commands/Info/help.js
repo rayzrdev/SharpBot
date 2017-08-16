@@ -80,7 +80,8 @@ const getHelp = (bot, command, single) => {
     let description = stripIndents`
         **Usage:** \`${bot.config.prefix}${command.info.usage || command.info.name}\`
         **Description:** ${command.info.description || '<no description>'}
-        **Category:** __${command.info.category}__`;
+        **Category:** __${command.info.category}__
+        **Usage Count:** ${bot.managers.stats.get(command.info.name) || 0}`;
 
     if (command.info.credits)
         description += `\n**Credits:** *${command.info.credits}*`;
