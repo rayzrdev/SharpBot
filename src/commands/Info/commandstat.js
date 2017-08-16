@@ -13,5 +13,6 @@ exports.run = async function (bot, msg, args) {
 exports.info = {
     name: 'commandstat',
     usage: 'commandstat <command>',
-    description: 'Show usage count for a specific command.'
+    description: 'Show usage count for a specific command.',
+    credits: '<@149916494183137280>' // Liam Bagge#0550
 };
