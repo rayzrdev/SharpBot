@@ -1,4 +1,14 @@
-const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/g;
+// The bot will have other problems if they're using Node v6<, so the only version
+// we probably need to worry about is v6.
+if (parseInt(process.versions.node.split('.')[0]) <= 6) {
+    console.error('[ERROR] SharpBot requires Node v7 or greater. Please download it at https://nodejs.org/en/download/current.');
+    console.error('| Windows | https://nodejs.org/en/download/current');
+    console.error('|  macOS  | https://nodejs.org/en/download/current');
+    console.error('|  Linux  | https://nodejs.org/en/download/package-manager');
+    process.exit(1);
+}
+
+const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/;
 
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
@@ -70,13 +80,14 @@ New modules have been installed. The bot will now restart.
             // Restart
             console.error('Restart code detected.');
             gulp.start('main');
-        } else if (code === 666) {
+        } else if (code === 666 || code === 154) {
+            // TODO: 154 = 666 & 255, so why does it sometimes exit with 154 and sometimes with 666?
             // Full process stop
             console.log('Process exit code detected.');
             process.exit(1);
         } else {
             // Wait for changes
-            console.log('Bot has exited. Waiting for changes...');
+            console.log(`Bot has exited with code ${code}. Waiting for changes...`);
         }
     });
 });

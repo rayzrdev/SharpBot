@@ -1,7 +1,5 @@
 'use strict';
 
-require('./polyfills');
-
 const path = require('path');
 const fse = require('fs-extra');
 const Discord = require('discord.js');
@@ -51,7 +49,14 @@ Managers.Migrator.migrate(bot, __dirname);
 
 let loaded = false;
 
+bot.utils = global.utils = require('./utils');
+
 bot.on('ready', () => {
+    if (bot.user.bot) {
+        logger.severe(`SharpBot is a selfbot, but you entered a bot token. Please follow the instructions at ${chalk.green('https://github.com/RayzrDev/SharpBot#getting-your-user-token')} and re-enter your token by running ${chalk.green('yarn run config')}.`);
+        process.exit(666);
+    }
+
     // =======================================================
     // === Until we know how to fix this, just make people ===
     // === use the //status command to make the bot invis. ===
@@ -60,8 +65,6 @@ bot.on('ready', () => {
 
     // Fix mobile notifications
     bot.user.setAFK(true);
-
-    bot.utils = require('./utils');
 
     commands.loadCommands();
 
@@ -121,6 +124,10 @@ bot.on('warn', console.warn);
 bot.on('disconnect', event => {
     if (event.code === 1000) {
         logger.info('Disconnected from Discord cleanly');
+    } else if (event.code === 4004) {
+        // Force the user to reconfigure if their token is invalid
+        logger.severe(`Failed to authenticate with Discord. Please follow the instructions at ${chalk.green('https://github.com/RayzrDev/SharpBot#getting-your-user-token')} and re-enter your token by running ${chalk.green('yarn run config')}.`);
+        process.exit(666);
     } else {
         logger.warn(`Disconnected from Discord with code ${event.code}`);
     }
@@ -132,13 +139,7 @@ process.on('uncaughtException', (err) => {
 });
 
 process.on('unhandledRejection', err => {
-    // Force the user to reconfigure if their token is invalid
-    if (err.message === 'Incorrect login details were provided.') {
-        logger.severe(`${err.message} Please reconfigure with ${chalk.green('yarn run config')}`);
-        process.exit(666);
-    } else {
-        logger.severe('Uncaught Promise error: \n' + err.stack);
-    }
+    logger.severe('Uncaught Promise error: \n' + err.stack);
 });
 
 bot.config && bot.login(bot.config.botToken);

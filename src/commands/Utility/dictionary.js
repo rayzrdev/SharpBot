@@ -10,9 +10,11 @@ const makeCommand = method => {
         const word = parsed.leftover.join(' ');
 
         webdict(method, word).then(res => {
-            let result = res.definition[0];
-            if (!res.definition[0]) {
+            let result;
+            if (!res || !res.definition || !res.definition[0]) {
                 result = 'No results found.';
+            } else {
+                result = res.definition[0];
             }
 
             if (parsed.options.e) {

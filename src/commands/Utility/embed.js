@@ -40,6 +40,11 @@ exports.info = {
     name: 'embed',
     usage: 'embed [text]',
     description: 'Sends a message via embeds',
+    examples: [
+        'embed Hello world!',
+        'embed -c #ff0000 Red is my favorite color :heart:',
+        'embed -r -t "Welcome to my server!" I hope you enjoy your time here.'
+    ],
     options: [
         {
             name: '-f',

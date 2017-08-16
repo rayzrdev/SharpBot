@@ -1,5 +1,3 @@
-const escapeRegex = require('escape-string-regexp');
-
 /*
 Generating the inverse replacements isnt insanely expensive,
     but I feel bad repeating an O(n) operation on every call of run
@@ -13,7 +11,7 @@ const getInverseReplacements = replacements => {
     Object.keys(replacements)
         .map(letter => {
             replacements[letter].forEach(replacement => {
-                inverseReplacements.set(new RegExp(escapeRegex(replacement), 'gi'), letter);
+                inverseReplacements.set(new RegExp(global.utils.quoteRegex(replacement), 'gi'), letter);
             });
         });
 
@@ -22,7 +20,7 @@ const getInverseReplacements = replacements => {
     return inverseReplacements;
 };
 
-exports.run = function(bot, message, args) {
+exports.run = function (bot, message, args) {
     const parsedArgs = bot.utils.parseArgs(args, ['e', 't']);
 
     if (parsedArgs.leftover.length < 1) {
@@ -65,14 +63,14 @@ exports.run = function(bot, message, args) {
                 .join(' ')
                 .replace(/[a-z]/gi, str => {
                     let selection = bot.utils.randomSelection(extendedLeetReplacements[str.toLowerCase()] || [str]);
-                    selection = escapeRegex(selection);
+                    selection = bot.utils.quoteRegex(selection);
                     return selection;
                 });
         }
     } else {
         const simpleLeetReplacements = '4BCD3F6H1JKLMN0PQR57';
         if (parsedArgs.options.t) {
-            parsed = parsedArgs.leftover.join(' ').replace(/[a-z0-9]/g, function(a) {
+            parsed = parsedArgs.leftover.join(' ').replace(/[a-z0-9]/g, function (a) {
                 let foundInReplacements = simpleLeetReplacements.indexOf(a);
                 if (foundInReplacements === -1) {
                     return a;

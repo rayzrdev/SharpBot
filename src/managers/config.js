@@ -76,7 +76,8 @@ class ConfigManager {
             }
 
             prompt.get(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs), (err, res) => {
-                if (!res) {
+                if (err) {
+                    console.error(err);
                     process.exit(666);
                 }
 
@@ -85,7 +86,14 @@ class ConfigManager {
                     '239010380385484801'
                 ];
 
-                fse.writeJSONSync(this._configPath, res);
+                try {
+                    fse.writeJSONSync(this._configPath, res);
+                } catch (e) {
+                    console.error(`Couldn't write config to ${this._configPath}\n${e.stack}`);
+                    if (!reconfiguring) {
+                        process.exit(666);
+                    }
+                }
                 // If this is running as the configure script, then we want a non-error return code
                 process.exit(reconfiguring ? 0 : 42);
             });

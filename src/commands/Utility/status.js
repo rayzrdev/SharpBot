@@ -24,7 +24,7 @@ const validStatuses = [
 const validStatusRegex = new RegExp(`^(${validStatuses.map(status => status.internal).join('|')})$`);
 const validStatusString = validStatuses.map(status => `\`${status.internal}\``).join(', ');
 
-exports.run = (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
     if (args.length < 1 || !validStatusRegex.test(args[0])) {
         throw `Please provide a status to set: ${validStatusString}`;
     }
@@ -33,7 +33,7 @@ exports.run = (bot, msg, args) => {
 
     bot.user.setStatus(status.internal);
 
-    msg.edit(`${status.emoji} Set status to ${status.display}.`).then(() => msg.delete(5000));
+    (await msg.edit(`${status.emoji} Set status to ${status.display}.`)).delete(5000);
 };
 
 exports.info = {

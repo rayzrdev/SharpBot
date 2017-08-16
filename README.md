@@ -33,7 +33,7 @@
 #### Linux & macOS quick-installer
 For those of you running Linux/Unix, this nifty little command should do everything for you:
 
-    curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh | bash -
+    bash -c "$(curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh)"
 
 #### Normal installation
 ```bash
@@ -73,6 +73,7 @@ yarn start
 ```
 
 ### Getting your user-token
+0. Open the Discord application
 1. Hit `CTRL+SHIFT+I` (`CMD+ALT+I` on macOS) to bring up the Developers Console
 > If you already see the `Application` tab, you can skip step 2
 2. At the top, click on the arrow pointing to the right

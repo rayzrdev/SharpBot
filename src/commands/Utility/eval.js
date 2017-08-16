@@ -1,50 +1,59 @@
 const stripIndents = require('common-tags').stripIndents;
 
-exports.run = (bot, msg, args) => {
-    let parsed = bot.utils.parseArgs(args, ['l:', 'i']);
+exports.run = async (bot, msg, args) => {
+    let parsed = bot.utils.parseArgs(args, ['l:', 'i', 'q']);
     let lang = parsed.options.l || '';
 
     let code = parsed.leftover.join(' ');
     let output;
 
-    Promise.resolve(eval(code)).then(evaled => {
-        if (typeof evaled !== 'string') {
-            evaled = require('util').inspect(evaled);
-            if (!lang) {
-                lang = 'javascript';
-            }
+    try {
+        output = await eval(code);
+    } catch (err) {
+        let message = err;
+        if (err && err.response && err.response.body && err.response.body.message) {
+            message = err.response.body.message;
         }
 
-        msg.delete();
-        output = clean(evaled).replace(new RegExp(RegExp.quote(bot.token), 'g'), 'BOT_TOKEN');
+        return errorHandler(msg, bot, code, `${message}`);
+    }
 
-        return bot.utils.gistUpload(output);
-    }).then(({ url }) => {
-        if (!url) {
-            return 'Failed to upload!';
-        }
+    msg.delete();
 
-        msg.channel.send({
-            embed: bot.utils.embed('', stripIndents`
+    if (parsed.options.q) {
+        return;
+    }
+
+    if (typeof output !== 'string') {
+        output = require('util').inspect(output);
+    }
+
+    if (!lang) {
+        lang = 'javascript';
+    }
+
+    output = clean(output).replace(new RegExp(bot.utils.quoteRegex(bot.token), 'g'), 'BOT_TOKEN');
+
+    const { url } = await bot.utils.gistUpload(output);
+    if (!url) {
+        return 'Failed to upload!';
+    }
+
+    msg.channel.send({
+        embed: bot.utils.embed('', stripIndents`
                 **Input:**\n\`\`\`js\n${code}\n\`\`\`
                 **Output:**${output.length < 1500 ? `\n\`\`\`${lang}\n${output}\n\`\`\`` : `\n${url}\n`}
                 `)
-        });
-
-        if (output.length > 1500 && parsed.options.i) {
-            bot.utils.sendLarge(msg.channel, output, {
-                prefix: '```' + lang + '\n',
-                suffix: '```',
-                cutOn: ',',
-                cutAfter: true
-            });
-        }
-    }).catch(err => {
-        if (err.response && err.response.body.message) {
-            err = err.response.body.message;
-        }
-        errorHandler(msg, bot, code, err);
     });
+
+    if (output.length > 1500 && parsed.options.i) {
+        bot.utils.sendLarge(msg.channel, output, {
+            prefix: '```' + lang + '\n',
+            suffix: '```',
+            cutOn: ',',
+            cutAfter: true
+        });
+    }
 };
 
 function errorHandler(msg, bot, code, err) {
@@ -75,6 +84,11 @@ exports.info = {
             name: '-i',
             usage: '-i',
             description: 'Inline extra-long output in addition to uploading to hastebin'
+        },
+        {
+            name: '-q',
+            usage: '-q',
+            description: 'Does not print any output'
         }
     ]
 };

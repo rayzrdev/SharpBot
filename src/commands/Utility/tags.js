@@ -2,7 +2,7 @@ exports.init = bot => {
     this.storage = bot.storage('tags');
 };
 
-exports.run = (bot, message, args) => {
+exports.run = async (bot, message, args) => {
     if (args.length < 1) {
         throw `Do \`${bot.config.prefix}help tag\` for info on how to use this command.`;
     }
@@ -31,8 +31,7 @@ exports.run = (bot, message, args) => {
         this.storage.set(name, { name, contents, used: 0 });
         this.storage.save();
 
-        message.edit(`:white_check_mark: The tag \`${name}\` was added.`)
-            .then(m => m.delete(5000));
+        (await message.edit(`:white_check_mark: The tag \`${name}\` was added.`)).delete(5000);
     } else if (sub === 'delete') {
         if (args.length < 1) {
             throw 'You must provide a tag name to delete!';
@@ -47,8 +46,7 @@ exports.run = (bot, message, args) => {
         this.storage.set(name);
         this.storage.save();
 
-        message.edit(`:white_check_mark: The tag \`${name}\` was deleted.`)
-            .then(m => m.delete(5000));
+        (await message.edit(`:white_check_mark: The tag \`${name}\` was deleted.`)).delete(5000);
     } else {
         const tag = this.storage.get(sub);
 

@@ -149,7 +149,7 @@ class CommandManager {
         );
     }
 
-    execute(msg, command, args) {
+    async execute(msg, command, args) {
         msg.error = ((message, delay) => {
             if (message.message === 'Not Found') {
                 // Kinda sick of these :\
@@ -163,13 +163,11 @@ class CommandManager {
                 .then(m => m.delete(delay || 2000));
         }).bind(msg);
 
-        // return Promise.resolve(command.run(this.bot, msg, args));
         try {
-            const returned = command.run(this.bot, msg, args);
-            return Promise.resolve(returned);
+            return await command.run(this.bot, msg, args);
         } catch (err) {
             msg.error(err);
-            return Promise.resolve();
+            return null;
         }
     }
 }
