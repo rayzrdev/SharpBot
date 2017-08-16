@@ -6,6 +6,8 @@ const { RichEmbed } = require('discord.js');
 exports.run = async (bot, msg, args) => {
     if(args.length < 1) throw 'I need to know what to search...';
 
+    await msg.edit(':arrows_counterclockwise: Googling....')
+
     const params = {
         q: args.join(' '),
         safe: 'on',
@@ -43,7 +45,7 @@ exports.run = async (bot, msg, args) => {
                 .setColor(bot.utils.randomColor())
                 .setURL(`https://google.com/search?q=${encodeURIComponent(params.q)}`);
         }
-        return await msg.channel.send({ embed: card });
+        return await msg.edit({ embed: card });
     }
 
     if(results.length === 0) {
@@ -60,8 +62,7 @@ exports.run = async (bot, msg, args) => {
             value: nexttwo
         }
     ]).setURL(`https://google.com/search?q=${encodeURIComponent(params.q)}`);
-    await msg.delete();
-    await msg.channel.send({embed: embed});
+    await msg.edit('', {embed: embed});
 
 };
 
