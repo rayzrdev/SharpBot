@@ -1,10 +1,14 @@
-exports.run = async function (bot, msg, args) {
-    let command = bot.commands.findBy('name', args[0]);
+exports.run = async (bot, msg, args) => {
+    if (args.length < 1) {
+        throw 'Please specify a command';
+    }
+    
+    let command = bot.commands.get(args[0]);
     if (!command) {
         throw 'That command doesn\'t exist!';
     }
 
-    let amount = bot.managers.stats.get(command.info.name) || 0;
+    let amount = bot.managers.stats.get(`command.${command.info.name}`) || 0;
     return (await msg.edit({
         embed: bot.utils.embed(command.info.name, `You've used **${command.info.name}** a total of ${amount} times.`)
     })).delete(6000);
