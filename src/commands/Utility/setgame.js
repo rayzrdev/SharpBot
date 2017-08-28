@@ -23,7 +23,13 @@ exports.run = async (bot, msg, args) => {
         fields.push({ name: ':headphones: Stream URL', value: stream });
     }
 
-    bot.user.setGame(game, stream);
+    bot.user.setPresence({
+        game: {
+            name: game,
+            url: stream,
+            type: !!stream + 0 // pr0 hax0r -- convert string to truthy int
+        }
+    });
 
     msg.delete();
 
