@@ -1,0 +1,17 @@
+exports.run = function (bot, msg, args) {
+    if(!msg.guild.member(bot.user).hasPermission("BAN_MEMBERS")){
+       throw "You do not have permission to ban members."
+    }
+    
+    if(args.length < 1){
+       throw "Please provide the ID of the user you want to ban."
+    }
+    guild.ban(`${args[0]}`)
+    msg.channel.send(`Successfully banned the ID: ${args[0]}`
+};
+
+exports.info = {
+    name: 'idban',
+    usage: 'idban <ID>',
+    description: 'Ban a user by their ID. Can be very helpful for banning people that leave the server.'
+};
