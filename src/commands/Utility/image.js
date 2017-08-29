@@ -4,6 +4,8 @@ exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
         throw 'Please provide an image URL to send.';
     }
+    
+    msg.delete();
 
     const url = args[0];
     let name;
@@ -23,8 +25,6 @@ exports.run = async (bot, msg, args) => {
         // Using throw inside of a catch doesn't work quite right
         return msg.error('Failed to send image.');
     }
-
-    msg.delete();
 };
 
 exports.info = {
