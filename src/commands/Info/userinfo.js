@@ -34,7 +34,7 @@ exports.run = async (bot, msg) => {
 
     let embed = bot.utils.embed(
         `${user.username}#${msg.mentions.users.first().discriminator}`,
-        'This message will dissappear in 60 seconds.***',
+        '***This message will dissappear in 60 seconds.***',
         [
             {
                 name: 'Status',
