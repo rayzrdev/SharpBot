@@ -159,8 +159,16 @@ class CommandManager {
             let displayMessage = message.message || message;
 
             this.bot.logger.severe(message);
-            msg.edit(`:x: ${displayMessage || 'Something failed!'}`)
-                .then(m => m.delete(delay || 2000));
+
+            const discordOutput = `:x: ${displayMessage || 'Something failed!'}`;
+
+            msg.edit(discordOutput)
+                .then(m => m.delete(delay || 2000))
+                .catch(() => {
+                    msg.channel.send(discordOutput)
+                        .then(m => m.delete(delay || 2000))
+                        .catch(() => { /* We can't even show the error, so what now? */ });
+                });
         }).bind(msg);
 
         try {
