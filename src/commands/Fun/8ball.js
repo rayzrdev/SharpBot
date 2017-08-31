@@ -28,8 +28,9 @@ exports.run = (bot, msg, args) => {
     if (msg.content.toLowerCase().indexOf('ipodtouch0218') > -1 || msg.content.indexOf('233360087979130882') > -1) {
         response = 'HAH';
     }
-
-    msg.edit(`:8ball: | **${response}**`);
+	msg.delete();
+msg.channel.send({
+embed: bot.utils.embed(`:8ball: Question: **${args}**`,`Answer: **${response}**`)})
 };
 
 
