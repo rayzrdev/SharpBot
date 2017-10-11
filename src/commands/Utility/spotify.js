@@ -1,7 +1,6 @@
 const RichEmbed = require('discord.js').RichEmbed;
 const SpotifyWebApi = require('spotify-web-api-node');
 const SpotifyUriParser = require('spotify-uri');
-const isgd = require('isgd');
 const spotifyApi = new SpotifyWebApi({
     clientId : 'c3212bc49fb348ddb270f2bd0cfe6e0f',
     clientSecret : '0fa120b921e5434ab7f3d6338e70c125'
