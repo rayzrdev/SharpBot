@@ -1,95 +1,94 @@
-const got = require('got');
+const RichEmbed = require('discord.js').RichEmbed;
+const SpotifyWebApi = require('spotify-web-api-node');
+const SpotifyUriParser = require('spotify-uri');
+const isgd = require('isgd');
+const spotifyApi = new SpotifyWebApi({
+    clientId : 'c3212bc49fb348ddb270f2bd0cfe6e0f',
+    clientSecret : '0fa120b921e5434ab7f3d6338e70c125'
+});
 
-exports.run = function (bot, msg, args) {
-    if (args.length < 1) {
-        throw 'You must specify a track url (spotify:track:XYZ)';
-    }
-
-    // possible inputs:
-    // https://open.spotify.com/track/4SUBEjh0WcaPXNeBpuRC7a
-    // spotify:track:4SUBEjh0WcaPXNeBpuRC7a
-    // 4SUBEjh0WcaPXNeBpuRC7a
-
-    let input = args.join(' ')
-        .replace('https://open.spotify.com/track/', '')
-        .replace('spotify:track:', '');
-    let url = `https://api.spotify.com/v1/tracks/${input}`;
-    msg.edit(':arrows_counterclockwise:  Loading track info for ' + input);
-
-    got(url).then(res => {
-
-        let data;
-
-        try {
-            data = JSON.parse(res.body);
-        } catch (e) {
-            msg.error('SpotifyAPI returned weird data. See console.');
-            bot.logger.severe(e);
-        }
-
-        if (data['type'] === 'track') {
-
-            let artists = [];
-            data['artists'].forEach(function (artist) {
-                artists.push(artist.name);
-            }, this);
-
-            let duration_m = Math.floor(data.duration_ms / 60000);
-            let duration_s = ((data.duration_ms % 60000) / 1000).toFixed(0);
-
-            let embed = bot.utils.embed(
-                'Listen now!',
-                `${msg.author.username} is currently listening to`,
-                [
-                    {
-                        name: 'Artist(s)',
-                        value: `${artists.join(', ')}`,
-                    },
-                    {
-                        name: 'Title',
-                        value: `${data.name}`,
-                    },
-                    {
-                        name: 'Explict',
-                        value: `${(data.explict) ? 'yes' : 'no'}`,
-                    },
-                    {
-                        name: 'Popularity',
-                        value: `${data.popularity} %`,
-                    },
-                    {
-                        name: 'Duration',
-                        value: (duration_s == 60 ? (duration_m + 1) + ':00' : duration_m + ':' + (duration_s < 10 ? '0' : '') + duration_s) + 'min',
-                    },
-                    {
-                        name: 'Markets',
-                        value: `Song is available on ${data.available_markets.length} markets`,
-                    },
-                ],
-                {
-                    inline: true,
-                    footer: 'Spotify Track Info',
-                    color: [30, 215, 96]
-                });
-
-            embed.setThumbnail(`${data['album']['images'][2]['url']}`);
-            embed.setURL(`${data['external_urls']['spotify']}`);
-            msg.delete();
-            msg.channel.send({ embed });
-
-        } else {
-            msg.error(`No info found for ${input}`);
-        }
-
-    }).catch(err => {
-        msg.error('SpotifyAPI returned an error. See console.');
-        bot.logger.severe(err);
+exports.init = function() {
+    spotifyApi.clientCredentialsGrant()
+    .then(function(data) {
+        spotifyApi.setAccessToken(data.body['access_token']);
+    }, function(err) {
+        console.error('[spotify.js] Something went wrong when retrieving an access token. ', err);
     });
 };
 
+exports.run = function (bot, msg, args) {
+    msg.delete();
+    if (args.length < 1) {
+        throw 'You must specify a spotify uri at least!';
+    }
+
+    let parsed = bot.utils.parseArgs(args, ['player']);
+    let spotifyUri = SpotifyUriParser.parse(parsed.leftover.join(' '));
+
+    switch(spotifyUri.type) {
+    case 'track':
+        getTrackEmbed(msg, spotifyUri.id, parsed.options.player);
+        break;
+    case 'artist':
+        break;
+    case 'playlist':
+        break;
+    default:
+        throw 'Sorry, I can\'t parse that type of URI yet.';
+    }
+
+};
+
+function getTrackEmbed(msg, spotifyId, withPlayer) {
+    spotifyApi.getTrack(spotifyId)
+    .then(function(data) {
+        let apiResponse = data.body;
+        let artists = [];
+
+        apiResponse.artists.forEach(function(element) {
+            artists.push(element.name);
+        }, this);
+
+        const embed = new RichEmbed()
+        .setColor([30,215,96])
+        .setThumbnail(apiResponse.album.images[0].url)
+        .setAuthor('Click to listen on Spotify','https://image.flaticon.com/icons/png/512/174/174872.png', apiResponse.external_urls.spotify)
+        .addField('Artist', artists.join(', '), true)
+        .addField('Title',  apiResponse.name, true)
+        .addField('Length', calculateDuration(apiResponse.duration_ms), true)
+        .addField('Album',  apiResponse.album.name, true)
+        .addField('Parental Advisory',  ((apiResponse.explicit)?'contains explicit lyrics':'none applicable'), true)
+        .addField('Availability', `Available in ${apiResponse.available_markets.length} countrys`, true)
+        .addField('Popularity', `${apiResponse.popularity}%`, true);
+        
+        msg.channel.send({embed:embed});
+
+        if(withPlayer) msg.channel.send(`Got spotify? Click below to play! ${apiResponse.external_urls.spotify}`);
+
+    }, function(err) {
+        throw `Something went wrong! ${err}`;
+    });
+}
+
+function calculateDuration(ms) {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    return (seconds == 60 ? (minutes+1) + ':00' : minutes + ':' + (seconds < 10 ? '0' : '') + seconds);
+}
+
 exports.info = {
     name: 'spotify',
-    usage: 'spotify <trackurl>',
-    description: 'shows detailed information about a spotify track',
-    credits: '<@140541588915879936>' // Doxylamin#4539
+    usage: 'spotify <url>',
+    description: 'Parses a spotify-uri and outputs its information.',
+    examples: [
+        'spotify spotify:track:5DkCAVqn09WAPOPiphKOUD',
+        'spotify -player spotify:track:5DkCAVqn09WAPOPiphKOUD',
+        'spotify https://open.spotify.com/track/5DkCAVqn09WAPOPiphKOUD'
+    ],
+    options: [
+        {
+            name: '-player',
+            description: 'Sends another message where discord places it\'s own embedded player'
+        }
+    ]
 };

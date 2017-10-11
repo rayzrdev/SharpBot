@@ -24,6 +24,7 @@
     "fs-extra": "^2.1.2",
     "google-translate-api": "abyssvi/google-translate-api",
     "got": "^6.7.1",
+    "isgd": "^1.1.3",
     "math-expression-evaluator": "^1.2.16",
     "node-notifier": "^5.1.2",
     "normalize-url": "^1.9.1",
@@ -32,6 +33,8 @@
     "prompt": "^1.0.0",
     "readdir-recursive": "^0.0.4",
     "roll": "^1.2.0",
+    "spotify-uri": "^1.0.0",
+    "spotify-web-api-node": "^2.5.0",
     "webdict": "^0.1.0"
   },
   "devDependencies": {
