@@ -25,11 +25,13 @@ exports.run = (bot, msg, args) => {
 
     let response = randomItem(responses);
 
-    if (msg.content.toLowerCase().indexOf('ipodtouch0218') > -1 || msg.content.indexOf('233360087979130882') > -1) {
+    const query = args.join(' ');
+
+    if (query.indexOf('ipodtouch0218') > -1 || query.indexOf('233360087979130882') > -1) {
         response = 'HAH';
     }
 
-    msg.edit(`:8ball: | **${response}**`);
+    msg.edit(`${query} :8ball: | **${response}**`);
 };
 
 
