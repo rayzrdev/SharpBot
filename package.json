@@ -32,6 +32,8 @@
     "prompt": "^1.0.0",
     "readdir-recursive": "^0.0.4",
     "roll": "^1.2.0",
+    "spotify-uri": "^1.0.0",
+    "spotify-web-api-node": "^2.5.0",
     "webdict": "^0.1.0"
   },
   "devDependencies": {
