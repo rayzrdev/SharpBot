@@ -91,4 +91,4 @@ If you need help with my bot, have a feature to request or just want to chat, yo
 
 [![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://discord.io/rayzrdevofficial)
 
-*This README.md has super cow powers*
+*This README.md has super cow powers.*
