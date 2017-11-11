@@ -5,7 +5,7 @@
 
 **SharpBot** is an ever-expanding [Discord](http://discordapp.com) selfbot written with [discord.js](https://discord.js.org/#/) that has a bunch of fun and useful commands.
 
-![SharpBot installer GIF](/res/sharpbot-install.gif)
+![SharpBot installer GIF](res/sharpbot-install.gif)
 
 ### [FAQ](docs/FAQ.md)
 ### [Commands](docs/COMMANDS.md)
