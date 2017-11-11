@@ -5,7 +5,7 @@ const got = require('got');
 const spotifyApi = new SpotifyWebApi();
 
 exports.run = async (bot, msg, args) => {
-    await got('https://spotify-auth.doxylamin.pw/').then((response) => {
+    await got('https://spotify-auth.doxylamin.pw/').then(response => {
         spotifyApi.setAccessToken(response.body);
     });
 
@@ -34,7 +34,7 @@ exports.run = async (bot, msg, args) => {
 
 function getPlaylistEmbed(msg, user, spotifyId, withPreview) {
     spotifyApi.getPlaylist(user, spotifyId)
-        .then((data) => {
+        .then(data => {
             const apiResponse = data.body;
 
             const embed = new RichEmbed()
@@ -53,14 +53,14 @@ function getPlaylistEmbed(msg, user, spotifyId, withPreview) {
 
             if (withPreview) msg.channel.send(`Got spotify? Click below to play! ${apiResponse.external_urls.spotify}`);
 
-        }).catch((err) => {
+        }).catch(err => {
             throw `Something went wrong! ${err}`;
         });
 }
 
 function getArtistEmbed(msg, spotifyId, withPreview) {
     spotifyApi.getArtist(spotifyId)
-        .then((data) => {
+        .then(data => {
             const apiResponse = data.body;
 
             const embed = new RichEmbed()
@@ -76,14 +76,14 @@ function getArtistEmbed(msg, spotifyId, withPreview) {
 
             if (withPreview) msg.channel.send(`Got spotify? Click below to play! ${apiResponse.external_urls.spotify}`);
 
-        }).catch((err) => {
+        }).catch(err => {
             throw `Something went wrong! ${err}`;
         });
 }
 
 function getTrackEmbed(msg, spotifyId, withPreview) {
     spotifyApi.getTrack(spotifyId)
-        .then((data) => {
+        .then(data => {
             const apiResponse = data.body;
             let artists = apiResponse.artists.map(artist => artist.name);
 
@@ -99,11 +99,11 @@ function getTrackEmbed(msg, spotifyId, withPreview) {
                 .addField('Availability', `Available in ${apiResponse.available_markets.length} countrys`, true)
                 .addField('Popularity', `${apiResponse.popularity}%`, true);
 
-            msg.edit({ embed: embed });
+            msg.edit({ embed });
 
             if (withPreview) msg.channel.send(`Got spotify? Click below to play! ${apiResponse.external_urls.spotify}`);
 
-        }).catch((err) => {
+        }).catch(err => {
             throw `Something went wrong! ${err}`;
         });
 }
