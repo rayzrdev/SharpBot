@@ -33,7 +33,9 @@
 #### Linux & macOS quick-installer
 For those of you running Linux/Unix, this nifty little command should do everything for you:
 
-    bash -c "$(curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh)"
+```bash
+bash -c "$(curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh)"
+```
 
 #### Normal installation
 ```bash
