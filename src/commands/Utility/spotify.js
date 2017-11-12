@@ -6,7 +6,7 @@ const spotifyApi = new SpotifyWebApi();
 
 exports.run = async (bot, msg, args) => {
     if (args.length < 1) {
-        throw 'You must specify a spotify uri at least!';
+        throw 'You must specify a Spotify URI at least!';
     }
 
     const response = await got('https://spotify-auth.doxylamin.pw/');
