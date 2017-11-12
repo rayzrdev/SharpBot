@@ -6,7 +6,9 @@ const spotifyApi = new SpotifyWebApi();
 
 exports.run = async (bot, msg, args) => {
     await got('https://spotify-auth.doxylamin.pw/').then(response => {
-        spotifyApi.setAccessToken(response.body);
+        if (response.body.success == true) {
+            spotifyApi.setAccessToken(response.body.access_token);
+        }
     });
 
     if (args.length < 1) {
