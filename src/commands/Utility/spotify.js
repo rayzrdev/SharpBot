@@ -5,14 +5,13 @@ const got = require('got');
 const spotifyApi = new SpotifyWebApi();
 
 exports.run = async (bot, msg, args) => {
-    await got('https://spotify-auth.doxylamin.pw/').then(response => {
-        if (response.body.success == true) {
-            spotifyApi.setAccessToken(response.body.access_token);
-        }
-    });
-
     if (args.length < 1) {
         throw 'You must specify a spotify uri at least!';
+    }
+
+    const response = await got('https://spotify-auth.doxylamin.pw/');
+    if (response.body.success == true) {
+        spotifyApi.setAccessToken(response.body.access_token);
     }
 
     const parsed = bot.utils.parseArgs(args, ['preview']);
