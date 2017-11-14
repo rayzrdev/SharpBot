@@ -9,6 +9,13 @@ const formatTime = (time) => {
     return `${hours.toFixed(0)}h ${minutes.toFixed(0)}m ${seconds.toFixed(0)}s`;
 };
 
+const ActivityTypes = [
+    'playing',
+    'streaming',
+    'listening to',
+    'watching',
+];
+
 exports.run = async (bot, msg) => {
     const game = bot.user.presence.game || {};
 
@@ -48,7 +55,7 @@ exports.run = async (bot, msg) => {
             },
             {
                 name: ':video_game: Game',
-                value: `${game.name || 'None'} ${game.streaming ? `[(Streaming)](${game.url})` : ''}`
+                value: (game.name)?`*${ActivityTypes[game.type]}* ${game.name} ${game.streaming ? `[(Streaming)](${game.url})` : ''}`:'none'
             }
         ], { inline: true })
     })).delete(30000);
