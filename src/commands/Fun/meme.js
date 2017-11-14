@@ -15,7 +15,7 @@ got('https://memegen.link/templates/').then(res => {
     }).catch(console.error);
 }).catch(console.error);
 
-function _loadMeme(url) {
+const _loadMeme = (url) => {
     return got(url).then(res => {
         let singleData = JSON.parse(res.body);
 
@@ -27,7 +27,7 @@ function _loadMeme(url) {
     });
 }
 
-function getMeme(name) {
+const getMeme = (name) => {
     return templates.find(m => m.name.toLowerCase() === name.toLowerCase());
 }
 

@@ -8,7 +8,7 @@ const QUERY_STRING_SETTINGS = [
     'oe=UTF-8'
 ].join('&');
 
-function getText(children) {
+const getText = (children) => {
     if (children.children) return getText(children.children);
     return children.map(c => {
         return c.children ? getText(c.children) : c.data;

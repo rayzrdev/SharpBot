@@ -1,6 +1,6 @@
 const got = require('got');
 
-function makeCommand(type, url, transformer) {
+const makeCommand = (type, url, transformer) => {
     return {
         run: async (bot, msg) => {
             await msg.edit(':arrows_counterclockwise:');

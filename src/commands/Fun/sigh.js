@@ -13,7 +13,7 @@ const ascii = `
 \`\`\`
 `;
 
-exports.run = function (bot, msg) {
+exports.run = (bot, msg) => {
     msg.edit(ascii);
 };
 

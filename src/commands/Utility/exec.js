@@ -28,7 +28,7 @@ exports.run = (bot, msg, args) => {
     ps.stderr.on('data', data => bot.utils.sendLarge(msg.channel, clean(data), opts));
 };
 
-const clean = function (data) {
+const clean = (data) => {
     return `${data}`
         .replace(/`/g, '\\$&')
         .replace(new RegExp(username, 'g'), '<Hidden>')

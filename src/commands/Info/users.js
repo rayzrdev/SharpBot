@@ -1,4 +1,4 @@
-function hasRole(member, roleName) {
+const hasRole = (member, roleName) => {
     return member.roles.map(role => role.name.toLowerCase()).indexOf(roleName.toLowerCase()) > -1;
 }
 

@@ -14,7 +14,7 @@ const responses = [
     'Haha, funny joke'
 ];
 
-function randomItem(array) {
+const randomItem = (array) => {
     return array[Math.floor(Math.random() * array.length)];
 }
 

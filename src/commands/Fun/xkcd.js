@@ -30,15 +30,15 @@ exports.run = async (bot, msg, args) => {
     });
 };
 
-async function getInfo(id) {
+const getInfo = async (id) => {
     return (await got(`http://xkcd.com/${id}/info.0.json`, { json: true })).body;
 }
 
-async function getLatest() {
+const getLatest = async () => {
     return (await got('http://xkcd.com/info.0.json', { json: true })).body;
 }
 
-async function getRandom() {
+const getRandom = async () => {
     const latest = await getLatest();
     const max = latest.num;
 

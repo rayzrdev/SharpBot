@@ -1,4 +1,4 @@
-const mappings = (function (object) {
+const mappings = ((object) => {
     let output = [];
 
     for (let key in object) {

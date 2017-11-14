@@ -1,7 +1,7 @@
 const Roll = require('roll');
 const roller = new Roll();
 
-exports.run = function (bot, msg, args) {
+exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         throw 'You must specify in dice notation (XdY)';
     }

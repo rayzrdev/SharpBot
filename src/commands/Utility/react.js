@@ -51,7 +51,7 @@ const mappings = {
     '$': [':heavy_dollar_sign:']
 };
 
-function clone(object) {
+const clone = (object) => {
     const newObject = {};
 
     Object.keys(object).forEach(key => {
@@ -65,14 +65,14 @@ function clone(object) {
     return newObject;
 }
 
-function emojiToUnicode(input) {
+const emojiToUnicode = (input) => {
     if (/^:regional_indicator_[a-z]:$/.test(input)) {
         return String.fromCharCode(55356) + String.fromCharCode(56806 + input.substr(20, 1).charCodeAt(0) - 97);
     }
     return emoji[input.slice(1, -1)];
 }
 
-function react(message, remaining, allowedMappings) {
+const react = (message, remaining, allowedMappings) => {
     if (remaining.length < 1) {
         // We're out of stuff
         return;

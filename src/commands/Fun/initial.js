@@ -1,4 +1,4 @@
-exports.run = function(bot, msg, args) {
+exports.run = (bot, msg, args) => {
     if (args.length === 0) {
         throw 'You must input text to be transformed.';
     }

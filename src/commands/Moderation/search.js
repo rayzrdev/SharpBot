@@ -33,11 +33,11 @@ exports.run = async (bot, msg, args) => {
     );
 };
 
-function formatDate(date) {
+const formatDate = (date) => {
     return `[${_(date.getDay())}/${_(date.getMonth())}/${_(date.getYear() - 100)}] [${_(date.getHours())}:${_(date.getMinutes())}:${_(date.getSeconds())}]`;
 }
 
-function _(number) {
+const _ = (number) => {
     return number < 10 ? '0' + number : '' + number;
 }
 

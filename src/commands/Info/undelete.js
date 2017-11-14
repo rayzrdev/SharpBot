@@ -1,4 +1,4 @@
-exports.run = function (bot, msg) {
+exports.run = (bot, msg) => {
     const user = msg.mentions.users.first();
     if (!user) {
         throw 'Please mention a user.';

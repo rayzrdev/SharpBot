@@ -20,7 +20,7 @@ const getInverseReplacements = replacements => {
     return inverseReplacements;
 };
 
-exports.run = function (bot, message, args) {
+exports.run = (bot, message, args) => {
     const parsedArgs = bot.utils.parseArgs(args, ['e', 't']);
 
     if (parsedArgs.leftover.length < 1) {

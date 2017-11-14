@@ -41,7 +41,7 @@ exports.run = async (bot, msg, args) => {
     }
 };
 
-function safeRepo(input) {
+const safeRepo = (input) => {
     if (input.indexOf('/') === -1) {
         return;
     }
@@ -52,7 +52,7 @@ function safeRepo(input) {
     return `${user}/${repo}`;
 }
 
-function getInfo(json) {
+const getInfo = (json) => {
     return `**${json.full_name}**
 
 \t**Description:** _${json.description || 'None provided'}_

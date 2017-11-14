@@ -1,4 +1,4 @@
-exports.run = function (bot, msg, args) {
+exports.run = (bot, msg, args) => {
     if (args.length < 1) {
         throw 'Please provide an emoji to enlarge.';
     }
