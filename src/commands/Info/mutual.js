@@ -19,11 +19,11 @@ exports.run = async (bot, msg, args) => {
 
     await msg.edit(':arrows_counterclockwise: Searching...');
 
-    const { url } = await bot.utils.gistUpload(mutual.map(user => `- ${user.username}#${user.discriminator}`).join('\n'), 'txt');
+    const { url } = await bot.utils.gistUpload(mutual.map(user => `- ${user.tag}`).join('\n'), 'txt');
 
     msg.delete();
     (await msg.channel.send({
-        embed: bot.utils.embed(`Mutual members of ${guild.name}`, limitTo(mutual.array().map(user => (user.username + "#" + user.discriminator)), 25, ', '), [
+        embed: bot.utils.embed(`Mutual members of ${guild.name}`, limitTo(mutual.array().map(user => user.tag), 25, ', '), [
             {
                 name: 'Full List',
                 value: url
