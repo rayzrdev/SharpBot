@@ -8,21 +8,22 @@ exports.run = async (bot, msg, args) => {
     }
 
     const query = args.join(' ').toLowerCase();
-    const guild = bot.guilds.find(guild => guild.name.toLowerCase() === query);
-
-    if (!guild) {
-        throw 'That guild could not be found!';
-    }
-
+	// Try to parse by Server Name fist or Server ID
+    const guild = bot.guilds.find(guild => guild.name.toLowerCase() === query || guild.id === query);
+	
+	if (!guild) {
+		throw 'That guild could not be found!';
+	}
+	
     const mutual = bot.users.filter(user => inGuild(msg.guild, user) && inGuild(guild, user));
 
     await msg.edit(':arrows_counterclockwise: Searching...');
 
-    const { url } = await bot.utils.gistUpload(mutual.map(user => `- ${user.username}`).join('\n'), 'txt');
+    const { url } = await bot.utils.gistUpload(mutual.map(user => `- ${user.username}#${user.discriminator}`).join('\n'), 'txt');
 
     msg.delete();
     (await msg.channel.send({
-        embed: bot.utils.embed(`Mutual members of ${guild.name}`, limitTo(mutual.array().map(user => user.username), 25, ', '), [
+        embed: bot.utils.embed(`Mutual members of ${guild.name}`, limitTo(mutual.array().map(user => (user.username + "#" + user.discriminator)), 25, ', '), [
             {
                 name: 'Full List',
                 value: url
