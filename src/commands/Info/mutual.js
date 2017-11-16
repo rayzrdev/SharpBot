@@ -8,13 +8,13 @@ exports.run = async (bot, msg, args) => {
     }
 
     const query = args.join(' ').toLowerCase();
-	// Try to parse by Server Name fist or Server ID
+    // Try to parse by Server Name fist or Server ID
     const guild = bot.guilds.find(guild => guild.name.toLowerCase() === query || guild.id === query);
-	
-	if (!guild) {
-		throw 'That guild could not be found!';
-	}
-	
+
+    if (!guild) {
+        throw 'That guild could not be found!';
+    }
+
     const mutual = bot.users.filter(user => inGuild(msg.guild, user) && inGuild(guild, user));
 
     await msg.edit(':arrows_counterclockwise: Searching...');
