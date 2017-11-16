@@ -9,7 +9,7 @@ const formatTime = (time) => {
     return `${hours.toFixed(0)}h ${minutes.toFixed(0)}m ${seconds.toFixed(0)}s`;
 };
 
-const ActivityTypes = [
+const activityTypes = [
     'playing',
     'streaming',
     'listening to',
@@ -55,7 +55,7 @@ exports.run = async (bot, msg) => {
             },
             {
                 name: ':video_game: Game',
-                value: (game.name)?`*${ActivityTypes[game.type]}* ${game.name} ${game.streaming ? `[(Streaming)](${game.url})` : ''}`:'none'
+                value: (game.name) ? `*${activityTypes[game.type]}* ${game.name} ${game.streaming ? `[(Streaming)](${game.url})` : ''}` : 'none'
             }
         ], { inline: true })
     })).delete(30000);
