@@ -95,16 +95,13 @@ bot.on('message', msg => {
     stats.increment(`messages-${bot.user.id === msg.author.id ? 'sent' : 'received'}`);
     if (msg.isMentioned(bot.user)) {
         stats.increment('mentions');
+        console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
     if (msg.author.id !== bot.user.id) return;
 
     if (msg.guild && bot.config.blacklistedServers && bot.config.blacklistedServers.indexOf(msg.guild.id.toString()) > -1) {
         return;
-    }
-
-    if (msg.isMentioned(bot.user.id)) {
-        console.log(`[MENTION] ${msg.author.username} | ${msg.guild ? msg.guild.name : '(DM)'} | #${msg.channel.name || 'N/A'}:\n${msg.cleanContent}`);
     }
 
     return bot.commands.handleCommand(msg, msg.content);
