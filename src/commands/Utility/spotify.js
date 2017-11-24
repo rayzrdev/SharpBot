@@ -9,7 +9,8 @@ exports.run = async (bot, msg, args) => {
         throw 'You must specify a Spotify URI at least!';
     }
 
-    const response = await got('https://spotify-auth.doxylamin.pw/');
+    const response = await got('https://spotify-auth.doxylamin.pw/', { json: true });
+
     if (response.body.success == true) {
         spotifyApi.setAccessToken(response.body.access_token);
     }
