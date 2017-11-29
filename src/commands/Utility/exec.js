@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const username = require('os').userInfo().username;
 
 exports.run = async (bot, msg, args) => {
-    let parsed = bot.utils.parseArgs(args, ['r', 'd', 's', 'f', 'fn:', 'l:']);
+    let parsed = bot.utils.parseArgs(args, ['r', 'd', 's', 'f', 'w', 'fn:', 'l:']);
 
     if (parsed.length < 1) {
         throw 'You must provide a command to run!';
@@ -58,10 +58,29 @@ exports.run = async (bot, msg, args) => {
             });
         });
     } else {
-        ps.stdout.on('data', data => bot.utils.sendLarge(msg.channel, clean(data), opts));
-        ps.stderr.on('data', data => bot.utils.sendLarge(msg.channel, clean(data), opts));
+        if (parsed.options.w) {
+            let output = '';
+            let handler = data => output += data.toString();
 
-        await new Promise(resolve => ps.once('exit', resolve));
+            [ps.stdout, ps.stderr].forEach(stream => stream.on('data', handler));
+
+            await new Promise(resolve => {
+                ps.once('exit', async () => {
+                    if (!output) {
+                        return resolve();
+                    }
+
+                    await bot.utils.sendLarge(msg.channel, clean(output), opts);
+
+                    resolve();
+                });
+            });
+        } else {
+            ps.stdout.on('data', data => bot.utils.sendLarge(msg.channel, clean(data), opts));
+            ps.stderr.on('data', data => bot.utils.sendLarge(msg.channel, clean(data), opts));
+
+            await new Promise(resolve => ps.once('exit', resolve));
+        }
     }
 };
 
@@ -102,6 +121,10 @@ exports.info = {
             name: '-fn',
             usage: '-fn <name>',
             description: 'Sets the name for the sent file'
+        },
+        {
+            name: '-w',
+            description: 'Wait for the program to finish before sending the output'
         }
     ]
 };
