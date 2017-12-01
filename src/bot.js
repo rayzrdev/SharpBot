@@ -75,6 +75,7 @@ bot.on('ready', () => {
 
     logger.info(stripIndents`Stats:
         - User: ${bot.user.username}#${bot.user.discriminator} <ID: ${bot.user.id}>
+        - Prefix: ${bot.config.prefix}
         - Users: ${bot.users.filter(user => !user.bot).size}
         - Bots: ${bot.users.filter(user => user.bot).size}
         - Channels: ${bot.channels.size}
