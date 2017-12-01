@@ -8,7 +8,8 @@
     "background": "screen -dmS sharpBot gulp",
     "config": "node src/scripts/configure.js",
     "debug": "node src/scripts/debug.js",
-    "dev": "gulp --dev"
+    "dev": "gulp --dev",
+    "precommit": "gulp lint"
   },
   "author": "",
   "license": "MIT",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "eslint": "^3.16.1",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1"
+    "gulp-eslint": "^3.0.1",
+    "husky": "^0.14.3"
   }
 }
