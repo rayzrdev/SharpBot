@@ -23,7 +23,7 @@
     "discord.js": "^11.0.0",
     "figlet": "^1.2.0",
     "fs-extra": "^2.1.2",
-    "google-translate-api": "abyssvi/google-translate-api",
+    "google-translate-api": "^2.3.0",
     "got": "^6.7.1",
     "math-expression-evaluator": "^1.2.16",
     "node-notifier": "^5.1.2",
