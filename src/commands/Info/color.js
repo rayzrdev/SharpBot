@@ -51,6 +51,7 @@ exports.run = (bot, msg, args) => {
 
     let color = resolveColor(args[0]);
 
+    msg.delete();
     msg.channel.send({
         embed: new RichEmbed()
             .setDescription(`Hex: \`#${color.hex}\`\nRGB: \`${color.red}, ${color.green}, ${color.blue}\`\nHSL: \`${color.hue}, ${color.saturation}, ${color.lightness}\``)
