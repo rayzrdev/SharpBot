@@ -32,7 +32,7 @@ exports.info = {
     credits: '<@149916494183137280>' // Liam Bagge#0550
 };
 
-function download(url) {
+const download = (url) => {
     let file = fs.createWriteStream(`${__dirname}/../../../out/attachment_${path.basename(url)}`);
     got.stream(url).pipe(file);
 }

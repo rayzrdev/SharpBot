@@ -1,4 +1,4 @@
-function makeCommand(name, viewName, description, filter) {
+const makeCommand(name, viewName, description, filter) => {
     return {
         run: async (bot, msg, args) => {
             let count = parseInt(args[0]) || 1;

@@ -32,7 +32,7 @@ exports.run = async (bot, msg, args) => {
     });
 };
 
-async function getUUID(username) {
+const getUUID = (username) => {
     const res = await got(`https://mcuuid.net/?q=${username}`);
     const $ = cheerio.load(res.body);
     const input = $('input')[1];

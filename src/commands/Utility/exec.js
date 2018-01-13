@@ -84,7 +84,7 @@ exports.run = async (bot, msg, args) => {
     }
 };
 
-const clean = function (data) {
+const clean = (data) => {
     return `${data}`
         .replace(/`/g, '\u200b$&')
         .replace(new RegExp(username, 'g'), '<Hidden>')

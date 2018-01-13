@@ -1,4 +1,4 @@
-exports.run = function (bot, msg) {
+exports.run = (bot, msg) => {
     if (msg.mentions.users.size < 1) {
         throw '@mention some people to shoot!';
     }

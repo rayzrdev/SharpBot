@@ -34,7 +34,7 @@ exports.run = async (bot, msg, args) => {
 
 };
 
-function getPlaylistEmbed(msg, user, spotifyId, withPreview) {
+const getPlaylistEmbed = (msg, user, spotifyId, withPreview) => {
     spotifyApi.getPlaylist(user, spotifyId)
         .then(data => {
             const apiResponse = data.body;
@@ -60,7 +60,7 @@ function getPlaylistEmbed(msg, user, spotifyId, withPreview) {
         });
 }
 
-function getArtistEmbed(msg, spotifyId, withPreview) {
+const getArtistEmbed = (msg, spotifyId, withPreview) => {
     spotifyApi.getArtist(spotifyId)
         .then(data => {
             const apiResponse = data.body;
@@ -83,7 +83,7 @@ function getArtistEmbed(msg, spotifyId, withPreview) {
         });
 }
 
-function getTrackEmbed(msg, spotifyId, withPreview) {
+const getTrackEmbed = (msg, spotifyId, withPreview) => {
     spotifyApi.getTrack(spotifyId)
         .then(data => {
             const apiResponse = data.body;

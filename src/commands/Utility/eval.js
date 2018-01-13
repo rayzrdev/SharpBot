@@ -56,7 +56,7 @@ exports.run = async (bot, msg, args) => {
     }
 };
 
-function errorHandler(msg, bot, code, err) {
+const errorHandler = (msg, bot, code, err) => {
     msg.delete();
     msg.channel.send({
         embed: bot.utils.embed('', `**Input:**\n\`\`\`js\n${code}\n\`\`\`\n:x: **Error!**\n\`\`\`xl\n${clean(err)}\n\`\`\``, [], {
