@@ -7,7 +7,7 @@
 
 > Yes, selfbots are officially banned. However, you can see my stance on the topic [here](https://github.com/RayzrDev/SharpBot/issues/116#issuecomment-335036210). 
 
-![SharpBot installer GIF](res/sharpbot-install.gif)
+![SharpBot installer GIF](res/sharpbot-install.svg)
 
 ### [FAQ](docs/FAQ.md)
 ### [Commands](docs/COMMANDS.md)
