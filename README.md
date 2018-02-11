@@ -38,6 +38,8 @@ bash -c "$(curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/inst
 ```
 
 #### Normal installation
+Run the following commands in Terminal / Git Bash / Command Prompt:
+
 ```bash
 # ============================================================
 # === DO NOT DOWNLOAD THE BOT AS A ZIP FILE, USE GIT CLONE ===
