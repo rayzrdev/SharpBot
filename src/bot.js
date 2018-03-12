@@ -1,13 +1,27 @@
 'use strict';
 
-const path = require('path');
 const fse = require('fs-extra');
+const envPaths = require('env-paths');
 const Discord = require('discord.js');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
 const Managers = require('./managers');
 
 const bot = global.bot = exports.client = new Discord.Client();
+
+// Settings
+
+const paths = envPaths('SharpBot', { suffix: '' });
+const settings = global.settings = {
+    paths,
+    dataFolder: paths.data,
+    configsFolder: paths.config
+};
+
+if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
+if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
+
+// Managers
 
 bot.managers = {};
 
@@ -31,25 +45,23 @@ bot.managers.notifications = new Managers.Notifications(bot);
 const commands = bot.commands = new Managers.CommandManager(bot);
 const stats = bot.managers.stats = new Managers.Stats(bot);
 
+Managers.Migrator.migrate(bot);
+
+// Deleted message record handler
+
 bot.deleted = new Discord.Collection();
 
 bot.setInterval(() => {
     bot.deleted.clear();
 }, 7200000);
 
-const settings = global.settings = {
-    dataFolder: path.resolve(__dirname, '..', 'data'),
-    configsFolder: path.resolve(__dirname, '..', 'data', 'configs')
-};
-
-if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
-if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
-
-Managers.Migrator.migrate(bot, __dirname);
+// Uncategorized
 
 let loaded = false;
 
 bot.utils = global.utils = require('./utils');
+
+// Event listeners
 
 bot.on('ready', () => {
     if (bot.user.bot) {
