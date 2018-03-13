@@ -1,6 +1,6 @@
 exports.run = async (bot, msg) => {
     await msg.edit(':wave: Restarting. Bye!');
-    process.exit(42);
+    bot.shutdown(true);
 };
 
 exports.info = {

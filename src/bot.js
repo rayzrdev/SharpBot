@@ -72,7 +72,7 @@ class SharpBot extends Client {
         this.on('ready', () => {
             if (this.user.bot) {
                 logger.severe(`SharpBot is a selfbot, but you entered a bot token. Please follow the instructions at ${chalk.green('https://github.com/RayzrDev/SharpBot#getting-your-user-token')} and re-enter your token by running ${chalk.green('yarn run config')}.`);
-                process.exit(666);
+                return this.shutdown(false);
             }
 
             // Fix mobile notifications
@@ -131,7 +131,7 @@ class SharpBot extends Client {
             } else if (event.code === 4004) {
                 // Force the user to reconfigure if their token is invalid
                 this.logger.severe(`Failed to authenticate with Discord. Please follow the instructions at ${chalk.green('https://github.com/RayzrDev/SharpBot#getting-your-user-token')} and re-enter your token by running ${chalk.green('yarn run config')}.`);
-                return this.shutdown(true);
+                return this.shutdown(false);
             } else {
                 this.logger.warn(`Disconnected from Discord with code ${event.code}.`);
             }
