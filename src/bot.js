@@ -1,29 +1,28 @@
 'use strict';
 
 const fse = require('fs-extra');
-const envPaths = require('env-paths');
 const { Client, Collection } = require('discord.js');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
 const Managers = require('./managers');
 
-// Settings
-
+const envPaths = require('env-paths');
 const paths = envPaths('SharpBot', { suffix: '' });
-const settings = global.settings = {
-    paths,
-    dataFolder: paths.data,
-    configsFolder: paths.config
-};
-
-if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
-if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
 
 class SharpBot extends Client {
     constructor(config = {}) {
         super();
 
         global.bot = this;
+
+        // Settings
+        const settings = global.settings = {
+            dataFolder: config.dataFolder || paths.data,
+            configsFolder: config.configsFolder || paths.config
+        };
+
+        if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
+        if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
 
         // Managers
         this.managers = {};
@@ -37,7 +36,7 @@ class SharpBot extends Client {
         this.managers.dynamicImports.init();
 
         // Config
-        this.managers.config = new Managers.Config(this, __dirname, this.managers.dynamicImports);
+        this.managers.config = new Managers.Config(this, __dirname, this.managers.dynamicImports, config);
         this.config = global.config = this.managers.config.load();
 
         // Plugins

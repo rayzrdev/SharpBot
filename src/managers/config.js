@@ -10,13 +10,15 @@ prompt.message = '';
 prompt.delimiter = chalk.green(' >');
 
 class ConfigManager {
-    constructor(bot, base, dynamicImports) {
+    constructor(bot, base, dynamicImports, overrides = {}) {
         this._bot = bot;
         this._base = base;
 
         this._configPath = path.resolve(global.settings.configsFolder, 'config.json');
 
         this._dynamicImports = dynamicImports;
+
+        this._overrides = overrides;
     }
 
     getQuestions(currentConfig, optionalConfigs) {
@@ -101,6 +103,8 @@ class ConfigManager {
         }
 
         this._config = fse.readJSONSync(this._configPath);
+
+        Object.assign(this._config, this._overrides);
 
         return this._config;
     }
