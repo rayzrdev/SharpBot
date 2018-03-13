@@ -1,13 +1,10 @@
-const prompt = require('prompt');
+const inquirer = require('inquirer');
 const chalk = require('chalk');
 const stripIndents = require('common-tags').stripIndents;
 const dateFormat = require('dateformat');
 
 const fse = require('fs-extra');
 const path = require('path');
-
-prompt.message = '';
-prompt.delimiter = chalk.green(' >');
 
 class ConfigManager {
     constructor(bot, base, dynamicImports, overrides = {}) {
@@ -22,27 +19,23 @@ class ConfigManager {
     }
 
     getQuestions(currentConfig, optionalConfigs) {
-        const questions = {
-            properties: {
-                botToken: {
-                    pattern: /^"?[a-zA-Z0-9_\.\-]+"?$/,
-                    type: 'string',
-                    message: 'Token can only contain letters, numbers, underscores and dashes',
-                    // Only require a token if one isnt already configured
-                    required: !currentConfig.botToken,
-                    // This will show up in the prompt as (<default hidden>)
-                    default: currentConfig.botToken,
-                    hidden: true,
-                    replace: '*',
-                    before: value => value.replace(/"/g, '')
-                },
-                prefix: {
-                    type: 'string',
-                    default: currentConfig.prefix || '//',
-                    required: false
-                }
+        const questions = [
+            {
+                name: 'botToken',
+                type: 'password',
+                message: 'What is your token? (Token can only contain letters, numbers, underscores and dashes)',
+                validate: input => /^(<default hidden>)|("?[a-zA-Z0-9_\.\-]+"?)$/.test(input),
+                filter: input => input.replace('<default hidden>', currentConfig.botToken).replace(/"/g, ''),
+                // Only require a token if one isnt already configured
+                default: currentConfig.botToken ? '<default hidden>' : undefined
+            },
+            {
+                name: 'prefix',
+                type: 'input',
+                message: 'What would you like your command prefix to be?',
+                default: currentConfig.prefix || '//'
             }
-        };
+        ];
 
         Object.keys(optionalConfigs).forEach(configName => {
             const config = optionalConfigs[configName];
@@ -51,14 +44,15 @@ class ConfigManager {
                 return;
             }
             question.description = (question.description || configName) + ' (Optional)';
-            questions.properties[configName] = question;
+            questions.push(question);
         });
 
         return questions;
     }
 
-    load(reconfiguring = false) {
-        const exit = restart => reconfiguring ? process.exit(1 - restart) : this._bot.shutdown(restart);
+    async load(reconfiguring = false) {
+        const exit = (restart = true) => !reconfiguring && this._bot.shutdown(restart);
+        const fail = () => reconfiguring ? process.exit(1) : exit(false);
 
         if (reconfiguring || !fse.existsSync(this._configPath)) {
             console.log(stripIndents`
@@ -79,12 +73,7 @@ class ConfigManager {
                 currentConfig = fse.readJSONSync(this._configPath);
             }
 
-            prompt.get(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs), (err, res) => {
-                if (err) {
-                    console.error(err);
-                    return exit(false);
-                }
-
+            await inquirer.prompt(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs)).then(res => {
                 res.blacklistedServers = res.blacklistedServers || [
                     '226865538247294976',
                     '239010380385484801'
@@ -94,12 +83,13 @@ class ConfigManager {
                     fse.writeJSONSync(this._configPath, res);
                 } catch (e) {
                     console.error(`Couldn't write config to ${this._configPath}\n${e.stack}`);
-                    if (!reconfiguring) {
-                        return exit(false);
-                    }
+                    return fail();
                 }
 
                 return exit(true);
+            }).catch(err => {
+                console.error(err);
+                return fail();
             });
 
             return null;

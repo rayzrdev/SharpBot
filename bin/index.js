@@ -81,12 +81,16 @@ global.settings = {
     configsFolder: cli.flags.configDir || paths.config
 };
 
-if (cli.flags.debug) {
-    require('../src/scripts/debug');
-} else if (cli.flags.config) {
-    require('../src/scripts/configure');
-} else {
-    let { token: botToken, prefix } = cli.flags;
+const main = () => {
+    if (cli.flags.debug) {
+        return require('../src/scripts/debug');
+    } else if (cli.flags.config) {
+        return require('../src/scripts/configure');
+    } else {
+        let { token: botToken, prefix } = cli.flags;
 
-    start({ botToken, prefix });
-}
+        start({ botToken, prefix });
+    }
+};
+
+main();
