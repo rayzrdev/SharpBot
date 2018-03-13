@@ -165,3 +165,9 @@ class SharpBot extends Client {
 // Temporary: We're eventually gonna have a CLI-based launcher for this.
 exports.client = new SharpBot();
 exports.client.start();
+
+console.log(process.argv);
+
+setTimeout(() => {
+    process.exit(Math.random() > 0.6 ? 666 : 0);
+}, 3000);
