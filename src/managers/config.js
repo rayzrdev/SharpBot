@@ -58,6 +58,8 @@ class ConfigManager {
     }
 
     load(reconfiguring = false) {
+        const exit = restart => reconfiguring ? process.exit(1 - restart) : this._bot.shutdown(restart);
+
         if (reconfiguring || !fse.existsSync(this._configPath)) {
             console.log(stripIndents`
             ${chalk.gray('----------------------------------------------------------')}
@@ -80,7 +82,7 @@ class ConfigManager {
             prompt.get(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs), (err, res) => {
                 if (err) {
                     console.error(err);
-                    return this._bot.shutdown(false);
+                    return exit(false);
                 }
 
                 res.blacklistedServers = res.blacklistedServers || [
@@ -93,12 +95,13 @@ class ConfigManager {
                 } catch (e) {
                     console.error(`Couldn't write config to ${this._configPath}\n${e.stack}`);
                     if (!reconfiguring) {
-                        return this._bot.shutdown(false);
+                        return exit(false);
                     }
                 }
-                // If this is running as the configure script, then we want a non-error return code
-                return this._bot.shutdown(!reconfiguring);
+
+                return exit(true);
             });
+
             return null;
         }
 

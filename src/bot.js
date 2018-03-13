@@ -6,9 +6,6 @@ const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
 const Managers = require('./managers');
 
-const envPaths = require('env-paths');
-const paths = envPaths('SharpBot', { suffix: '' });
-
 class SharpBot extends Client {
     constructor(config = {}) {
         super();
@@ -16,10 +13,7 @@ class SharpBot extends Client {
         global.bot = this;
 
         // Settings
-        const settings = global.settings = {
-            dataFolder: config.dataFolder || paths.data,
-            configsFolder: config.configsFolder || paths.config
-        };
+        const settings = global.settings;
 
         if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
         if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);

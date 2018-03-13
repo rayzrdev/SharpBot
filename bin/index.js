@@ -1,10 +1,28 @@
 #!/usr/bin/env
 
-const path = require('path');
-const { fork } = require('child_process');
 const meow = require('meow');
+const SharpBot = require('..');
+
+const envPaths = require('env-paths');
+const paths = envPaths('SharpBot', { suffix: '' });
 
 const wait = ms => new Promise(_ => setTimeout(_, ms));
+
+const start = (config = {}) => {
+    let bot = new SharpBot(config);
+
+    bot.once('sharpbot-shutdown', async reboot => {
+        if (reboot) {
+            console.log('Process has exited. Rebooting... (3 seconds)');
+            await wait(3000);
+            start();
+        } else {
+            console.log('Bot has exited cleanly.');
+        }
+    });
+
+    bot.start();
+};
 
 const cli = meow(
     `
@@ -58,16 +76,17 @@ const cli = meow(
     }
 );
 
-function start() {
-    fork(path.resolve(__dirname, '..', 'src', 'bot.js'), process.argv.slice(2)).on('exit', async code => {
-        if (code !== 666 && code !== 154 /* = 666 & 255 */) {
-            console.log('Process has exited. Rebooting... (3 seconds)');
-            await wait(3000);
-            start();
-        } else {
-            console.log('Clean exit.');
-        }
-    });
-}
+global.settings = {
+    dataFolder: cli.flags.dataDir || paths.data,
+    configsFolder: cli.flags.configDir || paths.config
+};
 
-start();
+if (cli.flags.debug) {
+    require('../src/scripts/debug');
+} else if (cli.flags.config) {
+    require('../src/scripts/configure');
+} else {
+    let { token: botToken, prefix } = cli.flags;
+
+    start({ botToken, prefix });
+}
