@@ -1,4 +1,3 @@
-const bot = require('./bot');
 const RichEmbed = require('discord.js').RichEmbed;
 const got = require('got');
 const url = require('url');
@@ -56,7 +55,7 @@ exports.embed = (title, description = '', fields = [], options = {}) => {
         .setURL(url)
         .setImage(options.image)
         .setTimestamp(options.timestamp ? timestampToDate(options.timestamp) : null)
-        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? bot.client.user.avatarURL : undefined)
+        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? global.bot.user.avatarURL : undefined)
         .setAuthor(options.author === undefined ? '' : options.author)
         .setThumbnail(options.thumbnail);
 };
@@ -182,7 +181,7 @@ exports.playAnimation = (msg, delay, list) => {
         setTimeout(() => {
             this.playAnimation(msg, delay, list);
         }, Math.max(50, delay - elapsed));
-    }).catch(bot.client.logger.severe);
+    });
 };
 
 exports.hastebinUpload = text => {

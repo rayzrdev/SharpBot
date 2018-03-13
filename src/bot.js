@@ -65,6 +65,7 @@ class SharpBot extends Client {
 
         // Uncategorized
         this.loaded = false;
+        this.shuttingDown = false;
         this.utils = global.utils = require('./utils');
 
         // Event listeners
@@ -123,23 +124,23 @@ class SharpBot extends Client {
 
         this.on('error', console.error);
         this.on('warn', console.warn);
-        this.on('disconnect', event => {
+
+        this.once('disconnect', event => {
             if (event.code === 1000) {
-                this.logger.info('Disconnected from Discord cleanly');
+                this.logger.info('Disconnected from Discord cleanly.');
             } else if (event.code === 4004) {
                 // Force the user to reconfigure if their token is invalid
                 this.logger.severe(`Failed to authenticate with Discord. Please follow the instructions at ${chalk.green('https://github.com/RayzrDev/SharpBot#getting-your-user-token')} and re-enter your token by running ${chalk.green('yarn run config')}.`);
-                process.exit(666);
+                return this.shutdown(true);
             } else {
-                this.logger.warn(`Disconnected from Discord with code ${event.code}`);
+                this.logger.warn(`Disconnected from Discord with code ${event.code}.`);
             }
+
+            this.shutdown();
         });
 
         // Process handlers
-        process.on('exit', () => {
-            this.storage.saveAll();
-            this.loaded && this.destroy();
-        });
+        process.on('exit', () => this.shutdown());
 
         process.on('uncaughtException', (err) => {
             let errorMsg = (err ? err.stack || err : '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
@@ -152,22 +153,21 @@ class SharpBot extends Client {
     }
 
     start() {
-        if (this.config) {
-            this.login(this.config.botToken);
-            return true;
-        } else {
-            return false;
-        }
+        if (!this.config) return false;
+
+        this.login(this.config.botToken);
+
+        return true;
+    }
+
+    async shutdown(restart = true) {
+        if (this.shuttingDown) return;
+        this.shuttingDown = true;
+
+        this.storage.saveAll();
+        this.loaded && await this.destroy();
+        this.emit('sharpbot-shutdown', restart);
     }
 }
 
-
-// Temporary: We're eventually gonna have a CLI-based launcher for this.
-exports.client = new SharpBot();
-exports.client.start();
-
-console.log(process.argv);
-
-setTimeout(() => {
-    process.exit(Math.random() > 0.6 ? 666 : 0);
-}, 3000);
+module.exports = SharpBot;
