@@ -1,6 +1,6 @@
 {
   "name": "sharpbot",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A Discord.js selfbot written by Rayzr - 60 second installation!",
   "main": "src/bot.js",
   "scripts": {
@@ -10,6 +10,9 @@
     "debug": "node src/scripts/debug.js",
     "dev": "gulp --dev",
     "precommit": "gulp lint"
+  },
+  "bin": {
+    "sharpbot": "./bin/sharpbot"
   },
   "author": "Rayzr522 <rayzr522@gmail.com",
   "license": "MIT",
