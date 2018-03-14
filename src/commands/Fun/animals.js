@@ -29,6 +29,6 @@ function makeCommand(type, url, transformer) {
 }
 
 module.exports = [
-    makeCommand('cat', 'http://random.cat/meow', body => JSON.parse(body).file),
+    makeCommand('cat', 'http://aws.random.cat/meow', body => JSON.parse(body).file),
     makeCommand('dog', 'http://random.dog/woof', body => `http://random.dog/${body}`)
 ];
