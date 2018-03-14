@@ -18,7 +18,9 @@ class Logger {
     }
 
     _log(prefix, message) {
-        (console._original.log || console.log)(`${prefix} ${message}`);
+        (console._original && console._original.log
+            ? console._original.log
+            : console.log)(`${prefix} ${message}`);
     }
 
     info(message) {

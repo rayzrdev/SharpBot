@@ -18,6 +18,7 @@ const start = (config = {}) => {
             start();
         } else {
             console.log('Bot has exited cleanly.');
+            process.exit(0);
         }
     });
 
