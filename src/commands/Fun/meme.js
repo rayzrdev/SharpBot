@@ -1,32 +1,6 @@
 const got = require('got');
 let templates = [];
 
-got('https://memegen.link/templates/').then(res => {
-    let data = JSON.parse(res.body);
-    templates = [];
-    let promises = [];
-    for (let key in data) {
-        promises.push(_loadMeme(data[key]));
-    }
-
-    Promise.all(promises).then(() => {
-        templates = templates.filter(e => !!e);
-        templates.sort((a, b) => a.name.localeCompare(b.name));
-    }).catch(console.error);
-}).catch(console.error);
-
-function _loadMeme(url) {
-    return got(url).then(res => {
-        let singleData = JSON.parse(res.body);
-
-        templates.push({
-            name: url.replace(/https\:\/\/memegen\.link\/api\/templates\/(.*)/, '$1'),
-            url: url.replace('/api/templates', ''),
-            styles: singleData.styles
-        });
-    });
-}
-
 function getMeme(name) {
     return templates.find(m => m.name.toLowerCase() === name.toLowerCase());
 }
@@ -35,9 +9,37 @@ function cleanInput(input) {
     if (!input) return '';
     return input.replace(/"/g, '\'\'').replace(/\#/g, '~h')
         .replace(/\-/g, '--').replace(/\_/g, '__')
-        .replace(' ', '_').replace(/\?/g, '~q')
+        .replace(/ /g, '_').replace(/\?/g, '~q')
         .replace(/\%/g, '~p').replace(/\//g, '~s');
 }
+
+exports.init = () => {
+    got('https://memegen.link/templates/').then(res => {
+        let data = JSON.parse(res.body);
+        templates = [];
+        let promises = [];
+        for (let key in data) {
+            promises.push(_loadMeme(data[key]));
+        }
+
+        Promise.all(promises).then(() => {
+            templates = templates.filter(e => !!e);
+            templates.sort((a, b) => a.name.localeCompare(b.name));
+        }).catch(console.error);
+    }).catch(console.error);
+
+    function _loadMeme(url) {
+        return got(url).then(res => {
+            let singleData = JSON.parse(res.body);
+
+            templates.push({
+                name: url.replace(/https\:\/\/memegen\.link\/api\/templates\/(.*)/, '$1'),
+                url: url.replace('/api/templates', ''),
+                styles: singleData.styles
+            });
+        });
+    }
+};
 
 exports.run = async (bot, msg, args) => {
     if (templates.length < 1) {
