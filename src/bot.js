@@ -33,6 +33,9 @@ class SharpBot extends Client {
         this.managers.config = new Managers.Config(this, __dirname, this.managers.dynamicImports, config);
         this.config = global.config = this.managers.config.load();
 
+        // Prevent any further loading if we're prompting them.
+        if (!this.config) return;
+
         // Plugins
         this.plugins = this.managers.pluginManager = new Managers.Plugins(this);
         this.plugins.loadPlugins();
@@ -157,9 +160,13 @@ class SharpBot extends Client {
     async shutdown(restart = true) {
         if (this.shuttingDown) return;
         this.shuttingDown = true;
+        this.logger.uninject();
 
-        this.storage.saveAll();
-        this.loaded && await this.destroy();
+        if (this.loaded) {
+            this.storage.saveAll();
+            await this.destroy();
+        }
+
         this.emit('sharpbot-shutdown', restart);
     }
 }

@@ -50,12 +50,13 @@ class ConfigManager {
         return questions;
     }
 
-    async load(reconfiguring = false) {
+    load(reconfiguring = false) {
         const exit = (restart = true) => !reconfiguring && this._bot.shutdown(restart);
         const fail = () => reconfiguring ? process.exit(1) : exit(false);
 
         if (reconfiguring || !fse.existsSync(this._configPath)) {
-            console.log(stripIndents`
+            // Just a quick hack, we don't want any special formatting.
+            (console._original || console).log(stripIndents`
             ${chalk.gray('----------------------------------------------------------')}
             ${chalk.gray('==============<') + chalk.yellow(' SharpBot Setup Wizard v1.0 ') + chalk.gray('>==============')}
             ${chalk.gray('----------------------------------------------------------')}
@@ -73,7 +74,7 @@ class ConfigManager {
                 currentConfig = fse.readJSONSync(this._configPath);
             }
 
-            await inquirer.prompt(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs)).then(res => {
+            inquirer.prompt(this.getQuestions(currentConfig, this._dynamicImports.optionalConfigs)).then(res => {
                 res.blacklistedServers = res.blacklistedServers || [
                     '226865538247294976',
                     '239010380385484801'

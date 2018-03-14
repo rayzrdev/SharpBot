@@ -57,6 +57,16 @@ class Logger {
         console.debug = this._wrap(this.debug);
     }
 
+    uninject() {
+        if (!console._original) throw 'Logger not injected!';
+
+        let original = console._original;
+
+        delete console._original;
+
+        Object.assign(console, original);
+    }
+
     _wrap(func) {
         let self = this;
         return function () {
