@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env node
 
 const meow = require('meow');
 const SharpBot = require('..');
