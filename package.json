@@ -4,11 +4,11 @@
   "description": "A Discord.js selfbot written by Rayzr - 60 second installation!",
   "main": "src/bot.js",
   "scripts": {
-    "start": "gulp",
-    "background": "screen -dmS sharpBot gulp",
-    "config": "node src/scripts/configure.js",
-    "debug": "node src/scripts/debug.js",
-    "dev": "gulp --dev",
+    "start": "./bin/sharpbot",
+    "background": "screen -dmS sharpbot ./bin/sharpbot",
+    "config": "./bin/sharpbot --config",
+    "debug": "./bin/sharpbot --debug",
+    "dev": "gulp",
     "precommit": "gulp lint"
   },
   "bin": {

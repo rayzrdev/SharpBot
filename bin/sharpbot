@@ -87,9 +87,15 @@ const main = () => {
     } else if (cli.flags.config) {
         return require('../src/scripts/configure');
     } else {
-        let { token: botToken, prefix } = cli.flags;
+        let overrides = {};
+        if (cli.flags.token) {
+            overrides.botToken = cli.flags.token;
+        }
+        if (cli.flags.prefix) {
+            overrides.prefix = cli.flags.prefix;
+        }
 
-        start({ botToken, prefix });
+        start(overrides);
     }
 };
 

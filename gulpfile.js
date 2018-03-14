@@ -21,21 +21,17 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const spawn = require('child_process').spawn;
 
-const isDev = process.argv[2] === '--dev';
-
 const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/;
 
 let bot;
 
 const paths = {
     srcFiles: 'src/**/!(_)*.js',
-    configFiles: 'data/configs/config.json',
-    gulpFile: 'gulpfile.js'
+    gulpFile: 'gulpfile.js',
+    binary: 'bin/sharpbot'
 };
 
-function killBot() {
-    if (bot) bot.kill();
-}
+const killBot = () => bot && bot.kill();
 
 gulp.task('kill', () => {
     killBot();
@@ -51,13 +47,8 @@ gulp.task('lint', () =>
         .pipe(eslint.failAfterError())
 );
 
-const mainTasks = ['kill'];
-if (isDev) {
-    mainTasks.push('lint');
-}
-
-gulp.task('main', mainTasks, () => {
-    bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] });
+gulp.task('main', ['kill', 'lint'], () => {
+    bot = spawn(paths.binary, [], { 'stdio': ['inherit', 'inherit', 'pipe'] });
 
     bot.stderr.on('data', data => {
         process.stderr.write(data);
@@ -68,35 +59,15 @@ gulp.task('main', mainTasks, () => {
  'yarn' will attempt to run now and install the dependencies for you.
 #########################################################################################################################
 `);
+
             spawn('yarn', ['--force'], { 'stdio': 'inherit' }).on('close', code => {
                 if (code === 0) {
                     console.log(`
-New modules have been installed. The bot will now restart.
-                `);
+    New modules have been installed. The bot will now restart.
+                    `);
                     gulp.start('main');
                 }
             });
-        }
-    });
-
-    bot.on('close', code => {
-        if (code === null) {
-            // Killed by killBot()
-            return;
-        }
-
-        if (code === 42) {
-            // Restart
-            console.error('Restart code detected.');
-            gulp.start('main');
-        } else if (code === 666 || code === 154) {
-            // TODO: 154 = 666 & 255, so why does it sometimes exit with 154 and sometimes with 666?
-            // Full process stop
-            console.log('Process exit code detected.');
-            process.exit(1);
-        } else {
-            // Wait for changes
-            console.log(`Bot has exited with code ${code}. Waiting for changes...`);
         }
     });
 });
@@ -104,7 +75,7 @@ New modules have been installed. The bot will now restart.
 gulp.task('watch', () => {
     gulp.watch([
         paths.srcFiles,
-        paths.configFiles
+        paths.binary
     ], ['main']);
 });
 
