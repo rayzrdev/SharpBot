@@ -6,7 +6,7 @@ class Storage {
         const cache = this.cache = {};
 
         const factory = function (storageFile) {
-            let realPath = path.resolve(global.settings.configsFolder, storageFile);
+            let realPath = path.resolve(global.settings.dataFolder, storageFile);
             if (!realPath.endsWith('.json')) {
                 realPath += '.json';
             }
