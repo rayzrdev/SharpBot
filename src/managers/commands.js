@@ -103,6 +103,7 @@ class CommandManager {
         let command = this.get(base);
 
         if (command) {
+            this.bot.managers.stats.increment(`command.${command.info.name}`);
             return this.execute(msg, command, args);
         } else {
             return this._handleShortcuts(msg, base, args);
