@@ -6,7 +6,7 @@ const Discord = require('discord.js');
 const stripIndents = require('common-tags').stripIndents;
 const chalk = require('chalk');
 const Managers = require('./managers');
-
+const term = require( 'terminal-kit' ).terminal;
 const bot = global.bot = exports.client = new Discord.Client();
 
 bot.managers = {};
@@ -52,10 +52,6 @@ let loaded = false;
 bot.utils = global.utils = require('./utils');
 
 bot.on('ready', () => {
-    if (bot.user.bot) {
-        logger.severe(`SharpBot is a selfbot, but you entered a bot token. Please follow the instructions at ${chalk.green('https://github.com/RayzrDev/SharpBot#getting-your-user-token')} and re-enter your token by running ${chalk.green('yarn run config')}.`);
-        process.exit(666);
-    }
 
     // =======================================================
     // === Until we know how to fix this, just make people ===

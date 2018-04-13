@@ -10,13 +10,6 @@ if (parseInt(process.versions.node.split('.')[0]) <= 6) {
 
 const fs = require('fs');
 const path = require('path');
-
-fs.stat(path.resolve(__dirname, '.git'), (err, stats) => {
-    if ((err && err.code === 'ENOENT') || (stats && !stats.isDirectory())) {
-        console.error('If you downloaded SharpBot as a ZIP file instead of via `git clone`, please read the instructions at https://github.com/RayzrDev/SharpBot#installing and reinstall now.');
-    }
-});
-
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const spawn = require('child_process').spawn;

@@ -2,7 +2,7 @@ const prompt = require('prompt');
 const chalk = require('chalk');
 const stripIndents = require('common-tags').stripIndents;
 const dateFormat = require('dateformat');
-
+const term = require( 'terminal-kit' ).terminal ;
 const fse = require('fs-extra');
 const path = require('path');
 
@@ -59,13 +59,16 @@ class ConfigManager {
         if (reconfiguring || !fse.existsSync(this._configPath)) {
             console.log(stripIndents`
             ${chalk.gray('----------------------------------------------------------')}
-            ${chalk.gray('==============<') + chalk.yellow(' SharpBot Setup Wizard v1.0 ') + chalk.gray('>==============')}
+            ${chalk.gray('==============<') + chalk.yellow(' Glitch Compatible Discord Bot v0.1 ') + chalk.gray('>==============')}
             ${chalk.gray('----------------------------------------------------------')}
+            ${chalk.red('CRITICAL:')} ${chalk.gray('PLEASE <<ONLY>> CONTINUE THROUGH THE TERMINAL AT THE TOP LEFT DROPDOWN UNDER "ADVANCED OPTIONS". INTERACTION IS REQUIRED BEFORE CONTINUING.')}
+            term.red.bold( "Please type:'")}  ${chalk.yellow('"yarn run config"')} 
 
-            To get your token, see the instructions at ${chalk.green('https://github.com/Rayzr522/SharpBot#getting-your-user-token')}
+            please ensure you understand the differences between a selfBot and a bot from a Discord application...
+            How to get userToken (selfBot): ${chalk.green('https://github.com/Rayzr522/SharpBot#getting-your-user-token')}
+            How to get botToken (Dedicated): ${chalk.green('https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token')}
 
             ${chalk.blue('Note:')} ${chalk.green('yarn run config')} can be run at any time to re-run this setup.
-
             Please enter your ${chalk.yellow('bot token')} and desired ${chalk.yellow('command prefix')} for the bot:
             \u200b
             `);
