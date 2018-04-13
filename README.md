@@ -1,11 +1,3 @@
-<h1 align="center">SharpBot</h1>
-
-**SelfBot** is an ever-expanding [Discord](http://discordapp.com) bot written with [discord.js](https://discord.js.org/#/) that has a bunch of fun and useful commands. Can also be a dedicated bot using bot token from app.
-
-### [FAQ](docs/FAQ.md)
-### [Commands](docs/COMMANDS.md)
-
-
 #### Table of contents
 - [Requirements](#requirements)
 - [Installing](#installing)
@@ -24,7 +16,6 @@ For those of you running Linux/Unix, this nifty little command should do everyth
 ```bash
 bash -c "$(curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh)"
 ```
-
 Now run `yarn start` to start the bot. 
 
 **Note:** The first time you start the bot you will enter the setup wizard. It takes just a few seconds to enter the needed information, and it sets up the bot for you.

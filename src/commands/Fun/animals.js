@@ -3,22 +3,18 @@ const got = require('got');
 function makeCommand(type, url, transformer) {
     return {
         run: async (bot, msg) => {
-            await msg.edit(':arrows_counterclockwise:');
-            const res = await got(url);
+            msg.edit(':arrows_counterclockwise:');
+            const { body } = await got(url);
 
             let file;
             try {
-                file = transformer(res.body);
+                file = transformer(body);
             } catch (ignore) {
                 return msg.error('Failed to transform image URL!');
             }
 
             msg.delete();
-            msg.channel.send({
-                files: [
-                    file
-                ]
-            });
+            msg.channel.send({ files: [file] });
         },
         info: {
             name: type,
@@ -29,6 +25,6 @@ function makeCommand(type, url, transformer) {
 }
 
 module.exports = [
-    makeCommand('cat', 'http://random.cat/meow', body => JSON.parse(body).file),
+    makeCommand('cat', 'http://thecatapi.com/api/images/get?format=xml', body => /<url>(.+?)<\/url>/.exec(body)[1]),
     makeCommand('dog', 'http://random.dog/woof', body => `http://random.dog/${body}`)
 ];

@@ -34,7 +34,7 @@ exports.run = async (bot, msg, args) => {
 
     output = clean(output).replace(new RegExp(bot.utils.quoteRegex(bot.token), 'g'), 'BOT_TOKEN');
 
-    const { url } = await bot.utils.gistUpload(output);
+    const { url } = await bot.utils.hastebinUpload(output);
     if (!url) {
         return 'Failed to upload!';
     }
