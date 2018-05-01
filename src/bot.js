@@ -15,8 +15,8 @@ class SharpBot extends Client {
         // Settings
         const settings = global.settings;
 
-        if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder);
-        if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder);
+        if (!fse.existsSync(settings.dataFolder)) fse.mkdirpSync(settings.dataFolder);
+        if (!fse.existsSync(settings.configsFolder)) fse.mkdirpSync(settings.configsFolder);
 
         // Managers
         this.managers = {};
