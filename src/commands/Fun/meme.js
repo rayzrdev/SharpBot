@@ -7,10 +7,10 @@ function getMeme(name) {
 
 function cleanInput(input) {
     if (!input) return '';
-    return input.replace(/"/g, '\'\'').replace(/\#/g, '~h')
-        .replace(/\-/g, '--').replace(/\_/g, '__')
+    return input.replace(/"/g, '\'\'').replace(/#/g, '~h')
+        .replace(/-/g, '--').replace(/_/g, '__')
         .replace(/ /g, '_').replace(/\?/g, '~q')
-        .replace(/\%/g, '~p').replace(/\//g, '~s');
+        .replace(/%/g, '~p').replace(/\//g, '~s');
 }
 
 exports.init = () => {
@@ -33,7 +33,7 @@ exports.init = () => {
             let singleData = JSON.parse(res.body);
 
             templates.push({
-                name: url.replace(/https\:\/\/memegen\.link\/api\/templates\/(.*)/, '$1'),
+                name: url.replace(/https:\/\/memegen\.link\/api\/templates\/(.*)/, '$1'),
                 url: url.replace('/api/templates', ''),
                 styles: singleData.styles
             });

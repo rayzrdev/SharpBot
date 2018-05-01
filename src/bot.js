@@ -140,7 +140,7 @@ class SharpBot extends Client {
         process.on('exit', () => this.shutdown());
 
         process.on('uncaughtException', (err) => {
-            let errorMsg = (err ? err.stack || err : '').toString().replace(new RegExp(`${__dirname}\/`, 'g'), './');
+            let errorMsg = (err ? err.stack || err : '').toString().replace(new RegExp(`${__dirname}/`, 'g'), './');
             this.logger.severe(errorMsg);
         });
 

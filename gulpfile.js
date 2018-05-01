@@ -55,7 +55,7 @@ gulp.task('main', ['kill', 'lint'], () => {
         if (moduleError.test(data.toString())) {
             console.error(`
 #########################################################################################################################
- Node has failed to load a module! If you just updated, you may need to run \'yarn\' again to install/update dependencies.
+ Node has failed to load a module! If you just updated, you may need to run 'yarn' again to install/update dependencies.
  'yarn' will attempt to run now and install the dependencies for you.
 #########################################################################################################################
 `);

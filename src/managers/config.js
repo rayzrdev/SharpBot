@@ -24,7 +24,7 @@ class ConfigManager {
                 name: 'botToken',
                 type: 'password',
                 message: 'What is your token? (Token can only contain letters, numbers, underscores and dashes)',
-                validate: input => /^(<default hidden>)|("?[a-zA-Z0-9_\.\-]+"?)$/.test(input),
+                validate: input => /^(<default hidden>)|("?[a-zA-Z0-9_.-]+"?)$/.test(input),
                 filter: input => input.replace('<default hidden>', currentConfig.botToken).replace(/"/g, ''),
                 // Only require a token if one isnt already configured
                 default: currentConfig.botToken ? '<default hidden>' : undefined

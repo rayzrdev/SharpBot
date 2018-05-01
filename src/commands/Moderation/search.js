@@ -25,7 +25,7 @@ exports.run = async (bot, msg, args) => {
         msg.channel,
         output.replace(/`/g, '\u200b`'),
         {
-            prefix: '\`\`\`log\n',
+            prefix: '```log\n',
             suffix: '\n```',
             delay: 10,
             cutOn: '\n'

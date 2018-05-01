@@ -172,8 +172,8 @@ exports.parseCards = ($, node) => {
             if(!pronunciation) return true;
 
             const select = (selector) => $(selector).parent().parent().parent().find('ol.lr_dct_sf_sens')
-                                            .find('div.lr_dct_sf_sen.vk_txt')
-                                            .find('div._Jig > div[data-dobid=dfn] > span');
+                .find('div.lr_dct_sf_sen.vk_txt')
+                .find('div._Jig > div[data-dobid=dfn] > span');
 
             const lexicalCategory = $(root).find('div.lr_dct_sf_h > i > span');
             let defenitions = select(root);
