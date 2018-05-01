@@ -1,6 +1,6 @@
 {
   "name": "sharpbot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Discord.js selfbot written by Rayzr - 60 second installation!",
   "main": "src/bot.js",
   "scripts": {
