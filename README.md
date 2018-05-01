@@ -10,7 +10,6 @@
 ![SharpBot installer GIF](res/sharpbot-install.gif)
 
 ### [FAQ](docs/FAQ.md)
-### [Commands](docs/COMMANDS.md)
 
 #### Table of contents
 - [Requirements](#requirements)
@@ -24,56 +23,30 @@
 ## Usage
 ### Requirements
 - `git` ([Windows](https://git-scm.com/download/win) | [Linux](https://git-scm.com/download/linux) | [macOS](https://git-scm.com/download/mac))
-- `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/)) (make sure to get v8)
+- `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/)) (make sure to get the latest)
 - `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows-tab) | [Linux](https://yarnpkg.com/en/docs/install#linux-tab) | [macOS](https://yarnpkg.com/en/docs/install#mac-tab))
 
 > If you want a simple reason to use `yarn` instead of `npm`, see [here](https://github.com/RayzrDev/SharpBot/wiki/Why-Yarn%3F).
 
 ### Installing
-#### Linux & macOS quick-installer
-For those of you running Linux/Unix, this nifty little command should do everything for you:
+To install SharpBot, run the following command in Terminal / Git Bash / Command Prompt:
 
 ```bash
-bash -c "$(curl -fsSL https://rawgit.com/RayzrDev/SharpBot-installer/master/install.sh)"
+yarn global add sharpbot
 ```
 
-#### Normal installation
-Run the following commands in Terminal / Git Bash / Command Prompt:
-
-```bash
-# ============================================================
-# === DO NOT DOWNLOAD THE BOT AS A ZIP FILE, USE GIT CLONE ===
-# ============================================================
-# Download the bot
-git clone https://github.com/RayzrDev/SharpBot.git
-# Enter the bot folder
-cd SharpBot
-# Install dependencies
-yarn install
-```
-
-Now run `yarn start` to start the bot. 
-
-**Note:** The first time you start the bot you will enter the setup wizard. It takes just a few seconds to enter the needed information, and it sets up the bot for you.
-
-### Updating
-Minor updates can be acquired by running `//exec git pull` in Discord to run the `git pull` command on your computer. Some updates, however, change too much to be updated like that, and instead you must do the following commands in your terminal/command prompt:
-
-```bash
-# Go to the SharpBot folder
-cd path/to/SharpBot
-# Pull in any changes
-git pull
-# Install new dependencies
-yarn install
-```
+**Note:** The first time you start the bot, you will enter the setup wizard. It takes just a few seconds to enter the needed information, and it sets up the bot for you.
 
 ### Running
+You can run the bot by running the command `sharpbot` in Terminal / Git Bash / Command Prompt.
+
+> Do `sharpbot --help` for more options.
+
+### Updating
+To update SharpBot, run the following command in Terminal / Git Bash / Command Prompt:
+
 ```bash
-# Go to the SharpBot folder
-cd path/to/SharpBot
-# Start the bot up
-yarn start
+yarn global upgrade --latest sharpbot
 ```
 
 ### Getting your user-token
