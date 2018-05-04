@@ -111,6 +111,7 @@ exports.run = async (bot, msg, args) => {
 exports.info = {
     name: 'meme',
     usage: 'meme list | info <name> | [<name> | <line 1> | <line 2> | [style]]',
+    description: 'Helps you generate meme images with custom text',
     examples: [
         'meme info sad-biden',
         'meme facepalm | please, oh please | rtfm',
