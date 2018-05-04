@@ -3,9 +3,9 @@
 [![Patreon](http://ionicabizau.github.io/badges/patreon.svg)](https://patreon.com/Rayzr522)
 [![Discord Badge](https://discordapp.com/api/guilds/282207139752050688/embed.png)](https://discord.io/rayzrdevofficial)
 
-**SharpBot** is an ever-expanding [Discord](http://discordapp.com) selfbot powered by [Discord.js](https://discord.js.org/#/) that has a bunch of fun and useful commands. From automating boring tasks with shortcuts to fetching a random cat picture from the internet, SharpBot has it all! Features include Google searching, fetching extended information about users and servers, dice rolls, quoting messages, setting your game, shortening URLs, keeping track of your todo list, embedding messages, generating memes, and so much more!
+### Selfbots are officially banned. For more information, see [here](https://github.com/RayzrDev/SharpBot/issues/116#issuecomment-335036210).
 
-> Yes, selfbots are officially banned. However, you can see my stance on the topic [here](https://github.com/RayzrDev/SharpBot/issues/116#issuecomment-335036210). 
+**SharpBot** is an ever-expanding [Discord](http://discordapp.com) selfbot powered by [Discord.js](https://discord.js.org/#/) that has a bunch of fun and useful commands. From automating boring tasks with shortcuts to fetching a random cat picture from the internet, SharpBot has it all! Features include Google searching, fetching extended information about users and servers, dice rolls, quoting messages, setting your game, shortening URLs, keeping track of your todo list, embedding messages, generating memes, and so much more!
 
 ![SharpBot installer GIF](res/sharpbot.gif)
 
