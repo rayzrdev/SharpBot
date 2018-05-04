@@ -63,7 +63,7 @@ class ConfigManager {
 
             To get your token, see the instructions at ${chalk.green('https://github.com/Rayzr522/SharpBot#getting-your-user-token')}
 
-            ${chalk.blue('Note:')} ${chalk.green('yarn run config')} can be run at any time to re-run this setup.
+            ${chalk.blue('Note:')} ${chalk.green('sharpbot --config')} can be run at any time to re-run this setup.
 
             Please enter your ${chalk.yellow('bot token')} and desired ${chalk.yellow('command prefix')} for the bot:
             \u200b
