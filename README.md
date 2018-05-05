@@ -10,6 +10,7 @@
 ![SharpBot installer GIF](res/sharpbot.gif)
 
 ### [FAQ](docs/FAQ.md)
+### [Commands](docs/COMMANDS.md)
 
 #### Table of contents
 - [Requirements](#requirements)
