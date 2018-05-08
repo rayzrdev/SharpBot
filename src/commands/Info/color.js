@@ -29,7 +29,7 @@ const rgbToHSL = (red, green, blue) => {
 };
 
 const resolveColor = input => {
-    if (input.startsWith('#')) input.splice(0, 1);
+    if (input.startsWith('#')) input = input.substr(1);
     if (input.length === 3) input = input.split('').map(c => c + c).join('');
 
     let hex = input;
