@@ -1,28 +1,16 @@
 const RichEmbed = require('discord.js').RichEmbed;
 const got = require('got');
 
-exports.randomSelection = (choices) => {
-    return choices[Math.floor(Math.random() * choices.length)];
-};
+const randomSelection = choices => choices[Math.floor(Math.random() * choices.length)];
 
-exports.randomColor = () => {
-    return [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
-};
-
-exports.formatNumber = (number) => {
-    if (isNaN(number)) return NaN;
-    let input = `${number}`;
-    if (number < 1e4) return input;
-    let out = [];
-    while (input.length > 3) {
-        out.push(input.substr(input.length - 3, input.length));
-        input = input.substr(0, input.length - 3);
-    }
-    return `${input},${out.reverse().join(',')}`;
-};
+const randomColor = () => [
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256)
+];
 
 const randomFooter = () => {
-    return exports.randomSelection([
+    return randomSelection([
         'just add water!',
         'Powered by squirrels!',
         'codeisluvcodeislife',
@@ -34,32 +22,17 @@ const randomFooter = () => {
     ]);
 };
 
-exports.embed = (title, description = '', fields = [], options = {}) => {
-    let url = options.url || '';
-    let color = options.color || this.randomColor();
+const formatNumber = number => isNaN(number) ? NaN : number.toLocaleString();
 
-    if (options.inline) {
-        if (fields.length % 3 === 2) {
-            fields.push({ name: '\u200b', value: '\u200b' });
-        }
-        fields.forEach(obj => {
-            obj.inline = true;
-        });
-    }
+const quoteRegex = input => `${input}`.replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');
 
-    return new RichEmbed({ fields, video: options.video || url })
-        .setTitle(title)
-        .setColor(color)
-        .setDescription(description)
-        .setURL(url)
-        .setImage(options.image)
-        .setTimestamp(options.timestamp ? timestampToDate(options.timestamp) : null)
-        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? global.bot.user.avatarURL : undefined)
-        .setAuthor(options.author === undefined ? '' : options.author)
-        .setThumbnail(options.thumbnail);
+const now = () => {
+    let now = process.hrtime();
+    return now[0] * 1e3 + now[1] / 1e6;
 };
 
-function timestampToDate(timestamp) {
+
+const timestampToDate = timestamp => {
     if (timestamp === true) {
         return new Date();
     }
@@ -67,9 +40,9 @@ function timestampToDate(timestamp) {
         return new Date(timestamp);
     }
     return timestamp;
-}
+};
 
-exports.parseArgs = (args, options) => {
+const parseArgs = (args, options) => {
     if (!options)
         return args;
     if (typeof options === 'string')
@@ -109,7 +82,32 @@ exports.parseArgs = (args, options) => {
     };
 };
 
-exports.multiSend = (channel, messages, delay) => {
+const embed = (title, description = '', fields = [], options = {}) => {
+    let url = options.url || '';
+    let color = options.color || this.randomColor();
+
+    if (options.inline) {
+        if (fields.length % 3 === 2) {
+            fields.push({ name: '\u200b', value: '\u200b' });
+        }
+        fields.forEach(obj => {
+            obj.inline = true;
+        });
+    }
+
+    return new RichEmbed({ fields, video: options.video || url })
+        .setTitle(title)
+        .setColor(color)
+        .setDescription(description)
+        .setURL(url)
+        .setImage(options.image)
+        .setTimestamp(options.timestamp ? timestampToDate(options.timestamp) : null)
+        .setFooter(options.footer === true ? randomFooter() : (options.footer ? options.footer : ''), options.footer ? global.bot.user.avatarURL : undefined)
+        .setAuthor(options.author === undefined ? '' : options.author)
+        .setThumbnail(options.thumbnail);
+};
+
+const multiSend = (channel, messages, delay) => {
     delay = delay || 100;
     messages.forEach((m, i) => {
         setTimeout(() => {
@@ -118,7 +116,7 @@ exports.multiSend = (channel, messages, delay) => {
     });
 };
 
-exports.sendLarge = (channel, largeMessage, options = {}) => {
+const sendLarge = (channel, largeMessage, options = {}) => {
     let message = largeMessage;
     let messages = [];
     let prefix = options.prefix || '';
@@ -159,15 +157,10 @@ exports.sendLarge = (channel, largeMessage, options = {}) => {
         messages.push(prefix + message + suffix);
     }
 
-    this.multiSend(channel, messages, options.delay);
+    multiSend(channel, messages, options.delay);
 };
 
-exports.now = () => {
-    let now = process.hrtime();
-    return now[0] * 1e3 + now[1] / 1e6;
-};
-
-exports.playAnimation = (msg, delay, list) => {
+const playAnimation = (msg, delay, list) => {
     if (list.length < 1)
         return;
 
@@ -178,28 +171,28 @@ exports.playAnimation = (msg, delay, list) => {
         let elapsed = this.now() - start;
 
         setTimeout(() => {
-            this.playAnimation(msg, delay, list);
+            playAnimation(msg, delay, list);
         }, Math.max(50, delay - elapsed));
     });
 };
 
-exports.uploadMethods = {
+const uploadMethods = {
     hastebin: 'hastebin',
     ix: 'ix.io'
 };
 
-exports.textUpload = (text, options) => {
+const textUpload = (text, options) => {
     options = options || {};
-    let method = (options.method || exports.uploadMethods.hastebin).toLowerCase();
+    let method = (options.method || uploadMethods.hastebin).toLowerCase();
 
-    if (method === exports.uploadMethods.ix) {
-        return exports.ixUpload(text);
-    } else if (method === exports.uploadMethods.hastebin) {
-        return exports.hastebinUpload(text);
+    if (method === uploadMethods.ix) {
+        return ixUpload(text);
+    } else if (method === uploadMethods.hastebin) {
+        return hastebinUpload(text);
     }
 };
 
-exports.hastebinUpload = text => {
+const hastebinUpload = text => {
     return got('https://hastebin.com/documents', { body: { 'contents': text }, form: true })
         .then(res => {
             if (res && res.body && res.body.key) {
@@ -218,7 +211,7 @@ exports.hastebinUpload = text => {
         });
 };
 
-exports.ixUpload = text => {
+const ixUpload = text => {
     return got('http://ix.io', { body: { 'f:1': text }, form: true })
         .then(res => {
             if (res && res.body) {
@@ -235,5 +228,26 @@ exports.ixUpload = text => {
         });
 };
 
-exports.quoteRegex = (input) => `${input}`.replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');
-
+module.exports = {
+    // Randomizers
+    randomSelection,
+    randomColor,
+    randomFooter,
+    // Formatter
+    formatNumber,
+    quoteRegex,
+    // Times
+    now,
+    timestampToDate,
+    // Message utilities
+    parseArgs,
+    embed,
+    multiSend,
+    sendLarge,
+    playAnimation,
+    // Services
+    uploadMethods,
+    textUpload,
+    hastebinUpload,
+    ixUpload
+};
