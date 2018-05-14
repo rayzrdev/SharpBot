@@ -15,7 +15,7 @@
   "bin": {
     "sharpbot": "./bin/sharpbot"
   },
-  "author": "Rayzr522 <rayzr522@gmail.com",
+  "author": "Rayzr522 <rayzr522@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
