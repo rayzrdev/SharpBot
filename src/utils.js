@@ -1,6 +1,5 @@
 const RichEmbed = require('discord.js').RichEmbed;
 const got = require('got');
-const url = require('url');
 
 exports.randomSelection = (choices) => {
     return choices[Math.floor(Math.random() * choices.length)];
@@ -184,14 +183,24 @@ exports.playAnimation = (msg, delay, list) => {
     });
 };
 
+exports.uploadMethods = {
+    hastebin: 'hastebin',
+    ix: 'ix.io'
+};
+
+exports.textUpload = (text, options) => {
+    options = options || {};
+    let method = (options.method || exports.uploadMethods.hastebin).toLowerCase();
+
+    if (method === exports.uploadMethods.ix) {
+        return exports.ixUpload(text);
+    } else if (method === exports.uploadMethods.hastebin) {
+        return exports.hastebinUpload(text);
+    }
+};
+
 exports.hastebinUpload = text => {
-    return got.post(url.resolve('https://hastebin.com', 'documents'), {
-        body: text,
-        json: true,
-        headers: {
-            'Content-Type': 'text/plain'
-        }
-    })
+    return got('https://hastebin.com/documents', { body: { 'contents': text }, form: true })
         .then(res => {
             if (res && res.body && res.body.key) {
                 const key = res.body.key;
@@ -209,24 +218,14 @@ exports.hastebinUpload = text => {
         });
 };
 
-exports.gistUpload = (text, lang = 'js') => {
-    const filename = 'sharpbot_upload.' + lang;
-    return got.post('https://api.github.com/gists', {
-        body: JSON.stringify({
-            files: {
-                [filename]: {
-                    content: text
-                }
-            }
-        }),
-        json: true
-    })
+exports.ixUpload = text => {
+    return got('http://ix.io', { body: { 'f:1': text }, form: true })
         .then(res => {
-            if (res && res.body && res.body.html_url) {
+            if (res && res.body) {
                 return {
                     success: true,
-                    url: res.body.html_url,
-                    rawUrl: res.body.files[filename].raw_url
+                    url: res.body,
+                    rawUrl: res.body
                 };
             } else {
                 return {
