@@ -19,7 +19,7 @@ exports.run = async (bot, msg, args) => {
 
     await msg.edit(':arrows_counterclockwise: Searching...');
 
-    const { url } = await bot.utils.gistUpload(mutual.map(user => `- ${user.tag}`).join('\n'), 'txt');
+    const { url } = await bot.utils.textUpload(mutual.map(user => `- ${user.tag}`).join('\n'));
 
     msg.delete();
     (await msg.channel.send({

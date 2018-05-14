@@ -29,7 +29,7 @@ exports.run = async (bot, msg, args) => {
     } else {
         let raw = members.map(m => `${m.user.username}${m.user.bot ? ' [BOT]' : ''}`).join('\n');
 
-        const { url } = await bot.utils.gistUpload(raw, 'txt');
+        const { url } = await bot.utils.textUpload(raw);
 
         let trimmed = body.substr(0, 1500);
         trimmed = trimmed.slice(0, trimmed.lastIndexOf('\n'));

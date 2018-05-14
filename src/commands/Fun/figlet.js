@@ -6,7 +6,7 @@ exports.run = (bot, msg, args) => {
     const parsed = bot.utils.parseArgs(args, ['l', 'f:']);
 
     if (parsed.options.l) {
-        bot.utils.gistUpload(figlet.fontsSync().join('\n'), 'txt').then(({ url }) => {
+        bot.utils.textUpload(figlet.fontsSync().join('\n')).then(({ url }) => {
             if (!url) {
                 return msg.error('Failed to upload fonts list!');
             }

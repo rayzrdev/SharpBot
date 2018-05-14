@@ -36,5 +36,5 @@ function makeCommand(name, displayName, methodName) {
 
 module.exports = [
     makeCommand('haste', 'Hastebin', 'hastebinUpload'),
-    makeCommand('gist', 'a GitHub Gist', 'gistUpload')
+    makeCommand('ix', 'ix.io', 'ixUpload')
 ];
