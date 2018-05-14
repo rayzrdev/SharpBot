@@ -32,7 +32,7 @@
     "discord.js": "^11.3.2",
     "env-paths": "^1.0.0",
     "figlet": "^1.2.0",
-    "fs-extra": "^6.0.0",
+    "fs-extra": "^6.0.1",
     "google-translate-api": "^2.3.0",
     "got": "^8.3.1",
     "inquirer": "^5.2.0",
