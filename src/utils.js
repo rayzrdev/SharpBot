@@ -84,7 +84,7 @@ const parseArgs = (args, options) => {
 
 const embed = (title, description = '', fields = [], options = {}) => {
     let url = options.url || '';
-    let color = options.color || this.randomColor();
+    let color = options.color || randomColor();
 
     if (options.inline) {
         if (fields.length % 3 === 2) {
@@ -165,10 +165,10 @@ const playAnimation = (msg, delay, list) => {
         return;
 
     let next = list.shift();
-    let start = this.now();
+    let start = now();
 
     msg.edit(next).then(() => {
-        let elapsed = this.now() - start;
+        let elapsed = now() - start;
 
         setTimeout(() => {
             playAnimation(msg, delay, list);
