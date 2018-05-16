@@ -67,6 +67,6 @@ The bot was originally a modified version of [eslachance's djs-selfbot-v9](https
 ## Join Me
 If you need help with my bot, have a feature to request or just want to chat, you can join my Discord server! If you don't have Discord, don't worry. It only takes a few moments to sign up.
 
-[![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://discord.io/rayzrdevofficial)
+[![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://discord.gg/HRfGECW)
 
 *This README.md has super cow powers.*
