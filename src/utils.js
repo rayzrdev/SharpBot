@@ -183,7 +183,7 @@ const uploadMethods = {
 
 const textUpload = (text, options) => {
     options = options || {};
-    let method = (options.method || uploadMethods.hastebin).toLowerCase();
+    let method = (options.method || uploadMethods.ix).toLowerCase();
 
     if (method === uploadMethods.ix) {
         return ixUpload(text);
