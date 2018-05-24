@@ -130,5 +130,6 @@ exports.info = {
             name: '-preview',
             description: 'Sends another message where discord places it\'s own embedded player'
         }
-    ]
+    ],
+    credits: '<@140541588915879936>' // Doxylamin#3377
 };
