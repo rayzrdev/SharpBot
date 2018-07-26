@@ -2872,9 +2872,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-webdict@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/webdict/-/webdict-0.2.2.tgz#dc44c63995dce77568007752ab755fa10089296e"
+webdict@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/webdict/-/webdict-0.3.0.tgz#98f4369d2330d899da31b13985e7dae12b1bef42"
   dependencies:
     cheerio "^0.22.0"
     got "^6.7.1"
