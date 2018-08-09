@@ -1,20 +1,54 @@
 function makeCommand(name, viewName, description, filter) {
     return {
-        run: async (bot, msg, args) => {
+        run: async(bot, msg, args) => {
             let count = parseInt(args[0]) || 1;
 
             msg.delete();
 
-            const messages = await msg.channel.fetchMessages({ limit: Math.min(count, 100), before: msg.id });
-            const deletable = messages.filter(message => filter(message, bot));
+            let pages = count / 100;
 
-            await Promise.all(
-                deletable.map(m => m.delete())
-            );
+            let lastmsgid = msg.id;
 
-            const deleted = deletable.size;
+            let totaldeleted = 0;
 
-            (await msg.channel.send(`:white_check_mark: ${viewName} \`${deletable.size}\` message${deleted === 1 ? '' : 's'}.`)).delete(2000);
+            for (var i = 0; i < pages; i++) {
+
+                console.log('On Page', i);
+
+                const messages = await msg.channel.fetchMessages({
+                    limit: Math.min(count, 100),
+                    before: lastmsgid
+                });
+
+                const deletable = messages.filter(function(message) {
+                    lastmsgid = message.id;
+                    return filter(message, bot);
+                });
+
+                await Promise.all(
+                    deletable.map(m => {
+                        if (m != null) {
+                            m.delete()
+                        }
+
+                    })
+                );
+
+                const deleted = deletable.size;
+
+                totaldeleted += deleted;
+
+                if (deleted > 0) 
+                {
+                    console.log('Deleted ', deleted);
+                }
+
+            }
+
+
+            console.log(`Deleted ${viewName} \`${totaldeleted}\` message${totaldeleted === 1 ? '' : 's'}.`);
+            (await msg.channel.send(`:white_check_mark: ${viewName} \`${totaldeleted}\` message${totaldeleted === 1 ? '' : 's'}.`)).delete(2000);
+
         },
         info: {
             name,
