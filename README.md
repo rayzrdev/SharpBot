@@ -14,9 +14,7 @@
 ## Credits
 The bot was originally a modified version of [eslachance's djs-selfbot-v9](https://github.com/eslachance/djs-selfbot-v9), but over time I've completely rewritten it. The commands are a compilation of my own work as well as snippets found online.
 
-## Join Me
-If you need help with a bot or just want to chat, you can join my Discord server! If you don't have Discord, don't worry. It only takes a few moments to sign up.
-
+# Do not join if you are looking for support. Your request will be denied.
 [![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://discord.io/rayzrdevofficial)
 
 *This README.md has super cow powers.*
