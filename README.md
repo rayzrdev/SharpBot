@@ -1,4 +1,4 @@
-# We are starting to no longer officially provide support for Selfbots. They are banned, and that is just the sad, honest truth. This repository is now just for educational purposes.
+# We no longer provide support for selfbots. They are banned, and that is just the sad, honest truth. This repository is now just for educational purposes.
 
 <h1 align="center">SharpBot</h1>
 
